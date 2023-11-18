@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class UIManager : SingletonMono<UIManager>
+public sealed class UIManager : SingletonMono<UIManager>
 {
     public const string FORM_PATH = "Forms/{0}";
 

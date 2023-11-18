@@ -6,6 +6,11 @@ public class Test : MonoBehaviour
 {
     private void Awake()
     {
+        DataManager.Instance.LoadDatas();
+        foreach (var item in DataManager.Instance.TestDatas.Values)
+        {
+            Debug.Log(item.id + ", " + item.pos);
+        }
     }
 
     private void Start()
