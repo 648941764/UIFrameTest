@@ -29,17 +29,3 @@ public class PlayerData
     public int sex;
     public int hp;
 }
-
-[CreateAssetMenu(fileName = "NPCDatas", menuName = "Datas/NPCDatas", order = 0)]
-public class NPCDatas : ScriptableObject
-{
-    public List<NPCData> datas = new List<NPCData>();
-}
-
-[Serializable]
-public class NPCData
-{
-    public int id;
-    public int sex;
-    public int hp;
-}
