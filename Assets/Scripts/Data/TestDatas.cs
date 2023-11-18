@@ -15,17 +15,3 @@ public class TestData
     public int id;
     public Vector3 pos;
 }
-
-[CreateAssetMenu(fileName = "PlayerDatas", menuName = "Datas/PlayerDatas", order = 0)]
-public class PlayerDatas : ScriptableObject
-{
-    public List<PlayerData> datas = new List<PlayerData>();
-}
-
-[Serializable]
-public class PlayerData
-{
-    public int id;
-    public int sex;
-    public int hp;
-}

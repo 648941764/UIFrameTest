@@ -24,4 +24,15 @@ public partial class DataManager
             PlayerDatas.Add(config.datas[i].id, config.datas[i]);
         }
     }
+    public void LoadItemDatas()
+    {
+        ItemDatas = new Dictionary<int, ItemData>();
+        ItemDatas config = Resources.Load<ItemDatas>(string.Format(DATA_PATH, typeof(ItemDatas).Name));
+        int i = -1;
+        while (++i < config.datas.Count)
+        {
+            ItemDatas.Add(config.datas[i].id, config.datas[i]);
+        }
+    }
+
 }

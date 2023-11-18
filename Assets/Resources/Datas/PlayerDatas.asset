@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: c143b5e789b6a4d4aa607ba58fcfe5cf, type: 3}
   m_Name: PlayerDatas
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerDatas
+  m_EditorClassIdentifier: 
   datas:
   - id: 1
-    sex: 2
-    hp: 3
+    sex: 1
+    hp: 30

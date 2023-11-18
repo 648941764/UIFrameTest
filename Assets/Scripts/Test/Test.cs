@@ -43,6 +43,15 @@ public class Test : MonoBehaviour
             {
                 UIManager.Instance.Open<TestForm>();
             }
+
+            if (UIManager.Instance.IsOpen<ButtonForm>())
+            {
+                UIManager.Instance.Close<ButtonForm>();
+            }
+            else
+            {
+                UIManager.Instance.Open<ButtonForm>();
+            }
         }
     }
 }
