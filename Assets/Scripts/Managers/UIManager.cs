@@ -35,7 +35,7 @@ public sealed class UIManager : SingletonMono<UIManager>
         return forms.ContainsKey(typeof(T));
     }
 
-    private T GetForm<T>() where T : Form
+    public T GetForm<T>() where T : Form
     {
         if (IsOpen<T>())
         {

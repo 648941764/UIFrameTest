@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class BackpackForm : Form
 {
@@ -10,9 +11,11 @@ public class BackpackForm : Form
     [SerializeField] private RectTransform _slotPrefab;
     [SerializeField] private ItemUI _slotUIPrefab;
     [SerializeField] private RectTransform _dragItem;
+    [SerializeField] private RectTransform _panel;
 
     private ItemUI[] itemUIs;
     private RectTransform[] itemSlots;
+    public RectTransform[] ItemSlots => itemSlots;
 
     protected override void InitComponents()
     {
@@ -48,6 +51,7 @@ public class BackpackForm : Form
             if (itemUIs[i] == null)
             {
                 itemUIs[i] = Instantiate<ItemUI>(_slotUIPrefab, itemSlots[i]);
+                itemUIs[i].Setindex(i);
             }
             else
             {
@@ -70,4 +74,26 @@ public class BackpackForm : Form
             OnRefresh();
         }
     }
+
+    public void SetItemUIToDragLayer(ItemUI itemUI)
+    {
+        itemUI.transform.SetParent(_dragItem);
+    }
+
+    public int FindNearestItemSlot(Camera camera, Vector2 mousePos)
+    {
+        if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(_panel, mousePos, camera, out Vector2 localPoint))
+        {
+            return -1;
+        }
+        for (int i = 0; i < itemSlots.Length; i++)
+        {
+            if (itemSlots[i].rect.Contains(localPoint))
+            {
+                return i;
+            }
+        }    
+        return -1;
+    }
+
 }

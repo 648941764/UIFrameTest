@@ -8,26 +8,20 @@ public class ItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
 {
     [SerializeField] private Image itemSpriteImg;
     [SerializeField] private Text  itemAmountText;
+    private int itemUIIndex;
+
 
     private bool isDragging;
-    private Vector2 mousePos, lastPos;
-    private RectTransform dragItem;
-
-    private void Start()
-    {
-
-
-    }
-
+    private Vector2 mousePos;
+    private int cilckIndex;
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (!isDragging && eventData.button == PointerEventData.InputButton.Left) 
         {
+            mousePos = eventData.position;
             isDragging = true;
-            this.gameObject.SetActive(false);
             //生成dragItem
-            ItemUI DragUI = Instantiate<ItemUI>(this);
-
+            UIManager.Instance.GetForm<BackpackForm>().SetItemUIToDragLayer(this);
             //this.gameObject.SetActive(false);
 
         }
@@ -44,7 +38,17 @@ public class ItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        //判断现在离他最近的格子是哪一个，如果里面有数据，那么就直接交换数据，如果为空就直接传入
+        Camera camera = eventData.pressEventCamera;
+        if (isDragging && eventData.button == PointerEventData.InputButton.Left)
+        {
+            mousePos = eventData.position;
+            isDragging = false;
+            //找到最近的一个格子，然后交换数据，并且把this的父节点重新设置到最近的格子那里
+            this.transform.SetParent(UIManager.Instance.GetForm<BackpackForm>().ItemSlots[itemUIIndex]);
+            int nearest = UIManager.Instance.GetForm<BackpackForm>().FindNearestItemSlot(camera, mousePos);
+            Test.Instance.Backpack.SwapItem(itemUIIndex, nearest);
+
+        }
     }
 
     public void RefreshItemUI(Item item)
@@ -52,5 +56,10 @@ public class ItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         ItemData itemData = DataManager.Instance.ItemDatas[item.id];
         itemSpriteImg.sprite = itemData.sprite;
         itemAmountText.text = item.amount.ToString();
+    }
+
+    public void Setindex(int index)
+    {
+        itemUIIndex = index;
     }
 }
