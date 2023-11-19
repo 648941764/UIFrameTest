@@ -17,12 +17,13 @@ public sealed class UIManager : SingletonMono<UIManager>
     {
         base.OnAwake();
         formParents = new GameObject("Forms").transform;
+        formParents.position = FORM_POS;
         DontDestroyOnLoad(formParents);
     }
 
     private T CreateForm<T>() where T : Form
     {
-        T form = Instantiate(Resources.Load<T>(GetFormPath(typeof(T).Name)), FORM_POS, Quaternion.identity);
+        T form = Instantiate(Resources.Load<T>(GetFormPath(typeof(T).Name)), Vector3.zero, Quaternion.identity);
         form.name = typeof(T).Name;
         form.transform.SetParent(formParents);
         return form;

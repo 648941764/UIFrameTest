@@ -38,16 +38,22 @@ public class ItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        Camera camera = eventData.pressEventCamera;
         if (isDragging && eventData.button == PointerEventData.InputButton.Left)
         {
             mousePos = eventData.position;
             isDragging = false;
             //找到最近的一个格子，然后交换数据，并且把this的父节点重新设置到最近的格子那里
-            this.transform.SetParent(UIManager.Instance.GetForm<BackpackForm>().ItemSlots[itemUIIndex]);
-            int nearest = UIManager.Instance.GetForm<BackpackForm>().FindNearestItemSlot(camera, mousePos);
-            Test.Instance.Backpack.SwapItem(itemUIIndex, nearest);
-
+            RectTransform rectTransform = transform as RectTransform;
+            int nearest = UIManager.Instance.GetForm<BackpackForm>().FindNearestItemSlot(transform.position);
+            if (nearest >= 0)
+            {
+                Test.Instance.Backpack.SwapItem(itemUIIndex, nearest);
+            }
+            else
+            {
+                this.transform.SetParent(UIManager.Instance.GetForm<BackpackForm>().ItemSlots[itemUIIndex]);
+            }
+            rectTransform.anchoredPosition = Vector2.zero;
         }
     }
 

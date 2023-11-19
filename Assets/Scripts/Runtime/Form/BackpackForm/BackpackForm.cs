@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 using static UnityEditor.Progress;
 
 public class BackpackForm : Form
@@ -51,6 +52,7 @@ public class BackpackForm : Form
             if (itemUIs[i] == null)
             {
                 itemUIs[i] = Instantiate<ItemUI>(_slotUIPrefab, itemSlots[i]);
+                itemUIs[i].transform.localPosition = Vector3.zero;
                 itemUIs[i].Setindex(i);
             }
             else
@@ -80,19 +82,17 @@ public class BackpackForm : Form
         itemUI.transform.SetParent(_dragItem);
     }
 
-    public int FindNearestItemSlot(Camera camera, Vector2 mousePos)
+    public int FindNearestItemSlot(Vector2 position)
     {
-        if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(_panel, mousePos, camera, out Vector2 localPoint))
-        {
-            return -1;
-        }
         for (int i = 0; i < itemSlots.Length; i++)
         {
-            if (itemSlots[i].rect.Contains(localPoint))
+            Rect rect = itemSlots[i].rect;
+            rect.position = itemSlots[i].position;
+            if (rect.Contains(position))
             {
                 return i;
             }
-        }    
+        }
         return -1;
     }
 
