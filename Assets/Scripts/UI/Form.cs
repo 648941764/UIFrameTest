@@ -14,7 +14,8 @@ public abstract class Form : MonoBehaviour
     {
         SetSortingLayer();
         InitComponents(); 
-        RegisterEvents(); 
+        RegisterEvents();
+        InitAwake();
     }
     private void Start() { }
     private void OnEnable() { eventRegistry.AddEvents(); }
@@ -22,6 +23,7 @@ public abstract class Form : MonoBehaviour
     private void OnDestroy() { eventRegistry.ClearEvents(); }
     private void SetSortingLayer() => GetComponent<Canvas>().sortingOrder = (int)formLayer;
 
+    protected virtual void InitAwake() { }
     protected virtual void InitComponents() { }
     protected virtual void RegisterEvents() { }
     protected virtual void OnOpen() { Refresh(); }

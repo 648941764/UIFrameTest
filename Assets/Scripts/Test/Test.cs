@@ -30,27 +30,18 @@ public class Test : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.B))
         {
-            EventManager.Instance.Broadcast(new EventParam() { eventName = EventType.Example2 });
+            EventManager.Instance.Broadcast(new EventParam() { eventName = EventType.BackPackAddItem });
         }
 
         if (Input.GetKeyDown(KeyCode.C))
         {
-            if (UIManager.Instance.IsOpen<TestForm>())
+            if (UIManager.Instance.IsOpen<BackpackForm>())
             {
-                UIManager.Instance.Close<TestForm>();
+                UIManager.Instance.Close<BackpackForm>();
             }
             else
             {
-                UIManager.Instance.Open<TestForm>();
-            }
-
-            if (UIManager.Instance.IsOpen<ButtonForm>())
-            {
-                UIManager.Instance.Close<ButtonForm>();
-            }
-            else
-            {
-                UIManager.Instance.Open<ButtonForm>();
+                UIManager.Instance.Open<BackpackForm>();
             }
         }
     }

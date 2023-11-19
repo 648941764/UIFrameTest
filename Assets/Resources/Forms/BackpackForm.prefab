@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3848611315093863344}
   - component: {fileID: 3848611315093863345}
   - component: {fileID: 3848611315093863350}
+  - component: {fileID: -9054581485278301942}
   m_Layer: 5
   m_Name: BackpackForm
   m_TagString: Untagged
@@ -100,6 +101,22 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &-9054581485278301942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3848611315093863351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6336aeae819d9444f9fa717419c829d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  formLayer: 50
+  _parent: {fileID: 3848611316458218241}
+  _slotPrefab: {fileID: 7594568158881528349, guid: e280c42c6160f014b9f71dccf0d3a0af, type: 3}
+  _slotUIPrefab: {fileID: 182385873469216010, guid: e85831f543e57a149a38a44ca00cb3d8, type: 3}
 --- !u!1 &3848611316458218246
 GameObject:
   m_ObjectHideFlags: 0
