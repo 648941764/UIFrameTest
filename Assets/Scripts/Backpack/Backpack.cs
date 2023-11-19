@@ -7,6 +7,9 @@ public class Item
 {
     public int id, amount;
 }
+/// <summary>
+/// backpack里面所有的数据都是Test脚本里面
+/// </summary>
 public class Backpack
 {
     public const int ITEM_NUMS = 45;

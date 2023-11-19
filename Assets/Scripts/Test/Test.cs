@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Test : SingletonMono<Test>
+public class Test : SingletonMono<Test> 
 {
     public Backpack Backpack { get; private set; }
 

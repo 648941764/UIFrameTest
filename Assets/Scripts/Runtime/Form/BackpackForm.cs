@@ -9,6 +9,7 @@ public class BackpackForm : Form
     [SerializeField] private RectTransform _parent;
     [SerializeField] private RectTransform _slotPrefab;
     [SerializeField] private ItemUI _slotUIPrefab;
+    [SerializeField] private RectTransform _dragItem;
 
     private ItemUI[] itemUIs;
     private RectTransform[] itemSlots;
@@ -31,6 +32,7 @@ public class BackpackForm : Form
         base.OnRefresh();
 
         int i = -1;
+        //获取最开始Test里面的backpack数据
         Item[] items = Test.Instance.Backpack.Items;
         while (++i < Backpack.ITEM_NUMS)
         {
