@@ -35,6 +35,15 @@ public sealed class UIManager : SingletonMono<UIManager>
         return forms.ContainsKey(typeof(T));
     }
 
+    private T GetForm<T>() where T : Form
+    {
+        if (IsOpen<T>())
+        {
+            return (T)forms[typeof(T)];
+        }
+        return default(T);
+    }
+
     public void Open<T>() where T : Form
     {
         bool isCreate = !IsCreated<T>();
