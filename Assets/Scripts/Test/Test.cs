@@ -2,23 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Test : MonoBehaviour
+public class Test : SingletonMono<Test>
 {
-    private void Awake()
+    public Backpack Backpack { get; private set; }
+
+    protected override void OnAwake()
     {
+        base.OnAwake();
         DataManager.Instance.LoadDatas();
-        foreach (var item in DataManager.Instance.TestDatas.Values)
-        {
-            Debug.Log(item.id + ", " + item.pos);
-        }
     }
 
     private void Start()
     {
-    }
-
-    private void OnEnable()
-    {
+        Backpack = new Backpack();
     }
 
     private void Update()
@@ -30,7 +26,7 @@ public class Test : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.B))
         {
-            EventManager.Instance.Broadcast(new EventParam() { eventName = EventType.BackPackAddItem });
+            Backpack.AddItem(1, 5);
         }
 
         if (Input.GetKeyDown(KeyCode.C))

@@ -8,30 +8,17 @@ public class BackpackForm : Form
 {
     [SerializeField] private RectTransform _parent;
     [SerializeField] private RectTransform _slotPrefab;
-    [SerializeField] private RectTransform _slotUIPrefab;
+    [SerializeField] private ItemUI _slotUIPrefab;
 
-    private Dictionary<RectTransform, Image> itmeSprite = new Dictionary<RectTransform, Image>();
-    private Dictionary<RectTransform, Text> text = new Dictionary<RectTransform, Text>();
-
-    private RectTransform[] itemUIs;
+    private ItemUI[] itemUIs;
     private RectTransform[] itemSlots;
-    Dictionary<int, ItemData> dict_itmedatas = new Dictionary<int, ItemData>();
-    private const int ITEM_NUMS = 45;
-    
-    
-    protected override void OnRefresh()
-    {
-        base.OnRefresh();
-    }
 
-    protected override void InitAwake()
+    protected override void InitComponents()
     {
-        dict_itmedatas = DataManager.Instance.ItemDatas;
-        itemUIs = new RectTransform[ITEM_NUMS];
-        itemSlots = new RectTransform[ITEM_NUMS];
-        base.InitAwake();
+        itemUIs = new ItemUI[Backpack.ITEM_NUMS];
+        itemSlots = new RectTransform[Backpack.ITEM_NUMS];
         int index = -1;
-        while (++index < ITEM_NUMS)
+        while (++index < Backpack.ITEM_NUMS)
         {
             RectTransform slot = Instantiate(_slotPrefab, _parent);
             slot.name = _slotPrefab.name;
@@ -39,28 +26,46 @@ public class BackpackForm : Form
         }
     }
 
+    protected override void OnRefresh()
+    {
+        base.OnRefresh();
+
+        int i = -1;
+        Item[] items = Test.Instance.Backpack.Items;
+        while (++i < Backpack.ITEM_NUMS)
+        {
+            if (items[i] == null)
+            {
+                if (itemUIs[i] != null)
+                {
+                    itemUIs[i].SetActivate(false);
+                }
+                continue;
+            }
+
+            if (itemUIs[i] == null)
+            {
+                itemUIs[i] = Instantiate<ItemUI>(_slotUIPrefab, itemSlots[i]);
+            }
+            else
+            {
+                itemUIs[i].SetActivate(true);
+            }
+            itemUIs[i].RefreshItemUI(items[i]);
+        }
+    }
+
     protected override void RegisterEvents()
     {
         base.RegisterEvents();
-        AddEvent(CreatItemUI);
+        AddEvent(OnBackpackDataChangeHandle);
     }
 
-    public void CreatItemUI(EventParam eventParam)
+    public void OnBackpackDataChangeHandle(EventParam eventParam)
     {
-        if (eventParam.eventName == EventType.BackPackAddItem)
+        if (eventParam.eventName == EventType.BackpackItemChange)
         {
-            int index = -1;
-            while (++index < ITEM_NUMS)
-            {
-                if (itemUIs[index] == null)
-                {
-                    RectTransform slotui = Instantiate(_slotUIPrefab, itemSlots[index]);
-                    ItemData data = dict_itmedatas[5];
-                    slotui.GetComponent<Image>().sprite = data.sprite;
-                    itemUIs[index] = slotui;
-                    break;
-                }
-            }
+            OnRefresh();
         }
     }
 }

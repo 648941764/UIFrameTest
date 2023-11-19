@@ -14,7 +14,7 @@ public sealed class EventManager : Singleton<EventManager>
 public class EventParam
 {
     public EventType eventName;
-    public Queue<object> @params = new Queue<object>();
+    private Queue<object> @params = new Queue<object>();
 
     public int Count => @params.Count;
 

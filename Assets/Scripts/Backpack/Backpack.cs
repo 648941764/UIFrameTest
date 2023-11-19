@@ -9,14 +9,11 @@ public class Item
 }
 public class Backpack
 {
-    public const int ITEMS_NUM = 45;
-    private Item[] items;
+    public const int ITEM_NUMS = 45;
+    private Item[] items = new Item[ITEM_NUMS];
     private Dictionary<int, ItemData> itemCfg => DataManager.Instance.ItemDatas;
-    
-    private Backpack() 
-    {
-        items = new Item[ITEMS_NUM];
-    }
+
+    public Item[] Items => items;
 
     public Item GetItem(int id)
     {
@@ -31,36 +28,33 @@ public class Backpack
         return null;
     }
 
-    public void AddItem(Item item)
+    public void AddItem(int id, int amount)
     {
-        ItemData cfg = GetCfg(item.id);
+        ItemData cfg = GetCfg(id);
         if (cfg != null)
         {
             int index = -1;
-            while (++index < ITEMS_NUM)
+            while (++index < ITEM_NUMS)
             {
                 if (items[index] == null)
                 {
-                    items[index] = new Item() {id = item.id, amount = item.amount };
+                    items[index] = new Item() { id = id, amount = amount };
+                    EventManager.Instance.Broadcast(new EventParam() { eventName = EventType.BackpackItemChange });
                     break;
                 }
             }
         }
     }
 
-    public void AddItem(int id, int amount)
-    {
-        AddItem(new Item() { id = id, amount = amount });
-    }
-
     public void RemoveItem(Item item)
     {
         int i = -1;
-        while (++i < ITEMS_NUM)
+        while (++i < ITEM_NUMS)
         {
             if (items[i] == item)
             {
                 items[i] = null;
+                EventManager.Instance.Broadcast(new EventParam() { eventName = EventType.BackpackItemChange });
                 break;
             }
         }
@@ -80,5 +74,6 @@ public class Backpack
         Item item = items[target];
         items[target] = items[origin];
         items[origin] = item;
+        EventManager.Instance.Broadcast(new EventParam() { eventName = EventType.BackpackItemChange });
     }
 }
