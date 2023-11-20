@@ -3,20 +3,23 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 using static UnityEditor.Progress;
+using static UnityEngine.GraphicsBuffer;
 
 public class BackpackForm : Form
 {
     [SerializeField] private RectTransform _parent;
     [SerializeField] private RectTransform _slotPrefab;
     [SerializeField] private ItemUI _slotUIPrefab;
-    [SerializeField] private RectTransform _dragItem;
-    [SerializeField] private RectTransform _panel;
+    [SerializeField] private RectTransform _dragItemParent;
+    [SerializeField] private Image Image;
 
     private ItemUI[] itemUIs;
     private RectTransform[] itemSlots;
     public RectTransform[] ItemSlots => itemSlots;
+    public RectTransform DragItem => _dragItemParent;
+    public Image image => Image;
+    public ItemUI UIPrefab => _slotUIPrefab;
 
     protected override void InitComponents()
     {
@@ -79,16 +82,28 @@ public class BackpackForm : Form
 
     public void SetItemUIToDragLayer(ItemUI itemUI)
     {
-        itemUI.transform.SetParent(_dragItem);
+        itemUI.transform.SetParent(_dragItemParent);
     }
 
-    public int FindNearestItemSlot(Vector2 position)
+    //public int FindNearestItemSlot(Vector2 position)
+    //{
+    //    for (int i = 0; i < itemSlots.Length; i++)
+    //    {
+    //        Rect rect = itemSlots[i].rect;
+    //        rect.position = itemSlots[i].position;
+    //        if (rect.Contains(position))
+    //        {
+    //            return i;
+    //        }
+    //    }
+    //    return -1;
+    //}
+
+    public int FindNearestItemSlot(Image image)
     {
         for (int i = 0; i < itemSlots.Length; i++)
         {
-            Rect rect = itemSlots[i].rect;
-            rect.position = itemSlots[i].position;
-            if (rect.Contains(position))
+            if (RectTransformUtility.RectangleContainsScreenPoint(itemSlots[i], image.transform.position))
             {
                 return i;
             }

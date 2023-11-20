@@ -26,7 +26,7 @@ public class Test : SingletonMono<Test>
 
         if (Input.GetKeyDown(KeyCode.B))
         {
-            Backpack.AddItem(1, 5);
+            Backpack.AddItem(Random.Range(1, 5), Random.Range(1,4));
         }
 
         if (Input.GetKeyDown(KeyCode.C))

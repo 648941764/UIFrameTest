@@ -14,6 +14,7 @@ public class ItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
     private bool isDragging;
     private Vector2 mousePos;
     private int cilckIndex;
+    private Image UI;
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (!isDragging && eventData.button == PointerEventData.InputButton.Left) 
@@ -21,8 +22,14 @@ public class ItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
             mousePos = eventData.position;
             isDragging = true;
             //生成dragItem
-            UIManager.Instance.GetForm<BackpackForm>().SetItemUIToDragLayer(this);
-            //this.gameObject.SetActive(false);
+            UI = Instantiate(UIManager.Instance.GetForm<BackpackForm>().image, UIManager.Instance.GetForm<BackpackForm>().DragItem);
+            UI.gameObject.GetComponent<Image>().sprite = this.itemSpriteImg.sprite;
+            UI.gameObject.SetActive(true);
+            UI.transform.position = this.transform.position;
+            //把所点击的ItemUI给关掉
+            this.transform.GetComponent<Image>().color = new Color(255, 255, 255, 0);
+            this.transform.GetChild(0).GetComponent<Text>().text = "";
+
 
         }
     }
@@ -32,11 +39,11 @@ public class ItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         if (isDragging && eventData.button == PointerEventData.InputButton.Left)
         {
             mousePos = eventData.position;
-            this.gameObject.transform.position = mousePos;
+            UI.gameObject.transform.position = mousePos;
         }
     }
 
-    public void OnEndDrag(PointerEventData eventData)
+    public void OnEndDrag(PointerEventData eventData)//这里需要重新判断
     {
         if (isDragging && eventData.button == PointerEventData.InputButton.Left)
         {
@@ -44,16 +51,42 @@ public class ItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
             isDragging = false;
             //找到最近的一个格子，然后交换数据，并且把this的父节点重新设置到最近的格子那里
             RectTransform rectTransform = transform as RectTransform;
-            int nearest = UIManager.Instance.GetForm<BackpackForm>().FindNearestItemSlot(transform.position);
+            int nearest = UIManager.Instance.GetForm<BackpackForm>().FindNearestItemSlot(UI);
             if (nearest >= 0)
             {
-                Test.Instance.Backpack.SwapItem(itemUIIndex, nearest);
+                this.transform.GetComponent<Image>().color = new Color(255, 255, 255, 255);
+                this.transform.GetChild(0).GetComponent<Text>().text = default;
+                Item currentItem = Test.Instance.Backpack.Items[this.itemUIIndex];
+                Item nearestItem = Test.Instance.Backpack.Items[nearest];
+                if(nearestItem != null)
+                {
+                    if (currentItem.id == nearestItem.id)
+                    {
+                        nearestItem.amount += currentItem.amount;
+                        Test.Instance.Backpack.RemoveItem(currentItem);
+                    }
+                    else
+                    {
+                        Test.Instance.Backpack.SwapItem(itemUIIndex, nearest);
+                    }
+                }
+                else
+                {
+                    Test.Instance.Backpack.SwapItem(itemUIIndex, nearest);
+                }
             }
             else
             {
-                this.transform.SetParent(UIManager.Instance.GetForm<BackpackForm>().ItemSlots[itemUIIndex]);
+                this.transform.GetComponent<Image>().color = new Color(255, 255, 255, 255);
+                this.transform.GetChild(0).GetComponent<Text>().text = Test.Instance.Backpack.Items[this.itemUIIndex].amount.ToString();
             }
-            rectTransform.anchoredPosition = Vector2.zero;
+            //}
+            //else
+            //{
+            //    UI.transform.SetParent(UIManager.Instance.GetForm<BackpackForm>().ItemSlots[itemUIIndex]);
+            //}
+            //rectTransform.anchoredPosition = Vector2.zero;
+            Destroy(UI.gameObject);
         }
     }
 
