@@ -80,12 +80,6 @@ public class ItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
                 this.transform.GetComponent<Image>().color = new Color(255, 255, 255, 255);
                 this.transform.GetChild(0).GetComponent<Text>().text = Test.Instance.Backpack.Items[this.itemUIIndex].amount.ToString();
             }
-            //}
-            //else
-            //{
-            //    UI.transform.SetParent(UIManager.Instance.GetForm<BackpackForm>().ItemSlots[itemUIIndex]);
-            //}
-            //rectTransform.anchoredPosition = Vector2.zero;
             Destroy(UI.gameObject);
         }
     }

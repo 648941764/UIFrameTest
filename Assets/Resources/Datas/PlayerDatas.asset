@@ -14,5 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   datas:
   - id: 1
-    sex: 1
-    hp: 30
+    level: 0
+    exp: 0
+    hp: 100
+    maxhp: 100
+    maxExp: 30

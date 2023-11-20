@@ -5,6 +5,8 @@ using UnityEngine;
 public class Test : SingletonMono<Test> 
 {
     public Backpack Backpack { get; private set; }
+    public Player Player { get; private set; }
+
 
     protected override void OnAwake()
     {
@@ -15,6 +17,7 @@ public class Test : SingletonMono<Test>
     private void Start()
     {
         Backpack = new Backpack();
+        Player = new Player();
     }
 
     private void Update()
@@ -26,7 +29,7 @@ public class Test : SingletonMono<Test>
 
         if (Input.GetKeyDown(KeyCode.B))
         {
-            Backpack.AddItem(Random.Range(1, 5), Random.Range(1,4));
+            Backpack.AddItem(Random.Range(1, 6), Random.Range(1,4));
         }
 
         if (Input.GetKeyDown(KeyCode.C))

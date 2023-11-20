@@ -85,21 +85,32 @@ public class Backpack
     {
         ItemData cfg = GetCfg(item.id);
         //先判断是否是可以消耗的物品，如果是，那么久执行下面代码
-        //if (cfg == null)//判断是否可以消耗
-        //{
-        //   return;
-        //}
         int differ = item.amount - amount;//differ是判断是否用完
-        if (differ <= 0)//如果用完就直接删除Item
+        if (differ <= 0)
         {
             //执行使用物品后的逻辑
-
+            for (int i = 0; i < item.amount; i++)
+            {
+                //执行相应的逻辑
+            }
             RemoveItem(item);
         }
         else
         {
-            
-        }
+            for(int i = 0; i < amount; i++)
+            {
+                //执行逻辑
+                if (cfg.name == "Beer")
+                {
 
+                }
+                else if (cfg.name == "Bread")
+                {
+
+                }
+                item.amount--;  
+            }
+        }
+        EventManager.Instance.Broadcast(new EventParam() { eventName = EventType.BackpackItemChange });
     }
 }

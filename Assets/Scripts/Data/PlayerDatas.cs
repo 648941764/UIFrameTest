@@ -15,6 +15,10 @@ public class PlayerDatas : ScriptableObject
 public class PlayerData
 {
     public int id;
-    public int sex;
+    public int level;
+    public int exp;
     public int hp;
+    public int maxhp;
+    public int maxExp;
+
 }

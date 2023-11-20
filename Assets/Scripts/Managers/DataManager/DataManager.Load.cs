@@ -14,7 +14,7 @@ public partial class DataManager
         }
     }
 
-    public void LoadPlayerDatas()
+    public void LoadPlayerDatas()//获取PlayerData的数据
     {
         PlayerDatas = new Dictionary<int, PlayerData>();
         PlayerDatas config = Resources.Load<PlayerDatas>(string.Format(DATA_PATH, typeof(PlayerDatas).Name));
