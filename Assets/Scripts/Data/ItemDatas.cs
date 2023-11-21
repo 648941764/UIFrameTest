@@ -15,4 +15,5 @@ public class ItemData
     public int id;
     public Sprite sprite;
     public string name;
+    public int incraseHp;
 }

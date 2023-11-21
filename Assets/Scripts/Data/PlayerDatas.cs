@@ -14,11 +14,12 @@ public class PlayerDatas : ScriptableObject
 [Serializable]
 public class PlayerData
 {
+    public int attack;
     public int id;
     public int level;
     public int exp;
     public int hp;
     public int maxhp;
     public int maxExp;
-
+    public int defence;
 }

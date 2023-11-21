@@ -92,6 +92,7 @@ public class Backpack
             for (int i = 0; i < item.amount; i++)
             {
                 //执行相应的逻辑
+                Test.Instance.Player.hp += cfg.incraseHp;
             }
             RemoveItem(item);
         }
@@ -99,15 +100,7 @@ public class Backpack
         {
             for(int i = 0; i < amount; i++)
             {
-                //执行逻辑
-                if (cfg.name == "Beer")
-                {
-
-                }
-                else if (cfg.name == "Bread")
-                {
-
-                }
+                Test.Instance.Player.hp += cfg.incraseHp;
                 item.amount--;  
             }
         }
