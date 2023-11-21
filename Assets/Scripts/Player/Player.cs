@@ -11,8 +11,13 @@ public class Player
     public int maxExp;
 
     private Dictionary<int, PlayerData> playerCfg => DataManager.Instance.PlayerDatas;
+    private PlayerData playerData => playerCfg[1];
     public Player()
     {
-        Debug.Log(playerCfg);
+        level = playerData.level;
+        exp = playerData.exp;
+        hp = playerData.hp;
+        maxhp = playerData.maxhp;
+        maxExp = playerData.maxExp;
     }
 }
