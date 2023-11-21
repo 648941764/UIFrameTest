@@ -23,7 +23,7 @@ public abstract class Form : MonoBehaviour
     private void SetSortingLayer() => GetComponent<Canvas>().sortingOrder = (int)formLayer;
 
     protected virtual void InitComponents() { }
-    protected virtual void RegisterEvents() { }
+    protected virtual void RegisterEvents() { }//×¢²áÊÂ¼þ
     protected virtual void OnOpen() { Refresh(); }
     protected virtual void OnRefresh() { }
     protected virtual void OnClose() { }

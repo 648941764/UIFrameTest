@@ -93,6 +93,12 @@ public class Backpack
             {
                 //执行相应的逻辑
                 Test.Instance.Player.hp += cfg.incraseHp;
+                if (Test.Instance.Player.hp >= Test.Instance.Player.maxhp)
+                {
+                    Test.Instance.Player.hp = Test.Instance.Player.maxhp;
+                    Debug.Log("角色血量已经达到最大值");
+                    break;
+                }
             }
             RemoveItem(item);
         }
@@ -101,6 +107,12 @@ public class Backpack
             for(int i = 0; i < amount; i++)
             {
                 Test.Instance.Player.hp += cfg.incraseHp;
+                if (Test.Instance.Player.hp >= Test.Instance.Player.maxhp)
+                {
+                    Test.Instance.Player.hp = Test.Instance.Player.maxhp;
+                    Debug.Log("角色血量已经达到最大值");
+                    break;
+                }
                 item.amount--;  
             }
         }

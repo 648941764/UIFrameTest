@@ -32,6 +32,12 @@ public class Test : SingletonMono<Test>
             Backpack.AddItem(Random.Range(1, 6), Random.Range(1,4));
         }
 
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            Backpack.UseItem(Backpack.Items[1], 1);
+            EventManager.Instance.Broadcast(new EventParam() { eventName = EventType.BackpackItemChange });
+        }
+
         if (Input.GetKeyDown(KeyCode.C))
         {
             if (UIManager.Instance.IsOpen<BackpackForm>())
@@ -43,5 +49,6 @@ public class Test : SingletonMono<Test>
                 UIManager.Instance.Open<BackpackForm>();
             }
         }
+
     }
 }
