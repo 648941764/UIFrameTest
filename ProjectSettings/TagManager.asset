@@ -5,15 +5,16 @@ TagManager:
   serializedVersion: 2
   tags:
   - DragItem
+  - Ground
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - BackGround
   - Water
   - UI
-  - 
-  - 
+  - Middle
+  - Front
   - 
   - 
   - 
@@ -41,4 +42,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: BackGround
+    uniqueID: 3934454545
+    locked: 0
+  - name: Middle
+    uniqueID: 3705845287
+    locked: 0
+  - name: Front
+    uniqueID: 588548435
     locked: 0
