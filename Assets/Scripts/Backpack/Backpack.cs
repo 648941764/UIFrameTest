@@ -15,7 +15,7 @@ public class Backpack
 {
     public const int ITEM_NUMS = 45;
     private Item[] items = new Item[ITEM_NUMS];
-    private Dictionary<int, ItemData> itemCfg => DataManager.Instance.ItemDatas;
+    private Dictionary<int, ItemData> itemCfg => DataManager.Instance.itemDatas;
 
     public Item[] Items => items;
 

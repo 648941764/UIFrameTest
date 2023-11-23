@@ -2,7 +2,8 @@ using System.Collections.Generic;
 
 public partial class DataManager
 {
-    public Dictionary<int, TestData> TestDatas { get; private set; }
-    public Dictionary<int, PlayerData> PlayerDatas { get; private set; }
-     public Dictionary<int, ItemData> ItemDatas { get; private set; }
+    public Dictionary<int, TestData> testDatas { get; private set; }
+    public Dictionary<int, PlayerData> playerDatas { get; private set; }
+    public Dictionary<int, ItemData> itemDatas { get; private set; }
+    public Dictionary<int, EnemyData> enemyDatas { get; private set; }
 }

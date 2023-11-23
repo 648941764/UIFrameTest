@@ -12,8 +12,9 @@ public class Player
     public int maxHp;
     public int maxExp;
     public int defence;
+    public int gold;
 
-    private Dictionary<int, PlayerData> playerCfg => DataManager.Instance.PlayerDatas;
+    private Dictionary<int, PlayerData> playerCfg => DataManager.Instance.playerDatas;
     private PlayerData playerData => playerCfg[1];
     public Player()
     {
@@ -24,6 +25,7 @@ public class Player
         maxHp = playerData.maxhp;
         maxExp = playerData.maxExp;
         defence = playerData.defence;
+        gold = playerData.gold;
     }
 
     public void ChangeHp(int change)

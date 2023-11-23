@@ -22,4 +22,5 @@ public class PlayerData
     public int maxhp;
     public int maxExp;
     public int defence;
+    public int gold;
 }

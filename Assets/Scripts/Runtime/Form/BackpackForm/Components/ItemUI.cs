@@ -86,7 +86,7 @@ public class ItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
 
     public void RefreshItemUI(Item item)
     {
-        ItemData itemData = DataManager.Instance.ItemDatas[item.id];
+        ItemData itemData = DataManager.Instance.itemDatas[item.id];
         itemSpriteImg.sprite = itemData.sprite;
         itemAmountText.text = item.amount.ToString();
     }
