@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,7 @@ public class Player
     public int level;
     public int exp;
     public int hp;
-    public int maxhp;
+    public int maxHp;
     public int maxExp;
     public int defence;
 
@@ -20,8 +21,13 @@ public class Player
         level = playerData.level;
         exp = playerData.exp;
         hp = playerData.hp;
-        maxhp = playerData.maxhp;
+        maxHp = playerData.maxhp;
         maxExp = playerData.maxExp;
         defence = playerData.defence;
+    }
+
+    public void ChangeHp(int change)
+    {
+        hp = Mathf.Clamp(hp + change, 0, maxHp);
     }
 }
