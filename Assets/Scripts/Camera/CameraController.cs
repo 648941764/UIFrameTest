@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+public class CameraController : SingletonMono<CameraController>
 {
     [SerializeField] Transform _leftPoint;
     [SerializeField] Transform _rightPoint;
@@ -14,6 +14,8 @@ public class CameraController : MonoBehaviour
     Vector3 _lastPlayerPos;
     bool _canFollow;
 
+    float left, right;
+
     private void Awake()
     {
         _lastPlayerPos = transform.position;
@@ -22,40 +24,40 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (_player != null)
-        {
-            _canFollow = true;
-            Vector3 playerPos = new Vector3(_player.position.x, transform.position.y, transform.position.z);
-            if (_bottomLeft.x <= _leftPoint.position.x && _player.position.x < transform.position.x || _topRight.x >= _rightPoint.position.x && _player.position.x > transform.position.x)
-            {
-                _canFollow = false;
-            }
+        //if (_player != null)
+        //{
+        //    _canFollow = true;
+        //    Vector3 playerPos = new Vector3(_player.position.x, transform.position.y, transform.position.z);
+        //    if (_bottomLeft.x <= _leftPoint.position.x && _player.position.x < transform.position.x || _topRight.x >= _rightPoint.position.x && _player.position.x > transform.position.x)
+        //    {
+        //        _canFollow = false;
+        //    }
 
-            if (_canFollow)
-            {
-                if (transform.position != playerPos)
-                {
-                    transform.position = Vector3.Lerp(transform.position, playerPos, _smoothing * Time.deltaTime);
-                }
-            }
+        //    if (_canFollow)
+        //    {
+        //        if (transform.position != playerPos)
+        //        {
+        //            transform.position = Vector3.Lerp(transform.position, playerPos, _smoothing * Time.deltaTime);
+        //        }
+        //    }
 
-        }
+        //}
     }
 
     private void Update()
     {
-        _bottomLeft = _cam.ViewportToWorldPoint(new Vector3(0, 0, _cam.nearClipPlane));
-        _topRight = _cam.ViewportToWorldPoint(new Vector3(1, 1, _cam.nearClipPlane));
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            //Debug.Log("相机最右边的那个点：" + _topRight.x);
-            //Debug.Log("相机最左边那个点：" + _bottomLeft.x);
-            //Debug.Log("右边边界点：" + _rightPoint.position.x);
-            //Debug.Log("相机的高度：" + _cam.orthographicSize * 2f);
-            //Debug.Log("相机的宽度：" + 10 * _cam.aspect);
-            Debug.Log("相机左下角：" + _bottomLeft);
-            GetCameraFourCorn();
-        }
+        //_bottomLeft = _cam.ViewportToWorldPoint(new Vector3(0, 0, _cam.nearClipPlane));
+        //_topRight = _cam.ViewportToWorldPoint(new Vector3(1, 1, _cam.nearClipPlane));
+        //if (Input.GetKeyDown(KeyCode.B))
+        //{
+        //    //Debug.Log("相机最右边的那个点：" + _topRight.x);
+        //    //Debug.Log("相机最左边那个点：" + _bottomLeft.x);
+        //    //Debug.Log("右边边界点：" + _rightPoint.position.x);
+        //    //Debug.Log("相机的高度：" + _cam.orthographicSize * 2f);
+        //    //Debug.Log("相机的宽度：" + 10 * _cam.aspect);
+        //    Debug.Log("相机左下角：" + _bottomLeft);
+        //    GetCameraFourCorn();
+        //}
     }
 
     public void GetCameraCorns()
@@ -104,5 +106,32 @@ public class CameraController : MonoBehaviour
 
     }
 
+    public void CalculateMoveRange()
+    {
+        Vector3 left = GameObject.Find("CameraStartPoint").transform.position;
+        Vector3 right = GameObject.Find("CameraEndCamera").transform.position;
 
+        float viewportWithHalf = _cam.orthographicSize * Screen.width / Screen.height;
+
+        Vector3 pos = _cam.transform.position;
+        pos.y = 0f;
+        _cam.transform.position = pos;
+
+        this.left = left.x + viewportWithHalf;
+        this.right = right.x - viewportWithHalf;
+    }
+
+    public void Focus(Vector3 point)
+    {
+        CalculateMoveRange();
+        point.y = 0f;
+        point.x = Mathf.Clamp(point.x, left, right);
+        _cam.transform.position = point;
+    }
+
+    public void FocusTo(Vector3 diff)
+    {
+        Vector3 pos = _cam.transform.position + diff;
+        Focus(pos);
+    }
 }

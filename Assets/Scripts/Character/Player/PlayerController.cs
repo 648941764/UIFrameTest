@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 3f;
     private Rigidbody2D rb;
 
+    private Vector3 previousPosition;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -15,7 +17,10 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        Move();
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        {
+            Move();
+        }
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Jump();
@@ -26,10 +31,14 @@ public class PlayerController : MonoBehaviour
     {
         float horizontalInput = Input.GetAxis("Horizontal");
 
-        Vector2 movement = new Vector2(horizontalInput, 0f);
-        movement.Normalize(); 
+        Vector3 pos = transform.position;
+        pos.x += horizontalInput * speed * Time.deltaTime;
+        CameraController.Instance.FocusTo(pos - transform.position);
+        transform.position = pos;
 
-        rb.velocity = new Vector2(movement.x * speed, rb.velocity.y);
+        //Vector2 movement = new Vector2(horizontalInput, 0f);
+        //movement.Normalize();
+        //rb.velocity = new Vector2(movement.x * speed, rb.velocity.y);
     }
 
     private void Jump()
@@ -38,5 +47,4 @@ public class PlayerController : MonoBehaviour
         Vector2 moment = new Vector2(0f, jump);
         rb.velocity = new Vector2(rb.velocity.x, moment.y * jumpForce + jumpForce * Time.deltaTime);
     }
-
 }
