@@ -138,4 +138,16 @@ public class CameraController : SingletonMono<CameraController>
         Vector3 pos = _cam.transform.position + diff;
         Focus(pos);
     }
+
+    public void FocusPlayer()
+    {
+        float xPos = _player.position.x;
+        if (xPos < left || xPos > right)
+        {
+            return;
+        }
+        Vector3 pos = _cam.transform.position;
+        pos.x = _player.position.x;
+        _cam.transform.position = pos;
+    }
 }

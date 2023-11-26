@@ -11,6 +11,10 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 previousPos;
 
+    [SerializeField] Transform rayTrans;
+
+    [SerializeField] float rayDistance = 0.5f;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -18,7 +22,6 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        previousPos = transform.position;
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
             Move();
@@ -29,33 +32,28 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void LateUpdate()
-    {
-        float xPos = transform.position.x;
-        if (xPos < CameraController.Instance.Left || xPos > CameraController.Instance.Right)
-        {
-            return;
-        }
-
-        if (Mathf.Abs(xPos - previousPos.x) > 0.01f)
-        {
-            CameraController.Instance.FocusTo(transform.position - previousPos);
-        }
-    }
-
-
     private void Move()
     {
+        previousPos = transform.position;
         float horizontalInput = Input.GetAxis("Horizontal");
-        Vector3 pos = transform.position;
 
+        Flip(horizontalInput > 0f);
+
+        //RaycastHit2D hit = Physics2D.Raycast(rayTrans.position, horizontalInput > 0f ? Vector2.right : Vector2.left, rayDistance);
+        //if (hit.collider != null)
+        //{
+        //    return;
+        //}
+
+        Vector3 pos = transform.position;
         pos.x += horizontalInput * speed * Time.deltaTime;
         transform.position = pos;
-        
+        CameraController.Instance.FocusPlayer();
 
-        //Vector2 movement = new Vector2(horizontalInput, 0f);
-        //movement.Normalize();
-        //rb.velocity = new Vector2(movement.x * speed, rb.velocity.y);
+        //if (Mathf.Abs(xPos - previousPos.x) > 1e-5f)
+        //{
+        //    CameraController.Instance.FocusTo(transform.position - previousPos);
+        //}
     }
 
     private void Jump()
@@ -63,5 +61,15 @@ public class PlayerController : MonoBehaviour
         float jump = Input.GetAxis("Jump");
         Vector2 moment = new Vector2(0f, jump);
         rb.velocity = new Vector2(rb.velocity.x, moment.y * jumpForce + jumpForce * Time.deltaTime);
+    }
+
+    private void Flip(bool flipToRight)
+    {
+        float scaleY = flipToRight ? 1f : -1f;
+        if (transform.localScale.y != scaleY)
+        {
+            transform.localScale = new Vector3(1f, scaleY, 1f);
+            transform.rotation = Quaternion.Euler(0f, 0f, flipToRight ? 0f : 180f);
+        }
     }
 }
