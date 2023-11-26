@@ -20,12 +20,12 @@ public class EventParam
 
     public EventParam Push<T>(T param)
     {
-        @params.Enqueue(param);
+        @params.Enqueue(param);//添加元素
         return this;
     }
 
     public T Get<T>()
     {
-        return (T)@params.Dequeue();
+        return (T)@params.Dequeue();//取出元素
     }
 }

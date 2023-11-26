@@ -25,3 +25,9 @@ MonoBehaviour:
     attack: 7
     deathGold: 11
     deathExp: 20
+  - id: 3
+    hp: 15
+    defence: 2
+    attack: 5
+    deathGold: 0
+    deathExp: 10

@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 10.0f; // 角色移动速度
-    public float jumpForce = 5.0f; // 跳跃力度
-    private bool isJumping = false; // 角色是否正在跳跃
+    public float speed = 2f;
+    public float jumpForce = 3f;
     private Rigidbody2D rb;
 
     void Start()
@@ -16,25 +15,28 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal");
-
-        // 控制角色左右移动
-        rb.velocity = new Vector2(moveHorizontal * speed, rb.velocity.y);
-
-        // 如果角色在地面上并且按下跳跃键，则使角色跳跃
-        if (isJumping == false && Input.GetButtonDown("Jump"))
+        Move();
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
-            isJumping = true;
+            Jump();
         }
     }
 
-    // 如果角色接触到地面，则可以再次跳跃
-    void OnCollisionEnter2D(Collision2D collision)
+    private void Move()
     {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isJumping = false;
-        }
+        float horizontalInput = Input.GetAxis("Horizontal");
+
+        Vector2 movement = new Vector2(horizontalInput, 0f);
+        movement.Normalize(); 
+
+        rb.velocity = new Vector2(movement.x * speed, rb.velocity.y);
     }
+
+    private void Jump()
+    {
+        float jump = Input.GetAxis("Jump");
+        Vector2 moment = new Vector2(0f, jump);
+        rb.velocity = new Vector2(rb.velocity.x, moment.y * jumpForce + jumpForce * Time.deltaTime);
+    }
+
 }
