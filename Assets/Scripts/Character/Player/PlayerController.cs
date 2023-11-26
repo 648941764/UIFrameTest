@@ -8,8 +8,10 @@ public class PlayerController : MonoBehaviour
     public float speed = 2f;
     public float jumpForce = 3f;
     private Rigidbody2D rb;
+    private Vector3 _previousPosition;
+    private Vector3 _currentPlayerPos;
 
-    private Vector3 previousPos;
+    private Vector3 previousPosition;
 
     void Start()
     {
@@ -27,25 +29,25 @@ public class PlayerController : MonoBehaviour
         {
             Jump();
         }
-        float xPos = transform.position.x;
-        if (xPos < CameraController.Instance.Left || xPos > CameraController.Instance.Right)
+    }
+
+    void LateUpdate()
+    {
+        Vector3 latePlayerPos = transform.position;
+        if (_currentPlayerPos != latePlayerPos)
         {
-            return;
-        }
-        // 0.00001
-        if (Mathf.Abs(xPos - previousPos.x) > 1e-5f)
-        {
-            CameraController.Instance.FocusTo(transform.position - previousPos);
+            //Ö´ÐÐÏàÓ¦Âß¼­
         }
     }
 
     private void Move()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
-
         Vector3 pos = transform.position;
+
         pos.x += horizontalInput * speed * Time.deltaTime;
         transform.position = pos;
+        
 
         //Vector2 movement = new Vector2(horizontalInput, 0f);
         //movement.Normalize();
