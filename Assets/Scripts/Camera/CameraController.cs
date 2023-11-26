@@ -14,12 +14,16 @@ public class CameraController : SingletonMono<CameraController>
     Vector3 _lastPlayerPos;
     bool _canFollow;
 
-    float left, right;
+    private float left, right;
+
+    public float Left => left;
+    public float Right => right;
 
     private void Awake()
     {
         _lastPlayerPos = transform.position;
         _cam = GetComponent<Camera>();
+        CalculateMoveRange();
     }
 
     private void LateUpdate()
@@ -123,7 +127,6 @@ public class CameraController : SingletonMono<CameraController>
 
     public void Focus(Vector3 point)
     {
-        CalculateMoveRange();
         point.y = 0f;
         point.x = Mathf.Clamp(point.x, left, right);
         _cam.transform.position = point;

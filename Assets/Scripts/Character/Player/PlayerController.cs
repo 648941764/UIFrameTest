@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 3f;
     private Rigidbody2D rb;
 
-    private Vector3 previousPosition;
+    private Vector3 previousPos;
 
     void Start()
     {
@@ -17,6 +18,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        previousPos = transform.position;
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
             Move();
@@ -24,6 +26,16 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Jump();
+        }
+        float xPos = transform.position.x;
+        if (xPos < CameraController.Instance.Left || xPos > CameraController.Instance.Right)
+        {
+            return;
+        }
+        // 0.00001
+        if (Mathf.Abs(xPos - previousPos.x) > 1e-5f)
+        {
+            CameraController.Instance.FocusTo(transform.position - previousPos);
         }
     }
 
@@ -33,7 +45,6 @@ public class PlayerController : MonoBehaviour
 
         Vector3 pos = transform.position;
         pos.x += horizontalInput * speed * Time.deltaTime;
-        CameraController.Instance.FocusTo(pos - transform.position);
         transform.position = pos;
 
         //Vector2 movement = new Vector2(horizontalInput, 0f);
