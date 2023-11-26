@@ -78,6 +78,7 @@ public class CameraController : SingletonMono<CameraController>
         float height = _cam.orthographicSize * 2f;
         float width = height * _cam.aspect;
         Vector3 bottomLeft = new Vector3(-height / 2, width / 2, 0f);
+     
         Vector3 worldBm = Camera.main.ScreenToWorldPoint(bottomLeft);
         Debug.Log(worldBm);
     }
