@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 _previousPosition;
     private Vector3 _currentPlayerPos;
 
-    private Vector3 previousPosition;
+    private Vector3 previousPos;
 
     void Start()
     {
