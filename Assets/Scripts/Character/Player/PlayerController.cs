@@ -8,8 +8,6 @@ public class PlayerController : MonoBehaviour
     public float speed = 2f;
     public float jumpForce = 3f;
     private Rigidbody2D rb;
-    private Vector3 _previousPosition;
-    private Vector3 _currentPlayerPos;
 
     private Vector3 previousPos;
 
@@ -31,14 +29,20 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
-        Vector3 latePlayerPos = transform.position;
-        if (_currentPlayerPos != latePlayerPos)
+        float xPos = transform.position.x;
+        if (xPos < CameraController.Instance.Left || xPos > CameraController.Instance.Right)
         {
-            //Ö´ÐÐÏàÓ¦Âß¼­
+            return;
+        }
+
+        if (Mathf.Abs(xPos - previousPos.x) > 0.01f)
+        {
+            CameraController.Instance.FocusTo(transform.position - previousPos);
         }
     }
+
 
     private void Move()
     {
