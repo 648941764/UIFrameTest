@@ -48,8 +48,8 @@ public class PlayerController : MonoBehaviour
         Vector3 pos = transform.position;
         pos.x += horizontalInput * speed * Time.deltaTime;
         transform.position = pos;
+        //CameraController.Instance.FocusPlayer();
         CameraController.Instance.FocusPlayer();
-
         //if (Mathf.Abs(xPos - previousPos.x) > 1e-5f)
         //{
         //    CameraController.Instance.FocusTo(transform.position - previousPos);
