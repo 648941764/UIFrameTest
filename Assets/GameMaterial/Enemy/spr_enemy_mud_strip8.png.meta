@@ -1,7 +1,31 @@
 fileFormatVersion: 2
 guid: f7f754d09394c884abd47b64f1e35d46
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 4654752230808865768
+    second: spr_enemy_mud_strip8_0
+  - first:
+      213: 3838639233763166747
+    second: spr_enemy_mud_strip8_1
+  - first:
+      213: 1199987830920113235
+    second: spr_enemy_mud_strip8_2
+  - first:
+      213: 5604967759666848303
+    second: spr_enemy_mud_strip8_3
+  - first:
+      213: -1951151154280594261
+    second: spr_enemy_mud_strip8_4
+  - first:
+      213: -7034577283839300845
+    second: spr_enemy_mud_strip8_5
+  - first:
+      213: -5759283212567099358
+    second: spr_enemy_mud_strip8_6
+  - first:
+      213: 2784867869810967964
+    second: spr_enemy_mud_strip8_7
   externalObjects: {}
   serializedVersion: 12
   mipmaps:
@@ -32,7 +56,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -41,12 +65,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 30
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -69,7 +93,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -81,7 +105,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -90,7 +114,175 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: spr_enemy_mud_strip8_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 0
+        width: 54
+        height: 54
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ebc1d2fd70099040800000000000000
+      internalID: 4654752230808865768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spr_enemy_mud_strip8_1
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 0
+        width: 53
+        height: 47
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1ac45d8b06954530800000000000000
+      internalID: 3838639233763166747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spr_enemy_mud_strip8_2
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 0
+        width: 51
+        height: 42
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35ce8cc039637a010800000000000000
+      internalID: 1199987830920113235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spr_enemy_mud_strip8_3
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 0
+        width: 51
+        height: 47
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f22a5742b78d8cd40800000000000000
+      internalID: 5604967759666848303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spr_enemy_mud_strip8_4
+      rect:
+        serializedVersion: 2
+        x: 248
+        y: 0
+        width: 54
+        height: 55
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba40302ec5e1ce4e0800000000000000
+      internalID: -1951151154280594261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spr_enemy_mud_strip8_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 0
+        width: 53
+        height: 61
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31be9bb2b39206e90800000000000000
+      internalID: -7034577283839300845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spr_enemy_mud_strip8_6
+      rect:
+        serializedVersion: 2
+        x: 373
+        y: 0
+        width: 56
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2284112ae6ae210b0800000000000000
+      internalID: -5759283212567099358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spr_enemy_mud_strip8_7
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 0
+        width: 54
+        height: 60
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c954b7e9296d5a620800000000000000
+      internalID: 2784867869810967964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

@@ -15,7 +15,7 @@ public class EnemyData
     public int hp;
     public int defence;
     public int attack;
-    public int deathGold;
-    public int deathExp;
+    public int Gold;
+    public int Exp;
 
 }

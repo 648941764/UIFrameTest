@@ -14,5 +14,7 @@ public sealed partial class DataManager : Singleton<DataManager>
         LoadPlayerDatas();
         LoadItemDatas();
         LoadEnemyDatas();
+        LoadShopDatas();
+        LoadEquipmentDatas();
     }
 }

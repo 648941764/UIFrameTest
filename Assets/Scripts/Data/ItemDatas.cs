@@ -16,4 +16,6 @@ public class ItemData
     public Sprite sprite;
     public string name;
     public int incraseHp;
+    public float attack;
+    public float defence;
 }

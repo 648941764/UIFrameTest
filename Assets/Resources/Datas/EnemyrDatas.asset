@@ -17,17 +17,29 @@ MonoBehaviour:
     hp: 50
     defence: 5
     attack: 11
-    deathGold: 15
-    deathExp: 30
+    Gold: 50
+    Exp: 50
   - id: 2
     hp: 30
     defence: 3
     attack: 7
-    deathGold: 11
-    deathExp: 20
+    Gold: 30
+    Exp: 30
   - id: 3
     hp: 15
     defence: 2
     attack: 5
-    deathGold: 0
-    deathExp: 10
+    Gold: 0
+    Exp: 10
+  - id: 4
+    hp: 25
+    defence: 3
+    attack: 6
+    Gold: 25
+    Exp: 25
+  - id: 5
+    hp: 10
+    defence: 1
+    attack: 3
+    Gold: 0
+    Exp: 9

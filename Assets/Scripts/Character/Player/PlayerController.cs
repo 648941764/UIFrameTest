@@ -6,10 +6,10 @@ using static UnityEditor.PlayerSettings;
 public class PlayerController : MonoBehaviour
 {
     public float speed = 2f;
-    public float jumpForce = 3f;
-    private Rigidbody2D rb;
-
     private Vector3 previousPos;
+    private float _jumpHeight = 5f;
+    private Rigidbody2D rb;
+    
 
     [SerializeField] Transform rayTrans;
 
@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
         {
             Move();
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space))
         {
             Jump();
         }
@@ -56,11 +56,9 @@ public class PlayerController : MonoBehaviour
         //}
     }
 
-    private void Jump()
+    public void Jump()
     {
-        float jump = Input.GetAxis("Jump");
-        Vector2 moment = new Vector2(0f, jump);
-        rb.velocity = new Vector2(rb.velocity.x, moment.y * jumpForce + jumpForce * Time.deltaTime);
+        rb.velocity = new Vector2(rb.velocity.x, _jumpHeight);
     }
 
     private void Flip(bool flipToRight)
