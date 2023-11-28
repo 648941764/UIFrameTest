@@ -14,14 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   datas:
   - id: 0
+    price: 0
     item:
       id: 0
       sprite: {fileID: 0}
       name: 
       incraseHp: 0
-  - id: 0
+      attack: 0
+      defence: 0
+  - id: 1
+    price: 0
     item:
       id: 0
       sprite: {fileID: 0}
       name: 
       incraseHp: 0
+      attack: 0
+      defence: 0

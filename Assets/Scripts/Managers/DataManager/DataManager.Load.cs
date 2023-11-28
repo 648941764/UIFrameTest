@@ -60,7 +60,7 @@ public partial class DataManager
     public void LoadEquipmentDatas()
     {
         equipmentDatas = new Dictionary<int, EquipmentData>();
-        EquipmentDatas config = Resources.Load<EquipmentDatas>(string.Format(DATA_PATH, typeof(EquipmentData).Name));
+        EquipmentDatas config = Resources.Load<EquipmentDatas>(string.Format(DATA_PATH, typeof(EquipmentDatas).Name));
         int i = -1;
         while (++i < config.datas.Count)
         {
