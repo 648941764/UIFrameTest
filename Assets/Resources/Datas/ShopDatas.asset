@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: ShopDatas
   m_EditorClassIdentifier: 
   datas:
-  - id: 0
-    price: 0
+  - id: 5001
+    price: 362
     item:
       id: 0
       sprite: {fileID: 0}
@@ -22,8 +22,8 @@ MonoBehaviour:
       incraseHp: 0
       attack: 0
       defence: 0
-  - id: 1
-    price: 0
+  - id: 5002
+    price: 356
     item:
       id: 0
       sprite: {fileID: 0}

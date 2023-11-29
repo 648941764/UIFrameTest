@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   datas:
   - attack: 15
-    id: 1
+    id: 4001
     level: 0
     exp: 0
     hp: 30
     maxhp: 100
     maxExp: 30
     defence: 5
+    gold: 0

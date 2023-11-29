@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     private Vector3 previousPos;
     private float _jumpHeight = 5f;
     private Rigidbody2D rb;
+    private ICharacterState currentState;
+    private IdleState idleState =new IdleState();
     
 
     [SerializeField] Transform rayTrans;
@@ -18,6 +20,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        currentState = idleState;
+        idleState.OnEnter();
     }
 
     void Update()
@@ -70,4 +74,6 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.Euler(0f, 0f, flipToRight ? 0f : 180f);
         }
     }
+
+   
 }
