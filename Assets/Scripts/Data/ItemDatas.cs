@@ -13,6 +13,7 @@ public class ItemDatas : ScriptableObject
 public class ItemData
 {
     public int id;
+    public ItemEnum itemType;
     public Sprite sprite;
     public string name;
     public int incraseHp;

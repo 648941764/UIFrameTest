@@ -15,7 +15,7 @@ public class Player
     public int gold;
 
     private Dictionary<int, PlayerData> playerCfg => DataManager.Instance.playerDatas;
-    private PlayerData playerData => playerCfg[1];
+    private PlayerData playerData => playerCfg[4001];
     public Player()
     {
         attack = playerData.attack;

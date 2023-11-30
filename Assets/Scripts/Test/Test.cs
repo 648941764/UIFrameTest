@@ -8,6 +8,7 @@ public class Test : SingletonMono<Test>
     public Player Player { get; private set; }
 
 
+
     protected override void OnAwake()
     {
         base.OnAwake();
@@ -29,7 +30,7 @@ public class Test : SingletonMono<Test>
 
         if (Input.GetKeyDown(KeyCode.B))
         {
-            Backpack.AddItem(Random.Range(1, 6), Random.Range(1,4));
+            Backpack.AddItem(Random.Range(3001, 3006), Random.Range(1,4));
         }
 
         if (Input.GetKeyDown(KeyCode.D))
