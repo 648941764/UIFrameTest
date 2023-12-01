@@ -17,23 +17,29 @@ MonoBehaviour:
     attack: 3
     defence: 0
     sprite: {fileID: 21300000, guid: b95e465f0acfd0741841d9d8c64ec5c8, type: 3}
+    itemType: 2
   - id: 2002
     attack: 5
     defence: 0
     sprite: {fileID: 21300000, guid: 6139cd37aafba5840b25f4e6af127acc, type: 3}
+    itemType: 2
   - id: 2003
     attack: 6
     defence: 0
     sprite: {fileID: 21300000, guid: f3b5c0ca3735a1c4abf65103006329d6, type: 3}
+    itemType: 2
   - id: 2004
     attack: 0
     defence: 2
     sprite: {fileID: 21300000, guid: 01e4d96867337084b98b17b0f7e556ac, type: 3}
+    itemType: 2
   - id: 2005
     attack: 0
     defence: 3
     sprite: {fileID: 21300000, guid: ea5ad6103ae445846bac3ab1a8a6988a, type: 3}
+    itemType: 2
   - id: 2006
     attack: 0
     defence: 4
     sprite: {fileID: 21300000, guid: 4e860cf348c82f74db1b26648d62f0c5, type: 3}
+    itemType: 2

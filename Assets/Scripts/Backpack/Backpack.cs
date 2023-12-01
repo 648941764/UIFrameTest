@@ -64,6 +64,8 @@ public class Backpack
         }
     }
 
+
+
     public ItemData GetCfg(int id)
     {
         if (itemCfg.TryGetValue(id, out ItemData cfg))

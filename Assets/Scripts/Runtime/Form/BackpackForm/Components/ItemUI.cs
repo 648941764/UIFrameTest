@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class ItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
     [SerializeField] private Image itemSpriteImg;
     [SerializeField] private Text  itemAmountText;
@@ -15,6 +15,7 @@ public class ItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
     private Vector2 mousePos;
     private int cilckIndex;
     private Image UI;
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (!isDragging && eventData.button == PointerEventData.InputButton.Left) 
@@ -84,6 +85,12 @@ public class ItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         }
     }
 
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        Item item = Test.Instance.Backpack.Items[this.itemUIIndex];
+        Debug.Log($"你现在选中的是{item.id}");
+    }
+
     public void RefreshItemUI(Item item)
     {
         ItemData itemData = DataManager.Instance.itemDatas[item.id];
@@ -95,4 +102,6 @@ public class ItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
     {
         itemUIIndex = index;
     }
+
+   
 }

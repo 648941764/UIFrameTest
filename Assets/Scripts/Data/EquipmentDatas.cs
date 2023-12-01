@@ -15,4 +15,5 @@ public class EquipmentData
     public int attack;
     public int defence;
     public Sprite sprite;
+    public ItemEnum itemType;
 }

@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class CharacterBase : MonoBehaviour
 {
-    public int attack;
-    public int hp;
-    public int defence;
-    public int Exp;
-    public float speed;
+    protected int attack;
+    protected int hp;
+    protected int defence;
+    protected int Exp;
+    protected float speed;
     
 
     public virtual void Move() { }

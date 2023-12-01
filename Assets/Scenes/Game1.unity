@@ -8152,6 +8152,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &726480669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 726480666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8bffb602019c61498f2ed3ca8ed1cf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attack: 0
+  hp: 0
+  defence: 0
+  Exp: 0
+  speed: 0
 --- !u!1 &750628847
 GameObject:
   m_ObjectHideFlags: 0
@@ -9495,6 +9512,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5018562991170827680, guid: e64940cb33760c34fbcace3e3accdf85, type: 3}
+      propertyPath: m_GravityScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5018562991170827683, guid: e64940cb33760c34fbcace3e3accdf85, type: 3}
       propertyPath: m_RootOrder
       value: 3
