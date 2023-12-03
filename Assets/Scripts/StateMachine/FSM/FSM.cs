@@ -4,11 +4,9 @@ using System;
 public sealed class FSM
 {
     private readonly Dictionary<Enum, IFSMState> _states = new Dictionary<Enum, IFSMState>();
-
+    private readonly FSMParameter _parameter;
     private Enum _currentStateName;
     private IFSMState _currentState;
-
-    private readonly FSMParameter _parameter;
 
     private bool Valide => _states.Count > 0;
 
