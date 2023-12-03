@@ -5,21 +5,32 @@ using UnityEngine;
 
 public class Player : Character
 {
+    private void Start()
+    {
+        InitFSM();
+    }
+
     private void Update()
     {
+        UpdateState();
+    }
+
+    private void UpdateState()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            FSM.Switch(CharacterState.Attack);
+        }
+
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
             FSM.Switch(CharacterState.Run);
-        }
-        else
-        {
-            FSM.Switch(CharacterState.Idle);
         }
     }
 
     public override void InitFSM()
     {
-        CharacterParameter param = new CharacterParameter()
+        fsmParameter = new CharacterFSMParameter()
         {
             animator = GetComponent<Animator>(),
             character = this,
@@ -33,17 +44,25 @@ public class Player : Character
                 [CharacterState.Fall] = "fall",
                 [CharacterState.Death] = "death",
             },
-            animStates = new Dictionary<CharacterState, AnimationTime>()
+            animStates = new Dictionary<CharacterState, AnimTime>()
             {
-                [CharacterState.Attack] = new AnimationTime(250, new int[] { 40, 170 }),
+                [CharacterState.Attack] = new AnimTime(433, new int[] { 40, 170 }, new Action[]
+                {
+                    () => Debug.Log("AAAAAA 40"),
+                    () => Debug.Log("AAAAAA 170"),
+                }),
             }
         };
-        fsm = new FSM(param);
+
+        fsm = new FSM(fsmParameter);
         IReadOnlyDictionary<CharacterState, IFSMState> playerStates = new Dictionary<CharacterState, IFSMState>()
         {
             [CharacterState.Idle] = new PlayerIdle(),
             [CharacterState.Run] = new PlayerRun(),
+            [CharacterState.Attack] = new PlayerAttack(),
         };
         fsm.Add(playerStates);
+        CharacterManager.Instance.fsmExecute += fsm.OnExecute;
+        fsm.OnStart();
     }
 }

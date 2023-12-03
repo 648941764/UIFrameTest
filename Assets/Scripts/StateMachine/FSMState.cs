@@ -13,4 +13,5 @@ public abstract class FSMParameter
 {
     public Enum defaultStateName;
     public bool running;
+    public bool stateExchangable = true;
 }

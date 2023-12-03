@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System;
+using UnityEngine;
 
 public sealed class FSM
 {
@@ -17,7 +18,12 @@ public sealed class FSM
 
     public void Switch(Enum stateName)
     {
-        if (!_parameter.running)
+        if (!_parameter.running || !_parameter.stateExchangable)
+        {
+            return;
+        }
+
+        if (_currentStateName == stateName)
         {
             return;
         }
@@ -27,16 +33,12 @@ public sealed class FSM
             throw new Exception($"switch fsm state {stateName} is not exist");
         }
 
-        if (_currentStateName == stateName)
-        {
-            return;
-        }
-
         _currentState.OnExit();
+        Debug.Log($"FSM state change: <color=#26A0CB>{_currentStateName}</color> -> <color=#CF1919>{stateName}</color>");
+        _currentStateName = stateName;
         IFSMState state = _states[stateName];
         state.OnEnter();
         _currentState = state;
-        _currentStateName = stateName;
     }
 
     public void Add<T>(IReadOnlyDictionary<T, IFSMState> states) where T : Enum
@@ -98,7 +100,8 @@ public sealed class FSM
         _parameter.running = true;
         if (_currentState == null)
         {
-            Switch(_parameter.defaultStateName);
+            _currentStateName = _parameter.defaultStateName;
+            _currentState = _states[_currentStateName];
             return;
         }
         _currentState.OnEnter();
@@ -136,8 +139,8 @@ public sealed class FSM
         return _parameter as T;
     }
 
-    public T GetState<T>() where T : Enum
+    public T GetStateName<T>() where T : Enum
     {
-        return (T)_currentState;
+        return (T)_currentStateName;
     }
 }

@@ -19,10 +19,14 @@ public class CameraController : SingletonMono<CameraController>
     public float Left => left;
     public float Right => right;
 
-    private void Awake()
+    protected override void OnAwake()
     {
         _lastPlayerPos = transform.position;
         _cam = GetComponent<Camera>();
+        if (_cam == null)
+        {
+            _cam = Camera.main;
+        }
         CalculateMoveRange();
     }
 

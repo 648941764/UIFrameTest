@@ -18,14 +18,18 @@ public abstract class Character : MonoBehaviour
 {
     [SerializeField] private CharacterInfo characterInfo;
 
+    protected CharacterFSMParameter fsmParameter;
+
     protected FSM fsm;
 
     private int _uid;
 
     private static CharacterManager Manager => CharacterManager.Instance;
     public CharacterInfo CharacterInfo => characterInfo;
+
     public int UID => _uid;
     public FSM FSM => fsm;
+    public CharacterFSMParameter FSMParameter => fsmParameter;
 
     public Vector3 Position
     {
