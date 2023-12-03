@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
@@ -83,40 +84,64 @@ public class Backpack
         EventManager.Instance.Broadcast(new EventParam() { eventName = EventType.BackpackItemChange });
     }
 
+    //public void UseItem(Item item, int amount)
+    //{
+    //    ItemData cfg = GetCfg(item.id);
+    //    //先判断是否是可以消耗的物品，如果是，那么久执行下面代码
+    //    int differ = item.amount - amount;//differ是判断是否用完
+    //    if (differ <= 0)
+    //    {
+    //        //执行使用物品后的逻辑
+    //        for (int i = 0; i < item.amount; i++)
+    //        {
+    //            //执行相应的逻辑
+    //            Test.Instance.Player.hp += cfg.incraseHp;
+    //            if (Test.Instance.Player.hp >= Test.Instance.Player.maxHp)
+    //            {
+    //                Test.Instance.Player.hp = Test.Instance.Player.maxHp;
+    //                Debug.Log("角色血量已经达到最大值");
+    //                break;
+    //            }
+    //        }
+    //        RemoveItem(item);
+    //    }
+    //    else
+    //    {
+    //        for(int i = 0; i < amount; i++)
+    //        {
+    //            Test.Instance.Player.hp += cfg.incraseHp;
+    //            if (Test.Instance.Player.hp >= Test.Instance.Player.maxHp)
+    //            {
+    //                Test.Instance.Player.hp = Test.Instance.Player.maxHp;
+    //                Debug.Log("角色血量已经达到最大值");
+    //                break;
+    //            }
+    //            item.amount--;  
+    //        }
+    //    }
+    //    EventManager.Instance.Broadcast(new EventParam() { eventName = EventType.BackpackItemChange });
+    //}
+
     public void UseItem(Item item, int amount)
     {
-        ItemData cfg = GetCfg(item.id);
-        //先判断是否是可以消耗的物品，如果是，那么久执行下面代码
-        int differ = item.amount - amount;//differ是判断是否用完
-        if (differ <= 0)
+        ItemData itemcfg = GetCfg(item.id);
+        int useAmount = Mathf.Min(item.amount, amount);
+        int actualIncreaseHp = Mathf.Min(useAmount * itemcfg.incraseHp, Test.Instance.Player.maxHp - Test.Instance.Player.hp);
+        Test.Instance.Player.hp += actualIncreaseHp;
+
+        if (Test.Instance.Player.hp >= Test.Instance.Player.maxHp)
         {
-            //执行使用物品后的逻辑
-            for (int i = 0; i < item.amount; i++)
-            {
-                //执行相应的逻辑
-                Test.Instance.Player.hp += cfg.incraseHp;
-                if (Test.Instance.Player.hp >= Test.Instance.Player.maxHp)
-                {
-                    Test.Instance.Player.hp = Test.Instance.Player.maxHp;
-                    Debug.Log("角色血量已经达到最大值");
-                    break;
-                }
-            }
+            Test.Instance.Player.maxHp = Test.Instance.Player.hp;
+            Debug.Log("角色的血量已满");
+        }
+
+        if (item.amount <= useAmount)
+        {
             RemoveItem(item);
         }
         else
         {
-            for(int i = 0; i < amount; i++)
-            {
-                Test.Instance.Player.hp += cfg.incraseHp;
-                if (Test.Instance.Player.hp >= Test.Instance.Player.maxHp)
-                {
-                    Test.Instance.Player.hp = Test.Instance.Player.maxHp;
-                    Debug.Log("角色血量已经达到最大值");
-                    break;
-                }
-                item.amount--;  
-            }
+            item.amount -= useAmount;
         }
         EventManager.Instance.Broadcast(new EventParam() { eventName = EventType.BackpackItemChange });
     }

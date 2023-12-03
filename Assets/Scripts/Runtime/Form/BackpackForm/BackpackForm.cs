@@ -2,19 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static UnityEditor.Progress;
 using static UnityEngine.GraphicsBuffer;
 
-public class BackpackForm : Form
+public class BackpackForm : Form, IPointerClickHandler
 {
     [SerializeField] private RectTransform _parent;
     [SerializeField] private RectTransform _slotPrefab;
     [SerializeField] private ItemUI _slotUIPrefab;
     [SerializeField] private RectTransform _dragItemParent;
     [SerializeField] private Image Image;
+    [SerializeField] private Button DelBtn;
 
     private ItemUI[] itemUIs;
+    private Item ChooseItem;
     private RectTransform[] itemSlots;
     public RectTransform[] ItemSlots => itemSlots;
     public RectTransform DragItem => _dragItemParent;
@@ -70,6 +73,7 @@ public class BackpackForm : Form
     {
         base.RegisterEvents();
         AddEvent(OnBackpackDataChangeHandle);
+        DelBtn.onClick.AddListener(() => Test.Instance.Backpack.RemoveItem(ChooseItem));
     }
 
     public void OnBackpackDataChangeHandle(EventParam eventParam)
@@ -78,11 +82,6 @@ public class BackpackForm : Form
         {
             OnRefresh();
         }
-    }
-
-    public void SetItemUIToDragLayer(ItemUI itemUI)
-    {
-        itemUI.transform.SetParent(_dragItemParent);
     }
 
     //public int FindNearestItemSlot(Vector2 position)
@@ -111,4 +110,25 @@ public class BackpackForm : Form
         return -1;
     }
 
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        Vector2 mouesPos = eventData.position;
+        for (int i = 0; i < itemSlots.Length; i++)
+        {
+            if (RectTransformUtility.RectangleContainsScreenPoint(itemSlots[i], mouesPos))
+            {
+               Item currentItem = Test.Instance.Backpack.Items[i];
+
+                if (currentItem == ChooseItem)
+                {
+                    ChooseItem = null;
+                }
+                else if(currentItem != null)
+                {
+                    ChooseItem = currentItem;
+                }
+                break;
+            }
+        }
+    }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
+public class ItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     [SerializeField] private Image itemSpriteImg;
     [SerializeField] private Text  itemAmountText;
@@ -85,11 +85,6 @@ public class ItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         }
     }
 
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        Item item = Test.Instance.Backpack.Items[this.itemUIIndex];
-        Debug.Log($"你现在选中的是{item.id}");
-    }
 
     public void RefreshItemUI(Item item)
     {
