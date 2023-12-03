@@ -51,7 +51,6 @@ public class ItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
             mousePos = eventData.position;
             isDragging = false;
             //找到最近的一个格子，然后交换数据，并且把this的父节点重新设置到最近的格子那里
-            RectTransform rectTransform = transform as RectTransform;
             int nearest = UIManager.Instance.GetForm<BackpackForm>().FindNearestItemSlot(UI);
             if (nearest >= 0)
             {
@@ -59,12 +58,13 @@ public class ItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
                 this.transform.GetChild(0).GetComponent<Text>().text = default;
                 Item currentItem = Test.Instance.Backpack.Items[this.itemUIIndex];
                 Item nearestItem = Test.Instance.Backpack.Items[nearest];
-                if(nearestItem != null)
+                if(nearestItem != null && nearest != itemUIIndex)
                 {
                     if (currentItem.id == nearestItem.id)
                     {
                         nearestItem.amount += currentItem.amount;
                         Test.Instance.Backpack.RemoveItem(currentItem);
+                        UIManager.Instance.GetForm<BackpackForm>().RefreshSlotImage();
                     }
                     else
                     {

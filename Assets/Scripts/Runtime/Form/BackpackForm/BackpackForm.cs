@@ -73,7 +73,13 @@ public class BackpackForm : Form, IPointerClickHandler
     {
         base.RegisterEvents();
         AddEvent(OnBackpackDataChangeHandle);
-        DelBtn.onClick.AddListener(() => Test.Instance.Backpack.RemoveItem(ChooseItem));
+        DelBtn.onClick.AddListener(DelItem);
+    }
+
+    public void DelItem()
+    {
+        Test.Instance.Backpack.RemoveItem(ChooseItem);
+        RefreshSlotImage();
     }
 
     public void OnBackpackDataChangeHandle(EventParam eventParam)
@@ -83,20 +89,6 @@ public class BackpackForm : Form, IPointerClickHandler
             OnRefresh();
         }
     }
-
-    //public int FindNearestItemSlot(Vector2 position)
-    //{
-    //    for (int i = 0; i < itemSlots.Length; i++)
-    //    {
-    //        Rect rect = itemSlots[i].rect;
-    //        rect.position = itemSlots[i].position;
-    //        if (rect.Contains(position))
-    //        {
-    //            return i;
-    //        }
-    //    }
-    //    return -1;
-    //}
 
     public int FindNearestItemSlot(Image image)
     {
@@ -110,8 +102,19 @@ public class BackpackForm : Form, IPointerClickHandler
         return -1;
     }
 
+    public void RefreshSlotImage()
+    {
+        int k = -1;
+        while (++k < Backpack.ITEM_NUMS)
+        {
+            itemSlots[k].GetComponent<Image>().color = Color.white;
+        }
+        ChooseItem = null;
+    }
+
     public void OnPointerClick(PointerEventData eventData)
     {
+        Test.Instance.Backpack.SortItme();//≈≈–Ú
         Vector2 mouesPos = eventData.position;
         for (int i = 0; i < itemSlots.Length; i++)
         {
@@ -122,10 +125,13 @@ public class BackpackForm : Form, IPointerClickHandler
                 if (currentItem == ChooseItem)
                 {
                     ChooseItem = null;
+                    itemSlots[i].GetComponent<Image>().color = Color.white;
                 }
                 else if(currentItem != null)
                 {
+                    RefreshSlotImage();
                     ChooseItem = currentItem;
+                    itemSlots[i].GetComponent<Image>().color = Color.gray;
                 }
                 break;
             }

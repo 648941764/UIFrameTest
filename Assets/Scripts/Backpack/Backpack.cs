@@ -65,8 +65,6 @@ public class Backpack
         }
     }
 
-
-
     public ItemData GetCfg(int id)
     {
         if (itemCfg.TryGetValue(id, out ItemData cfg))
@@ -81,6 +79,7 @@ public class Backpack
         Item item = items[target];
         items[target] = items[origin];
         items[origin] = item;
+        UIManager.Instance.GetForm<BackpackForm>().RefreshSlotImage();
         EventManager.Instance.Broadcast(new EventParam() { eventName = EventType.BackpackItemChange });
     }
 
@@ -144,5 +143,24 @@ public class Backpack
             item.amount -= useAmount;
         }
         EventManager.Instance.Broadcast(new EventParam() { eventName = EventType.BackpackItemChange });
+    }
+
+    public void SortItme()
+    {
+        int i = -1;
+        while (++i < ITEM_NUMS) 
+        {
+            if (items[i] == null)
+            {
+                int k = i;
+                while (++k < ITEM_NUMS)
+                {
+                    if (items[k] != null)
+                    {
+                        SwapItem(i, k);
+                    }
+                }
+            }
+        }
     }
 }
