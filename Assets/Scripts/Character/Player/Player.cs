@@ -3,33 +3,48 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player
+public class Player : Character
 {
-    public int attack;
-    public int level;
-    public int exp;
-    public int hp;
-    public int maxHp;
-    public int maxExp;
-    public int defence;
-    public int gold;
-
-    private Dictionary<int, PlayerData> playerCfg => DataManager.Instance.playerDatas;
-    private PlayerData playerData => playerCfg[4001];
-    public Player()
+    private void Update()
     {
-        attack = playerData.attack;
-        level = playerData.level;
-        exp = playerData.exp;
-        hp = playerData.hp;
-        maxHp = playerData.maxhp;
-        maxExp = playerData.maxExp;
-        defence = playerData.defence;
-        gold = playerData.gold;
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        {
+            FSM.Switch(CharacterState.Run);
+        }
+        else
+        {
+            FSM.Switch(CharacterState.Idle);
+        }
     }
 
-    public void ChangeHp(int change)
+    public override void InitFSM()
     {
-        hp = Mathf.Clamp(hp + change, 0, maxHp);
+        CharacterParameter param = new CharacterParameter()
+        {
+            animator = GetComponent<Animator>(),
+            character = this,
+            defaultStateName = CharacterState.Idle,
+            stateClips = new Dictionary<CharacterState, string>() 
+            {
+                [CharacterState.Idle] = "idle",
+                [CharacterState.Idle] = "run",
+                [CharacterState.Idle] = "attack",
+                [CharacterState.Idle] = "hurt",
+                [CharacterState.Idle] = "jump",
+                [CharacterState.Idle] = "fall",
+                [CharacterState.Idle] = "death",
+            },
+            animStates = new Dictionary<CharacterState, AnimationTime>()
+            {
+                [CharacterState.Attack] = new AnimationTime(250, new int[] { 40, 170 }),
+            }
+        };
+        fsm = new FSM(param);
+        IReadOnlyDictionary<CharacterState, IFSMState> playerStates = new Dictionary<CharacterState, IFSMState>()
+        {
+            [CharacterState.Idle] = new PlayerIdle(),
+            [CharacterState.Run] = new PlayerRun(),
+        };
+        fsm.Add(playerStates);
     }
 }

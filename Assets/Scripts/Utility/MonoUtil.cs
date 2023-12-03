@@ -12,9 +12,6 @@ public static class MonoUtil
 
     public static void SetActivate(this Component component, bool activeSelf)
     {
-        if (component.gameObject.activeSelf != activeSelf)
-        {
-            component.gameObject.SetActive(activeSelf);
-        }
+        component.gameObject.SetActivate(activeSelf);
     }
 }

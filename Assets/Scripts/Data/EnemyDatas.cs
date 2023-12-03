@@ -17,5 +17,4 @@ public class EnemyData
     public int attack;
     public int Gold;
     public int Exp;
-
 }

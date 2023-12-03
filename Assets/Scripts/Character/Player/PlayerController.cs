@@ -9,8 +9,8 @@ public class PlayerController : MonoBehaviour
     private Vector3 previousPos;
     private float _jumpHeight = 5f;
     private Rigidbody2D rb;
-    private ICharacterState currentState;
-    private IdleState idleState =new IdleState();
+    //private ICharacterState currentState;
+    private PlayerIdle idleState =new PlayerIdle();
     
 
     [SerializeField] Transform rayTrans;
@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        currentState = idleState;
+        //currentState = idleState;
         idleState.OnEnter();
     }
 

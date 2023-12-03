@@ -123,26 +123,26 @@ public class Backpack
 
     public void UseItem(Item item, int amount)
     {
-        ItemData itemcfg = GetCfg(item.id);
-        int useAmount = Mathf.Min(item.amount, amount);
-        int actualIncreaseHp = Mathf.Min(useAmount * itemcfg.incraseHp, Test.Instance.Player.maxHp - Test.Instance.Player.hp);
-        Test.Instance.Player.hp += actualIncreaseHp;
+        //ItemData itemcfg = GetCfg(item.id);
+        //int useAmount = Mathf.Min(item.amount, amount);
+        //int actualIncreaseHp = Mathf.Min(useAmount * itemcfg.incraseHp, Test.Instance.Player.maxHp - Test.Instance.Player.hp);
+        //Test.Instance.Player.hp += actualIncreaseHp;
 
-        if (Test.Instance.Player.hp >= Test.Instance.Player.maxHp)
-        {
-            Test.Instance.Player.maxHp = Test.Instance.Player.hp;
-            Debug.Log("角色的血量已满");
-        }
+        //if (Test.Instance.Player.hp >= Test.Instance.Player.maxHp)
+        //{
+        //    Test.Instance.Player.maxHp = Test.Instance.Player.hp;
+        //    Debug.Log("角色的血量已满");
+        //}
 
-        if (item.amount <= useAmount)
-        {
-            RemoveItem(item);
-        }
-        else
-        {
-            item.amount -= useAmount;
-        }
-        EventManager.Instance.Broadcast(new EventParam() { eventName = EventType.BackpackItemChange });
+        //if (item.amount <= useAmount)
+        //{
+        //    RemoveItem(item);
+        //}
+        //else
+        //{
+        //    item.amount -= useAmount;
+        //}
+        //EventManager.Instance.Broadcast(new EventParam() { eventName = EventType.BackpackItemChange });
     }
 
     public void SortItme()

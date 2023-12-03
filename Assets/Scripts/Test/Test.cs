@@ -18,7 +18,7 @@ public class Test : SingletonMono<Test>
     private void Start()
     {
         Backpack = new Backpack();
-        Player = new Player();
+        //Player = new Player();
     }
 
     private void Update()
