@@ -1,6 +1,6 @@
 using System;
 
-public abstract class CharacterFSMState : IFSMState
+public abstract class CharacterFSMState : IFSMState//具体的动画
 {
     protected CharacterParameter param;
     protected FSM fsm;

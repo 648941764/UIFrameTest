@@ -27,12 +27,11 @@ public class Player : Character
             stateClips = new Dictionary<CharacterState, string>() 
             {
                 [CharacterState.Idle] = "idle",
-                [CharacterState.Idle] = "run",
-                [CharacterState.Idle] = "attack",
-                [CharacterState.Idle] = "hurt",
-                [CharacterState.Idle] = "jump",
-                [CharacterState.Idle] = "fall",
-                [CharacterState.Idle] = "death",
+                [CharacterState.Run] = "run",
+                [CharacterState.Attack] = "attack",
+                [CharacterState.Jump] = "jump",
+                [CharacterState.Fall] = "fall",
+                [CharacterState.Death] = "death",
             },
             animStates = new Dictionary<CharacterState, AnimationTime>()
             {

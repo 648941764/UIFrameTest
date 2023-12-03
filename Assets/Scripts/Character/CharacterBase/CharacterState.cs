@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum CharacterState
 {
-    Idle, Run, Jump, Fall, Attack, Hurt, Death
+    Idle, Run, Jump, Fall, Attack, Death
 }
 
 public class AnimationTime
@@ -16,7 +16,7 @@ public class AnimationTime
     public Action[] actions;
     public int keyCount;
 
-    public AnimationTime(int time, int[] keys = default, Action[] actions = default)
+    public AnimationTime(int time, int[] keys = default, Action[] actions = default)//添加事件的时间，次数，
     {
         this.time = time;
         if (keys != default)
