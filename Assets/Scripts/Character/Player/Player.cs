@@ -60,7 +60,8 @@ public class Player : Character
                 [CharacterState.Jump] = new AnimTime(433, new int[] { 433 }, new Action[]
                 {
                     () => Debug.Log("ÏÂÂä"),
-                }) 
+                }),
+                [CharacterState.Fall] = new AnimTime(433, new int[] {432})
             }
         };
 
