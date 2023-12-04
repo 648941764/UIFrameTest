@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static PlayerJump;
 
 public class Player : Character
 {
@@ -25,6 +26,11 @@ public class Player : Character
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
             FSM.Switch(CharacterState.Run);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            FSM.Switch(CharacterState.Jump);
         }
     }
 
@@ -51,6 +57,10 @@ public class Player : Character
                     () => Debug.Log("AAAAAA 40"),
                     () => Debug.Log("AAAAAA 170"),
                 }),
+                [CharacterState.Jump] = new AnimTime(433, new int[] {433}, new Action[]
+                {
+                    () => Debug.Log("ÏÂÂä"),
+                }) 
             }
         };
 
@@ -60,6 +70,8 @@ public class Player : Character
             [CharacterState.Idle] = new PlayerIdle(),
             [CharacterState.Run] = new PlayerRun(),
             [CharacterState.Attack] = new PlayerAttack(),
+            [CharacterState.Jump] = new PlayerJump(),
+            [CharacterState.Fall] = new PlayerFall(),
         };
         fsm.Add(playerStates);
         CharacterManager.Instance.fsmExecute += fsm.OnExecute;

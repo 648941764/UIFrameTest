@@ -32,4 +32,5 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
     {
         fsmExecute?.Invoke();
     }
+
 }

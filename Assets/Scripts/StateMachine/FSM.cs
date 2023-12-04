@@ -34,7 +34,7 @@ public sealed class FSM
         }
 
         _currentState.OnExit();
-        Debug.Log($"FSM state change: <color=#26A0CB>{_currentStateName}</color> -> <color=#CF1919>{stateName}</color>");
+        //Debug.Log($"FSM state change: <color=#26A0CB>{_currentStateName}</color> -> <color=#CF1919>{stateName}</color>");
         _currentStateName = stateName;
         IFSMState state = _states[stateName];
         state.OnEnter();
