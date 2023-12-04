@@ -30,6 +30,12 @@ public sealed partial class Timer
         GameManager.Instance.TimeUpdateHandle += Tick;
     }
 
+    public void BreakOff()
+    {
+        ticking = false;
+        GameManager.Instance.TimeUpdateHandle -= Tick;
+    }
+
     public void Tick(float dt)
     {
         if (!ticking) { return; }
@@ -101,6 +107,7 @@ public sealed partial class Timer
 public partial class Timer
 {
     private static TimerPool pool = new TimerPool();
+
     public static void Tick(
         int time,
         Action<int> onTick = default, Action<float> onTickTime = default,
@@ -118,6 +125,7 @@ public partial class Timer
         timer.onTickTime = onTickTime;
         timer.onStart = onStart;
         timer.onComplete = onComplete;
+        timer.returnToPool = true;
         timer.Start();
     }
 

@@ -36,8 +36,6 @@ public class PlayerRun : CharacterFSMState
         param.character.Position = pos;
         CameraController.Instance.FocusPlayer();
         param.character.Orientation = horizontalInput > 0f;
-
-
     }
 
     public override void OnExit()
@@ -161,7 +159,7 @@ public class PlayerAttack : CharacterFSMState
 
         TryGetAnimTime(CharacterState.Attack, out AnimTime animTime);
 
-         timer = new Timer()
+        timer = new Timer()
         {
             time = animTime.time,
             onTick = OnTimerTick,
@@ -182,6 +180,7 @@ public class PlayerAttack : CharacterFSMState
 
     public override void OnExit()
     {
+        timer.BreakOff();
     }
 
     private void OnTimerTick(int tick)
