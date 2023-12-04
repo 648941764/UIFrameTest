@@ -30,6 +30,12 @@ public sealed partial class Timer
         GameManager.Instance.TimeUpdateHandle += Tick;
     }
 
+    public void BreakOff()
+    {
+        ticking = false;
+        GameManager.Instance.TimeUpdateHandle -= Tick;
+    }
+
     public void Tick(float dt)
     {
         if (!ticking) { return; }

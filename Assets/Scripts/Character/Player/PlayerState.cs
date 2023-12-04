@@ -178,7 +178,7 @@ public class PlayerAttack : CharacterFSMState
 
     public override void OnExit()
     {
-        timer.Complete(true);
+        timer.BreakOff();
     }
 
     private void OnTimerTick(int tick)
