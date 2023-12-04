@@ -44,7 +44,7 @@ public class PlayerRun : CharacterFSMState
     }
 }
 
-public class PlayerJump : CharacterFSMState
+public class PlayerJump : CharacterFSMState//适当增加一个功能，根据按键的时常来进行跳跃高度的改变
 {
     Timer timer;
 
@@ -121,7 +121,6 @@ public class PlayerFall : CharacterFSMState
     public override void OnEnter()
     {
         base.OnEnter();
-        param.stateExchangable = false;
     }
 
     public override void OnExecute()
