@@ -40,9 +40,11 @@ public sealed partial class Timer
             --timer;
             if (++elapsed <= delay) { continue; }
             ++tick;
-            if (tick % interval != 0) { continue; }
-            onTick?.Invoke(tick);
-            onTickTime?.Invoke(time - tick);
+            if (tick % interval == 0)
+            {
+                onTick?.Invoke(tick);
+                onTickTime?.Invoke(time - tick);
+            }
             if (tick >= time)
             {
                 if (--repeate <= 0)
