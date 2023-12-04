@@ -49,6 +49,7 @@ public class PlayerRun : CharacterFSMState
 public class PlayerJump : CharacterFSMState
 {
     Timer timer;
+
     public override void OnInit(FSM fsm)
     {
         base.OnInit(fsm);
@@ -59,12 +60,14 @@ public class PlayerJump : CharacterFSMState
             onComplete = () => FSM.Switch(CharacterState.Fall)
         };
     }
+
     public override void OnEnter()
     {
         base.OnEnter();
         param.stateExchangable = false;
         timer.Restart();
     }
+
     public override void OnExecute()
     {
         Vector3 pos = param.character.Position;
@@ -87,6 +90,7 @@ public class PlayerJump : CharacterFSMState
     public override void OnExit()
     {
     }
+
     private void OnTimerTick(int tick)
     {
         TryGetAnimTime(CharacterState.Jump, out AnimTime animTime);
@@ -113,11 +117,13 @@ public class PlayerFall : CharacterFSMState
     {
         base.OnInit(fsm);
     }
+
     public override void OnEnter()
     {
         base.OnEnter();
         param.stateExchangable = false;
     }
+
     public override void OnExecute()
     {
     }
