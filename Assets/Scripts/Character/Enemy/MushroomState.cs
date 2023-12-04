@@ -8,11 +8,11 @@ public class MushroomState
 
 public class MushroomIdle : CharacterFSMState
 {
-
     public override void OnEnter()
     {
         base.OnEnter();
     }
+
     public override void OnExecute()
     {
     }
@@ -58,6 +58,7 @@ public class MushroomHurt : CharacterFSMState
     {
         base.OnInit(fsm);
     }
+
     public override void OnExecute()
     {
         throw new System.NotImplementedException();

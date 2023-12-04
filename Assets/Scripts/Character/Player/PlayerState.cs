@@ -53,7 +53,9 @@ public class PlayerJump : CharacterFSMState
     public override void OnInit(FSM fsm)
     {
         base.OnInit(fsm);
-        TryGetAnimTime(CharacterState.Jump, out AnimTime animTime); timer = new Timer()
+        TryGetAnimTime(CharacterState.Jump, out AnimTime animTime);
+
+        timer = new Timer()
         {
             time = animTime.time,
             onTick = OnTimerTick,

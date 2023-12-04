@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
         {
             Move();
         }
+
         if (Input.GetKey(KeyCode.Space))
         {
             Jump();
@@ -68,6 +69,7 @@ public class PlayerController : MonoBehaviour
     private void Flip(bool flipToRight)
     {
         float scaleY = flipToRight ? 1f : -1f;
+
         if (transform.localScale.y != scaleY)
         {
             transform.localScale = new Vector3(1f, scaleY, 1f);

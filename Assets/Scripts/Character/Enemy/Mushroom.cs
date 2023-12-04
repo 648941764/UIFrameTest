@@ -9,18 +9,24 @@ using System;
 /// </summary>
 public class Mushroom : Character
 {
+    public bool isPatrol;//判断当前怪物是否具备巡逻功能
+
+
     private void Start()
     {
         InitFSM();
     }
 
-    public bool Isfollow()
+    /// <summary>
+    /// 巡逻的方法，在敌人的两边分别生成一个点让敌人来回移动
+    /// </summary>
+    public void PatrolMethod()
     {
-        return true;
-    }
-    public bool IsAttackRange()
-    {
-        return true;
+        if (!isPatrol)
+        {
+            return;
+        }
+        
     }
 
     public override void InitFSM()
