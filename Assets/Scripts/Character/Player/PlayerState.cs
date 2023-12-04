@@ -35,11 +35,22 @@ public class PlayerRun : CharacterFSMState
         pos.x += horizontalInput * param.character.CharacterInfo.moveSpeed * Time.deltaTime;
         param.character.Position = pos;
         CameraController.Instance.FocusPlayer();
-        param.character.Orientation = horizontalInput > 0f;
+        //param.character.Orientation = horizontalInput > 0f;
+        if (horizontalInput > 0)
+        {
+            param.character.Orientation = true;
+        }
+        else if (horizontalInput < 0)
+        {
+            param.character.Orientation = false;
+        }
+
+
     }
 
     public override void OnExit()
     {
+
     }
 }
 
