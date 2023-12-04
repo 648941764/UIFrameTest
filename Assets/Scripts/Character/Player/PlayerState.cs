@@ -90,7 +90,7 @@ public class PlayerJump : CharacterFSMState
     private void OnTimerTick(int tick)
     {
         TryGetAnimTime(CharacterState.Jump, out AnimTime animTime);
-        if (tick >= animTime.keys[animTime.keyCount - 1])//计算当前帧率是否超过事件的最后一个帧率，如果超过，那么就让他可以改变动作
+        if (tick > animTime.keys[animTime.keyCount - 1])//计算当前帧率是否超过事件的最后一个帧率，如果超过，那么就让他可以改变动作
         {
             param.stateExchangable = true;
             return;
@@ -116,6 +116,7 @@ public class PlayerFall : CharacterFSMState
     public override void OnEnter()
     {
         base.OnEnter();
+        param.stateExchangable = false;
     }
     public override void OnExecute()
     {
