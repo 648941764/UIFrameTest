@@ -35,11 +35,12 @@ public sealed partial class Timer
         if (!ticking) { return; }
 
         timer += dt * 1000f;
-        while (timer >= interval)
+        while (timer >= 1)
         {
             --timer;
             if (++elapsed <= delay) { continue; }
             ++tick;
+            if (tick % interval != 0) { continue; }
             onTick?.Invoke(tick);
             onTickTime?.Invoke(time - tick);
             if (tick >= time)

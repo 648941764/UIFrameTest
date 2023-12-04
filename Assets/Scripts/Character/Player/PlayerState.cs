@@ -29,6 +29,7 @@ public class PlayerRun : CharacterFSMState
         if (horizontalInput == 0f)
         {
             FSM.Switch(CharacterState.Idle);
+            return;
         }
         Vector3 pos = param.character.Position;
         pos.x += horizontalInput * param.character.CharacterInfo.moveSpeed * Time.deltaTime;
