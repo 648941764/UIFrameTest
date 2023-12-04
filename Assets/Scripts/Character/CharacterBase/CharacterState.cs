@@ -5,7 +5,7 @@ using UnityEngine;
 
 public enum CharacterState
 {
-    Idle, Run, Jump, Fall, Attack, Death
+    Idle, Run, Jump, Fall, Attack ,Hurt ,Death
 }
 
 public class AnimTime

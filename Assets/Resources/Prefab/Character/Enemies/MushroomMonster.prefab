@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4019490480189202192}
   - component: {fileID: 4019490480189202193}
   - component: {fileID: 4019490480189202195}
-  - component: {fileID: -7327539588678589441}
+  - component: {fileID: 6111365904961310042}
   m_Layer: 0
   m_Name: MushroomMonster
   m_TagString: Untagged
@@ -105,16 +105,29 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!65 &-7327539588678589441
-BoxCollider:
+--- !u!61 &6111365904961310042
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4019490480189202198}
+  m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.009608984, y: -0.4035837}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 7.5, y: 7.5}
+    newSize: {x: 9.375, y: 9.375}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.2348425, y: 1.9074831, z: 0.2}
-  m_Center: {x: 0.00000011920929, y: -0.41319323, z: 0}
+  m_Size: {x: 1.1003151, y: 1.982854}
+  m_EdgeRadius: 0
