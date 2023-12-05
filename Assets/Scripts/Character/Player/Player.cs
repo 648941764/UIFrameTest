@@ -2,10 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static PlayerJump;
 
 public class Player : Character
 {
+
     private void Start()
     {
         InitFSM();
@@ -32,7 +32,6 @@ public class Player : Character
         {
             FSM.Switch(CharacterState.Jump);
         }
-
 
     }
 

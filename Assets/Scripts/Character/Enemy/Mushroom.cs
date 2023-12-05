@@ -11,7 +11,6 @@ public class Mushroom : Character
 {
     public bool isPatrol;//判断当前怪物是否具备巡逻功能
 
-
     private void Start()
     {
         InitFSM();
