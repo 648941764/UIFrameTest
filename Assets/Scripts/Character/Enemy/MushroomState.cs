@@ -24,14 +24,17 @@ public class MushroomIdle : CharacterFSMState
 
 public class MushroomRun : CharacterFSMState
 {
+    public override void OnEnter()
+    {
+        base.OnEnter();
+    }
+
     public override void OnExecute()
     {
-        throw new System.NotImplementedException();
     }
 
     public override void OnExit()
     {
-        throw new System.NotImplementedException();
     }
 }
 
@@ -42,6 +45,7 @@ public class MushroomAttack : CharacterFSMState
     {
         base.OnEnter();
     }
+
     public override void OnExecute()
     {
     }

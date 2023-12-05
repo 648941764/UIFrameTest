@@ -47,7 +47,7 @@ public abstract class CharacterFSMState : IFSMState
     public virtual void OnInit(FSM fsm)
     {
         this.fsm = fsm;
-        param = FSM.GetParameter<CharacterFSMParameter>();
+        param = FSM.GetParameter<CharacterFSMParameter>();//获取角色states里面的动画参数
     }
 
     public virtual void OnEnter()

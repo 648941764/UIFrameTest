@@ -3693,11 +3693,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4019490480189202192, guid: 51ffed1130528f8488020d2b4911fc6a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.36
+      value: -12.44
       objectReference: {fileID: 0}
     - target: {fileID: 4019490480189202192, guid: 51ffed1130528f8488020d2b4911fc6a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.63
+      value: -2.64
       objectReference: {fileID: 0}
     - target: {fileID: 4019490480189202192, guid: 51ffed1130528f8488020d2b4911fc6a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8175,28 +8175,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &743723469 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4019490480189202198, guid: 51ffed1130528f8488020d2b4911fc6a, type: 3}
-  m_PrefabInstance: {fileID: 526805248}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &743723474
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 743723469}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f1bddbd2e268ea4ba54a07e803d2891, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characterInfo:
-    moveSpeed: 0
-    jumpSpeed: 0
-    jumpHeight: 0
-    orientation: 1
 --- !u!1 &750628847
 GameObject:
   m_ObjectHideFlags: 0

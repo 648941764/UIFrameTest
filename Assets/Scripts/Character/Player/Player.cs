@@ -62,6 +62,10 @@ public class Player : Character
                 {
                     () => Debug.Log("ÏÂÂä"),
                 }),
+                [CharacterState.Fall] = new AnimTime(433, new int[] { 432 }, new Action[]
+                {
+                    () => Debug.Log("Í£Ö¹"),
+                }),
             }
         };
 

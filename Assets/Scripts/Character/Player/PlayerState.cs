@@ -73,6 +73,7 @@ public class PlayerJump : CharacterFSMState//ÊÊµ±Ôö¼ÓÒ»¸ö¹¦ÄÜ£¬¸ù¾Ý°´¼üµÄÊ±³£À´½
         Vector3 pos = param.character.Position;
         pos.y += param.character.CharacterInfo.jumpSpeed * Time.deltaTime;
         param.character.Position = pos;
+
         float horizontalInput = Input.GetAxis("Horizontal");
 
         if (horizontalInput == 0f)
@@ -113,10 +114,7 @@ public class PlayerJump : CharacterFSMState//ÊÊµ±Ôö¼ÓÒ»¸ö¹¦ÄÜ£¬¸ù¾Ý°´¼üµÄÊ±³£À´½
 
 public class PlayerFall : CharacterFSMState
 {
-    public override void OnInit(FSM fsm)
-    {
-        base.OnInit(fsm);
-    }
+    
 
     public override void OnEnter()
     {
@@ -130,6 +128,7 @@ public class PlayerFall : CharacterFSMState
     public override void OnExit()
     {
     }
+
 }
 
 public class PlayerDeath : CharacterFSMState
@@ -139,7 +138,6 @@ public class PlayerDeath : CharacterFSMState
     {
         base.OnEnter();
     }
-
     public override void OnExecute()
     {
     }
