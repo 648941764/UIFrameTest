@@ -11,11 +11,13 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
 
     public CharacterEntity PlayerEntity => _playerEntity;
 
-    public event Action fsmExecute;
+    public event Action CharacterUpdateHandle;
+    public event Action<float> TimeCharacterUpdateHandle;
 
     protected override void OnAwake()
     {
-        GameManager.Instance.UpdateHandle += Execute;
+        GameManager.Instance.UpdateHandle += CharacterUpdateHandle;
+        GameManager.Instance.TimeUpdateHandle += TimeCharacterUpdateHandle;
     }
 
     public CharacterEntity GetEnemyEntity(int uid)
@@ -26,10 +28,5 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
     public void AddEntity(CharacterEntity entity)
     {
         _enemyEntities[entity.UID] = entity;
-    }
-
-    public void Execute()
-    {
-        fsmExecute?.Invoke();
     }
 }

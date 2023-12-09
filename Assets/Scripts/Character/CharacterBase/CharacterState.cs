@@ -1,35 +1,58 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using TMPro;
 using UnityEngine;
 
 public enum CharacterState
 {
-    Idle, Run, Jump, Fall, Attack ,Hurt ,Death
+    None = 0, Idle, Run, Jump, Fall, Attack ,Hurt ,Death
 }
 
 public class AnimTime
 {
-    /// <summary> 触发事件的时间点: ms /// </summary>
-    public int[] keys;
     /// <summary> 动画总时长: ms /// </summary>
-    public int time;
-    public Action[] actions;
-    public int keyCount;
+    public Dictionary<int, Action> keyActions;
+    private Timer _timer;
 
-    public AnimTime(int time, int[] keys = default, Action[] actions = default)//添加事件的时间，次数，
+    public int Tick => _timer.TickTime;
+
+    public bool Ticking => _timer.Ticking;
+
+    public AnimTime(int time, Action onComplete) //添加事件的时间，次数，
     {
-        this.time = time;
-        if (keys != default)
+        _timer = new Timer()
         {
-            this.keys = keys;
-            keyCount = keys.Length;
-            this.actions = actions != null ? actions : new Action[keyCount];
+            time = time,
+            onTick = OnTick,
+            onComplete = onComplete,
+        };
+    }
+
+    public void Start()
+    {
+        _timer.Start();
+    }
+
+    public void Break()
+    {
+        _timer.BreakOff();
+    }
+
+    private void OnTick(int tick)
+    {
+        if (keyActions == null) { return; }
+        foreach (int key in keyActions.Keys)
+        {
+            if (key == tick)
+            {
+                keyActions[key]();
+            }
         }
     }
 }
 
-public class CharacterFSMParameter : FSMParameter
+public class CharacterParameter : FSMParameter
 {
     public Dictionary<CharacterState, string> stateClips;
     public Dictionary<CharacterState, AnimTime> animStates;
@@ -40,19 +63,23 @@ public class CharacterFSMParameter : FSMParameter
 
 public abstract class CharacterFSMState : IFSMState
 {
-    protected CharacterFSMParameter param;
+    protected CharacterParameter param;
     protected FSM fsm;
     public FSM FSM { get => fsm; }
 
     public virtual void OnInit(FSM fsm)
     {
         this.fsm = fsm;
-        param = FSM.GetParameter<CharacterFSMParameter>();//获取角色states里面的动画参数
+        param = FSM.GetParameter<CharacterParameter>();//获取角色states里面的动画参数
     }
 
     public virtual void OnEnter()
     {
-        param.animator.Play(param.stateClips[FSM.GetStateName<CharacterState>()]);
+        string animName = param.stateClips[FSM.GetStateName<CharacterState>()];
+        if (!string.IsNullOrEmpty(animName))
+        {
+            param.animator.Play(animName);
+        }
     }
 
     public abstract void OnExecute();
@@ -74,5 +101,21 @@ public abstract class CharacterFSMState : IFSMState
         }
 
         return false;
+    }
+}
+
+public class DeathState : CharacterFSMState
+{
+    public override void OnEnter()
+    {
+        base.OnEnter();
+    }
+
+    public override void OnExecute()
+    {
+    }
+
+    public override void OnExit()
+    {
     }
 }

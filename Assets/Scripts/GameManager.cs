@@ -7,6 +7,11 @@ public sealed class GameManager : SingletonMono<GameManager>
     public event Action UpdateHandle;
     public event Action<float> TimeUpdateHandle;
 
+    private void Awake()
+    {
+        Application.targetFrameRate = 60;
+    }
+
     private void Update()
     {
         UpdateHandle?.Invoke();

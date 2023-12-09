@@ -34,7 +34,6 @@ public sealed class FSM
         }
 
         _currentState.OnExit();
-        //Debug.Log($"FSM state change: <color=#26A0CB>{_currentStateName}</color> -> <color=#CF1919>{stateName}</color>");
         _currentStateName = stateName;
         IFSMState state = _states[stateName];
         state.OnEnter();
@@ -97,13 +96,14 @@ public sealed class FSM
             return;
         }
 
-        _parameter.running = true;
-        if (_currentState == null)
+        if (_currentState == null && _parameter.defaultStateName == null)
         {
-            _currentStateName = _parameter.defaultStateName;
-            _currentState = _states[_currentStateName];
             return;
         }
+        GameManager.Instance.UpdateHandle += OnExecute;
+        _parameter.running = true;
+        _currentStateName = _parameter.defaultStateName;
+        _currentState = _states[_currentStateName];
         _currentState.OnEnter();
     }
 
@@ -124,6 +124,7 @@ public sealed class FSM
             return;
         }
 
+        GameManager.Instance.UpdateHandle -= OnExecute;
         _parameter.running = false; 
         _currentState.OnExit();
     }

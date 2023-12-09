@@ -5,7 +5,7 @@ using UnityEngine;
 public class Test : SingletonMono<Test> 
 {
     public Backpack Backpack { get; private set; }
-    public Player Player { get; private set; }
+    public PlayerOld Player { get; private set; }
 
 
 

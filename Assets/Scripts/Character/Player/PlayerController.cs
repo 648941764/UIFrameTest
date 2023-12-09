@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     private float _jumpHeight = 5f;
     private Rigidbody2D rb;
     //private ICharacterState currentState;
-    private PlayerIdle idleState =new PlayerIdle();
+    //private PlayerIdle idleState =new PlayerIdle();
     
 
     [SerializeField] Transform rayTrans;
@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         //currentState = idleState;
-        idleState.OnEnter();
+        //idleState.OnEnter();
     }
 
     void Update()

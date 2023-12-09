@@ -9,7 +9,6 @@ public class CharacterInfo
 {
     public float moveSpeed;
     public float jumpSpeed;
-    public float jumpHeight;
     // 朝X正方向位true
     public bool orientation = true;
 }
@@ -18,18 +17,15 @@ public abstract class Character : MonoBehaviour
 {
     [SerializeField] private CharacterInfo characterInfo;
 
-    protected CharacterFSMParameter fsmParameter;
+    [SerializeField] private int _uid;
 
-    protected FSM fsm;
+    protected CharacterParameter parameter;
+    public CharacterParameter Parameter => parameter;
 
-    private int _uid;
-
-    private static CharacterManager Manager => CharacterManager.Instance;
+    protected static CharacterManager Manager => CharacterManager.Instance;
     public CharacterInfo CharacterInfo => characterInfo;
 
     public int UID => _uid;
-    public FSM FSM => fsm;
-    public CharacterFSMParameter FSMParameter => fsmParameter;
 
     public Vector3 Position
     {
@@ -37,6 +33,7 @@ public abstract class Character : MonoBehaviour
         set => transform.position = value;
     }
 
+    /// <summary> xy平面上, true 朝向右边， false 朝向左边 /// </summary>
     public bool Orientation
     {
         set
@@ -49,10 +46,13 @@ public abstract class Character : MonoBehaviour
         }
     }
 
-    public void Init(int uid)
+    private void Start()
     {
-        InitFSM();
+        Init();
     }
 
-    public abstract void InitFSM();
+    protected virtual void Init()
+    {
+
+    }
 }

@@ -18,22 +18,33 @@ public sealed partial class Timer
         repeate = 1;    // 重复次数
 
     private bool ticking;
-    public bool returnToPool;
-    public Action onStart, onComplete;
+    public bool returnToPool = false;
+    public Action onStart, onBreakOff, onComplete;
     public Action<int> onTick;         // 当前计时的时间
     public Action<float> onTickTime;   // 剩余时间
 
+    public int TickTime => tick;
+    public bool Ticking => ticking;
+
     public void Start()
     {
-        ticking = true;
+        timer = 0f;
+        elapsed = 0;
+        tick = 0;
         onStart?.Invoke();
+        ticking = true;
+        GameManager.Instance.TimeUpdateHandle -= Tick;
         GameManager.Instance.TimeUpdateHandle += Tick;
     }
 
     public void BreakOff()
     {
-        ticking = false;
-        GameManager.Instance.TimeUpdateHandle -= Tick;
+        if (ticking)
+        {
+            ticking = false;
+            onBreakOff?.Invoke();
+            GameManager.Instance.TimeUpdateHandle -= Tick;
+        }
     }
 
     public void Tick(float dt)
@@ -68,23 +79,15 @@ public sealed partial class Timer
     public void Complete(bool callComplete = false)
     {
         ticking = false;
+        GameManager.Instance.TimeUpdateHandle -= Tick;
         if (callComplete)
         {
             onComplete?.Invoke();
         }
-        GameManager.Instance.TimeUpdateHandle -= Tick;
         if (returnToPool)
         {
             pool.Release(this);
         }
-    }
-
-    public void Restart()
-    {
-        timer = 0f;
-        elapsed = 0;
-        tick = 0;
-        Start();
     }
 
     private void Reset()

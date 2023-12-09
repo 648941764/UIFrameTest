@@ -13,10 +13,10 @@ public class Enemy : Character
     private float _rightLimit;
     private float _lefttLimit;
 
-    private void Start()
-    {
-        InitFSM();
-    }
+    protected FSM fsm;
+
+    public FSM FSM => fsm;
+
 
     private void Awake()
     {
@@ -24,44 +24,45 @@ public class Enemy : Character
         _lefttLimit = transform.position.x - 4f;
     }
 
-
-    private void Update()
+    public void Init(int uid)
     {
-        if (isPatrol)
-        {
-            Patrol();
-        }
+        InitFSM();
     }
 
-    public override void InitFSM()
+    public void ExitFSM()
     {
-        fsmParameter = new CharacterFSMParameter()
-        {
-            animator = GetComponent<Animator>(),
-            character = this,
-            defaultStateName = CharacterState.Attack,
-            stateClips = new Dictionary<CharacterState, string>()
-            {
-                [CharacterState.Idle] = "idle",
-                [CharacterState.Run] = "run",
-                [CharacterState.Attack] = "attack",
-                [CharacterState.Hurt] = "hurt",
-                [CharacterState.Death] = "death",
-            },
-            animStates = new Dictionary<CharacterState, AnimTime>()
-            {
-                [CharacterState.Hurt] = new AnimTime(450, new int[] { 150 }, new Action[]
-                {
-                    () => Debug.Log($"{150}怪物收到伤害"),//
-                }),
-                //[CharacterState.Attack] = new AnimTime(433, new int[] {230}, new Action[]
-                //{
-                //    () => Debug.Log("对玩家造成伤害"),
-                //}) 
-            }
-        };
+        fsm.OnExit();
+    }
 
-        fsm = new FSM(fsmParameter);
+    public virtual void InitFSM()
+    {
+        //parameter = new CharacterParameter()
+        //{
+        //    animator = GetComponent<Animator>(),
+        //    character = this,
+        //    defaultStateName = CharacterState.Attack,
+        //    stateClips = new Dictionary<CharacterState, string>()
+        //    {
+        //        [CharacterState.Idle] = "idle",
+        //        [CharacterState.Run] = "run",
+        //        [CharacterState.Attack] = "attack",
+        //        [CharacterState.Hurt] = "hurt",
+        //        [CharacterState.Death] = "death",
+        //    },
+        //    animStates = new Dictionary<CharacterState, AnimTime>()
+        //    {
+        //        [CharacterState.Hurt] = new AnimTime(450, new int[] { 150 }, new Action[]
+        //        {
+        //            () => Debug.Log($"{150}怪物收到伤害"),//
+        //        }),
+        //        //[CharacterState.Attack] = new AnimTime(433, new int[] {230}, new Action[]
+        //        //{
+        //        //    () => Debug.Log("对玩家造成伤害"),
+        //        //}) 
+        //    }
+        //};
+
+        fsm = new FSM(parameter);
         IReadOnlyDictionary<CharacterState, IFSMState> enemyStates = new Dictionary<CharacterState, IFSMState>()
         {
             [CharacterState.Idle] = new MushroomIdle(),
@@ -71,7 +72,6 @@ public class Enemy : Character
             [CharacterState.Death] = new MushroomDeath(),
         };
         fsm.Add(enemyStates);
-        CharacterManager.Instance.fsmExecute += fsm.OnExecute;
         fsm.OnStart();
     }
 
