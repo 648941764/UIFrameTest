@@ -79,10 +79,6 @@ public class Player : Character
             if (parameter.stateExchangable && !HasState(CharacterState.Run))
             {
                 AddState(CharacterState.Run);
-                if (!_inAir)
-                {
-                    PlayStateAnim(CharacterState.Run);
-                }
             }
         }
 
