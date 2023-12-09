@@ -130,18 +130,7 @@ public class CameraController : SingletonMono<CameraController>
         this.right = right.x - viewportWithHalf;
     }
 
-    public void Focus(Vector3 point)
-    {
-        point.y = 0f;
-        point.x = Mathf.Clamp(point.x, left, right);
-        _cam.transform.position = point;
-    }
 
-    public void FocusTo(Vector3 diff)
-    {
-        Vector3 pos = _cam.transform.position + diff;
-        Focus(pos);
-    }
 
     public void FocusPlayer()
     {
