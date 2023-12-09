@@ -3687,13 +3687,33 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 765838089, guid: 51ffed1130528f8488020d2b4911fc6a, type: 3}
+      propertyPath: characterInfo.seeRange
+      value: 4.46
+      objectReference: {fileID: 0}
+    - target: {fileID: 765838089, guid: 51ffed1130528f8488020d2b4911fc6a, type: 3}
+      propertyPath: characterInfo.moveSpeed
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 765838089, guid: 51ffed1130528f8488020d2b4911fc6a, type: 3}
+      propertyPath: characterInfo.attackRange
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 765838089, guid: 51ffed1130528f8488020d2b4911fc6a, type: 3}
+      propertyPath: characterInfo.patrolRange
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 765838089, guid: 51ffed1130528f8488020d2b4911fc6a, type: 3}
+      propertyPath: characterInfo.attackInterval
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4019490480189202192, guid: 51ffed1130528f8488020d2b4911fc6a, type: 3}
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4019490480189202192, guid: 51ffed1130528f8488020d2b4911fc6a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -12.44
+      value: -10.65
       objectReference: {fileID: 0}
     - target: {fileID: 4019490480189202192, guid: 51ffed1130528f8488020d2b4911fc6a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -9468,7 +9488,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!50 &5018562989535246415
 Rigidbody2D:
   serializedVersion: 4
@@ -9505,6 +9525,10 @@ MonoBehaviour:
   characterInfo:
     moveSpeed: 4
     jumpSpeed: 10
+    attackInterval: 0
+    attackRange: 1
+    patrolRange: 2
+    seeRange: 2
     orientation: 1
   _uid: 0
 --- !u!4 &5018562989672457440

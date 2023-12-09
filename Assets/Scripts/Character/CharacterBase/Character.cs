@@ -4,11 +4,16 @@ using UnityEngine;
 using System;
 
 
-[System.Serializable]
+[Serializable]
 public class CharacterInfo
 {
     public float moveSpeed;
     public float jumpSpeed;
+    public float attackInterval = 1.2f;
+    public float attackRange = 0.5f;
+    public float patrolRange = 2.0f;
+    public float seeRange = 2.0f;
+    public float guardTime = 3f;
     // 朝X正方向位true
     public bool orientation = true;
 }
@@ -36,6 +41,7 @@ public abstract class Character : MonoBehaviour
     /// <summary> xy平面上, true 朝向右边， false 朝向左边 /// </summary>
     public bool Orientation
     {
+        get => characterInfo.orientation;
         set
         {
             if (characterInfo.orientation != value)

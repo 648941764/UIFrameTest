@@ -6,7 +6,7 @@ using UnityEngine;
 
 public enum CharacterState
 {
-    None = 0, Idle, Run, Jump, Fall, Attack ,Hurt ,Death
+    None = 0, Idle, Run, Jump, Fall, Attack, Hurt, Death, Guard, Patrol
 }
 
 public class AnimTime
@@ -59,9 +59,11 @@ public class CharacterParameter : FSMParameter
     public Animator animator;
     public Character character;
     public Character target;
+    public float patrolPosX;
+    public float timer;
 }
 
-public abstract class CharacterFSMState : IFSMState
+public abstract class EnemyFSMState : IFSMState
 {
     protected CharacterParameter param;
     protected FSM fsm;
@@ -102,9 +104,35 @@ public abstract class CharacterFSMState : IFSMState
 
         return false;
     }
+
+    protected virtual bool SeePlayer()
+    {
+        Character player = CharacterManager.Instance.Player;
+        if (player == null)
+        {
+            return false;
+        }
+
+        if (Mathf.Abs(player.Position.x - param.character.Position.x) > param.character.CharacterInfo.seeRange)
+        {
+            return false;
+        }
+
+        return param.character.CharacterInfo.orientation
+            ? player.Position.x > param.character.Position.x
+            : player.Position.x < param.character.Position.x;
+    }
+
+    protected virtual void Move()
+    {
+        int sign = param.character.Orientation ? 1 : -1;
+        Vector3 pos = param.character.Position;
+        pos.x += sign * param.character.CharacterInfo.moveSpeed * Time.deltaTime;
+        param.character.Position = pos;
+    }
 }
 
-public class DeathState : CharacterFSMState
+public class DeathState : EnemyFSMState
 {
     public override void OnEnter()
     {

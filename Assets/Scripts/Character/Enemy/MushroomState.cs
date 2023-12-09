@@ -6,7 +6,7 @@ public class MushroomState
 {
 }
 
-public class MushroomIdle : CharacterFSMState
+public class MushroomIdle : EnemyFSMState
 {
     public override void OnEnter()
     {
@@ -22,7 +22,7 @@ public class MushroomIdle : CharacterFSMState
     }
 }
 
-public class MushroomRun : CharacterFSMState
+public class MushroomRun : EnemyFSMState
 {
     public override void OnEnter()
     {
@@ -38,7 +38,7 @@ public class MushroomRun : CharacterFSMState
     }
 }
 
-public class MushroomAttack : CharacterFSMState
+public class MushroomAttack : EnemyFSMState
 {
 
     public override void OnEnter()
@@ -55,7 +55,7 @@ public class MushroomAttack : CharacterFSMState
     }
 }
 
-public class MushroomHurt : CharacterFSMState
+public class MushroomHurt : EnemyFSMState
 {
 
     public override void OnInit(FSM fsm)
@@ -74,7 +74,7 @@ public class MushroomHurt : CharacterFSMState
     }
 }
 
-public class MushroomDeath : CharacterFSMState
+public class MushroomDeath : EnemyFSMState
 {
     public override void OnEnter()
     {

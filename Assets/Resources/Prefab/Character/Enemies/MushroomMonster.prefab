@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4019490480189202192}
   - component: {fileID: 4019490480189202193}
+  - component: {fileID: 765838089}
   - component: {fileID: 4019490480189202195}
   - component: {fileID: 6111365904961310042}
   m_Layer: 0
@@ -84,6 +85,26 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &765838089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4019490480189202198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f1bddbd2e268ea4ba54a07e803d2891, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterInfo:
+    moveSpeed: 0
+    jumpSpeed: 0
+    attackInterval: 1.2
+    patrolRange: 2
+    orientation: 1
+  _uid: 0
+  attackDamageTime: 381
 --- !u!95 &4019490480189202195
 Animator:
   serializedVersion: 5

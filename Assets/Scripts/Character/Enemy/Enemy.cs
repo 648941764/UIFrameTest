@@ -3,29 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-
-/// <summary>
-/// 测试用
-/// </summary>
 public class Enemy : Character
 {
-    public bool isPatrol;//判断当前怪物是否具备巡逻功能
-    private float _rightLimit;
-    private float _lefttLimit;
-
     protected FSM fsm;
+
+    protected Vector3 bornPosition;
+
+    public int attackDamageTime;
 
     public FSM FSM => fsm;
 
+    public Vector3 BornPosition => bornPosition;
 
-    private void Awake()
+    /// <summary>
+    /// 怪物测试
+    /// </summary>
+    protected override void Init()
     {
-        _rightLimit = transform.position.x + 4f;
-        _lefttLimit = transform.position.x - 4f;
+        base.Init();
+        Init(0);
     }
 
     public void Init(int uid)
     {
+        bornPosition = Position;
+        Orientation = false;
+        InitFSMParameter();
         InitFSM();
     }
 
@@ -34,62 +37,88 @@ public class Enemy : Character
         fsm.OnExit();
     }
 
-    public virtual void InitFSM()
+    protected virtual void InitFSMParameter()
     {
-        //parameter = new CharacterParameter()
-        //{
-        //    animator = GetComponent<Animator>(),
-        //    character = this,
-        //    defaultStateName = CharacterState.Attack,
-        //    stateClips = new Dictionary<CharacterState, string>()
-        //    {
-        //        [CharacterState.Idle] = "idle",
-        //        [CharacterState.Run] = "run",
-        //        [CharacterState.Attack] = "attack",
-        //        [CharacterState.Hurt] = "hurt",
-        //        [CharacterState.Death] = "death",
-        //    },
-        //    animStates = new Dictionary<CharacterState, AnimTime>()
-        //    {
-        //        [CharacterState.Hurt] = new AnimTime(450, new int[] { 150 }, new Action[]
-        //        {
-        //            () => Debug.Log($"{150}怪物收到伤害"),//
-        //        }),
-        //        //[CharacterState.Attack] = new AnimTime(433, new int[] {230}, new Action[]
-        //        //{
-        //        //    () => Debug.Log("对玩家造成伤害"),
-        //        //}) 
-        //    }
-        //};
+        parameter = new CharacterParameter()
+        {
+            animator = GetComponent<Animator>(),
+            character = this,
+            defaultStateName = CharacterState.Guard,
+            stateClips = new Dictionary<CharacterState, string>()
+            {
+                [CharacterState.Guard] = "idle",
+                [CharacterState.Patrol] = "run",
+                [CharacterState.Attack] = "attack",
+                [CharacterState.Hurt] = "hurt",
+                [CharacterState.Death] = "death",
+                [CharacterState.Run] = "run",
+            },
+            animStates = new Dictionary<CharacterState, AnimTime>()
+            {
+                [CharacterState.Attack] = new AnimTime(
+                    433,
+                    () => parameter.stateExchangable = true
+                )
+                {
+                    keyActions = new Dictionary<int, Action>()
+                    {
+                        [attackDamageTime] = Attack
+                    }
+                },
+                [CharacterState.Hurt] = new AnimTime(
+                    450,
+                    () => parameter.stateExchangable = true
+                )
+            }
+        };
+    }
 
+    protected virtual void InitFSM()
+    {
         fsm = new FSM(parameter);
         IReadOnlyDictionary<CharacterState, IFSMState> enemyStates = new Dictionary<CharacterState, IFSMState>()
         {
-            [CharacterState.Idle] = new MushroomIdle(),
-            [CharacterState.Run] = new MushroomRun(),
-            [CharacterState.Hurt] = new MushroomHurt(),
-            [CharacterState.Attack] = new MushroomAttack(),
-            [CharacterState.Death] = new MushroomDeath(),
+            [CharacterState.Guard] = new EnemyGuard(),
+            [CharacterState.Patrol] = new EnemyPatrol(),
+            [CharacterState.Hurt] = new EnemyHurt(),
+            [CharacterState.Attack] = new EnemyAttack(),
+            [CharacterState.Death] = new EnemyDeath(),
+            [CharacterState.Run] = new EnemyMoveToPlayer(),
         };
         fsm.Add(enemyStates);
         fsm.OnStart();
     }
 
-    /// <summary>
-    /// 让角色移动的方法
-    /// </summary>
-    public void Patrol()
+    protected virtual void Attack()
     {
-        fsm.Switch(CharacterState.Run);
 
-        if (transform.position.x < _lefttLimit)
-        {
-            Orientation = true;
-        }
-        else if (transform.position.x > _rightLimit)
-        {
-            Orientation = false;
-        }
-        transform.Translate(Vector3.right * CharacterInfo.moveSpeed * Time.deltaTime);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Color color = Gizmos.color;
+        // 攻击范围
+        Gizmos.color = Color.red;
+        Vector3 position = Position;
+        Vector3 attack = position;
+        attack.x += (Orientation ? 1 : -1) * CharacterInfo.attackRange;
+        Gizmos.DrawSphere(attack, 0.2f);
+        // 可视距离
+        Gizmos.color = Color.green;
+        Vector3 see = position;
+        see.x += (Orientation ? 1 : -1) * CharacterInfo.seeRange;
+        Gizmos.DrawSphere(see, 0.2f);
+
+        // 巡逻范围
+        Gizmos.color = Color.blue;
+        Vector3 l = Application.isPlaying ? BornPosition : Position;
+        Vector3 r = Application.isPlaying ? BornPosition : Position;
+        l.x -= CharacterInfo.patrolRange;
+        r.x += CharacterInfo.patrolRange;
+        l.y -= 1.0f;
+        r.y -= 1.0f;
+        Gizmos.DrawLine(l, r);
+
+        Gizmos.color = color;
     }
 }

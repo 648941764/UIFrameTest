@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PlayerJump : CharacterFSMState // 适当增加一个功能，根据按键的时常来进行跳跃高度的改变
+public class PlayerJump : EnemyFSMState // 适当增加一个功能，根据按键的时常来进行跳跃高度的改变
 {
     private float _lastY;
 
@@ -29,7 +29,7 @@ public class PlayerJump : CharacterFSMState // 适当增加一个功能，根据
     }
 }
 
-public class PlayerFall : CharacterFSMState
+public class PlayerFall : EnemyFSMState
 {
     public override void OnEnter()
     {
@@ -45,7 +45,7 @@ public class PlayerFall : CharacterFSMState
     }
 }
 
-public class JumpIdleState : CharacterFSMState
+public class JumpIdleState : EnemyFSMState
 {
     public override void OnExecute()
     {

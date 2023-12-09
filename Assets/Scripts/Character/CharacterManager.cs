@@ -9,6 +9,9 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
     private readonly Dictionary<int, CharacterEntity> _enemyEntities = new Dictionary<int, CharacterEntity>();
     private readonly CharacterEntity _playerEntity = new CharacterEntity();
 
+    private Player _player;
+    public Player Player => _player;
+
     public CharacterEntity PlayerEntity => _playerEntity;
 
     public event Action CharacterUpdateHandle;
@@ -28,5 +31,10 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
     public void AddEntity(CharacterEntity entity)
     {
         _enemyEntities[entity.UID] = entity;
+    }
+
+    public void SetPlayer(Player player)
+    {
+        _player = player;
     }
 }

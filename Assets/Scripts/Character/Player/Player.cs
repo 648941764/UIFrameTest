@@ -7,17 +7,17 @@ public class Player : Character
     private readonly Dictionary<CharacterState, Action> _stateHandlers = new Dictionary<CharacterState, Action>();
 
     private float dt;
-    private float _curJumpSpeed, _lastPosY;
-    private bool _inAir;
+    private float _curJumpSpeed;
     private int states;
 
-    private Rigidbody2D rigidbody2D;
+    private new Rigidbody2D rigidbody2D;
 
     private bool isDead => HasState(CharacterState.Death);
 
     protected override void Init()
     {
         base.Init();
+        Manager.SetPlayer(this);
         rigidbody2D = GetComponent<Rigidbody2D>();
         InitParam();
         GameManager.Instance.TimeUpdateHandle += PlayerUpdate;
@@ -66,7 +66,6 @@ public class Player : Character
         _stateHandlers.Add(CharacterState.Fall, FallHandle);
         _stateHandlers.Add(CharacterState.Death, DeathHandle);
         AddState(CharacterState.Idle);
-        _lastPosY = Position.y;
     }
 
     private void PlayerUpdate(float dt)
@@ -299,5 +298,19 @@ public class Player : Character
     private void Attack2()
     {
         Debug.Log("Attack 2");
+    }
+
+    private void OnDrawGizmos()
+    {
+        Color color = Gizmos.color;
+        // 攻击范围
+        Gizmos.color = Color.red;
+        Vector3 position = Position;
+        Vector3 attack = position;
+        attack.x += CharacterInfo.attackRange;
+        attack.y += 0.6f;
+        Gizmos.DrawSphere(attack, 0.2f);
+
+        Gizmos.color = color;
     }
 }
