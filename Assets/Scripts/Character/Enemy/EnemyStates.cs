@@ -35,7 +35,7 @@ public class EnemyPatrol : EnemyFSMState
         base.OnEnter();
         Enemy enemy = param.character as Enemy;
         float range = 0f;
-        while (range < 1.5f)
+        while (Mathf.Abs(range) < 1.5f)
         {
             range = Random.Range(-enemy.CharacterInfo.patrolRange, enemy.CharacterInfo.patrolRange);
         }
@@ -86,6 +86,7 @@ public class EnemyHurt : EnemyFSMState
     {
         base.OnEnter();
         param.stateExchangable = false;
+        FacePlayer();
     }
 
     public override void OnExecute()

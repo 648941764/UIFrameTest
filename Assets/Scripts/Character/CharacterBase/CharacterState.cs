@@ -105,6 +105,17 @@ public abstract class EnemyFSMState : IFSMState
         return false;
     }
 
+    protected virtual void FacePlayer()
+    {
+        Character player = CharacterManager.Instance.Player;
+        if (player == null)
+        {
+            return;
+        }
+
+        param.character.Orientation = !(param.character.Position.x > player.Position.x);
+    }
+
     protected virtual bool SeePlayer()
     {
         Character player = CharacterManager.Instance.Player;
