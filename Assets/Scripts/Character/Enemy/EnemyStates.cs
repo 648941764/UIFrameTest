@@ -34,12 +34,7 @@ public class EnemyPatrol : EnemyFSMState
     {
         base.OnEnter();
         Enemy enemy = param.character as Enemy;
-        float range = 0f;
-        while (Mathf.Abs(range) < 1.5f)
-        {
-            range = Random.Range(-enemy.CharacterInfo.patrolRange, enemy.CharacterInfo.patrolRange);
-        }
-        param.patrolPosX = enemy.BornPosition.x + range;
+        param.patrolPosX = enemy.BornPosition.x + Random.Range(-enemy.CharacterInfo.patrolRange, enemy.CharacterInfo.patrolRange);
         Debug.Log($"巡逻目标点：{param.patrolPosX}");
         param.character.Orientation = param.patrolPosX >= param.character.Position.x;
     }
