@@ -41,7 +41,7 @@ public class EnemyPatrol : EnemyFSMState
         }
         param.patrolPosX = enemy.BornPosition.x + range;
         Debug.Log($"巡逻目标点：{param.patrolPosX}");
-        param.character.Orientation = param.patrolPosX >= enemy.BornPosition.x;
+        param.character.Orientation = param.patrolPosX >= param.character.Position.x;
     }
 
     public override void OnExecute()
