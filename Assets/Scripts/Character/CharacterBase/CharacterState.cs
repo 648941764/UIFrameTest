@@ -6,7 +6,7 @@ using UnityEngine;
 
 public enum CharacterState
 {
-    None = 0, Idle, Run, Jump, Fall, Attack, Hurt, Death, Guard, Patrol
+    None = 0, Idle, Run, Jump, Fall, Attack, AttackCooling, Hurt, Death, Guard, Patrol
 }
 
 public class AnimTime
@@ -61,6 +61,7 @@ public class CharacterParameter : FSMParameter
     public Character target;
     public float patrolPosX;
     public float timer;
+    public float attckCoolTimer;
 }
 
 public abstract class EnemyFSMState : IFSMState

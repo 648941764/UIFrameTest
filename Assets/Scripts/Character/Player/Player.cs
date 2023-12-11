@@ -63,6 +63,7 @@ public class Player : Character
         _stateHandlers.Add(CharacterState.Run, RunHandle);
         _stateHandlers.Add(CharacterState.Jump, JumpHandle);
         _stateHandlers.Add(CharacterState.Attack, AttackHandle);
+        _stateHandlers.Add(CharacterState.AttackCooling, AttackCoolingHandle);
         _stateHandlers.Add(CharacterState.Fall, FallHandle);
         _stateHandlers.Add(CharacterState.Death, DeathHandle);
         AddState(CharacterState.Idle);
@@ -84,7 +85,7 @@ public class Player : Character
         // 攻击
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            if (parameter.stateExchangable && !HasState(CharacterState.Attack))
+            if (parameter.stateExchangable && !HasState(CharacterState.Attack) && !HasState(CharacterState.AttackCooling))
             {
                 AddState(CharacterState.Attack);
             }
@@ -162,6 +163,15 @@ public class Player : Character
         }
     }
 
+    private void AttackCoolingHandle()
+    {
+        parameter.attckCoolTimer += dt;
+        if (parameter.attckCoolTimer >= CharacterInfo.attackInterval)
+        {
+            DelState(CharacterState.AttackCooling);
+        }
+    }
+
     private void FallHandle()
     {
         if (rigidbody2D.velocity.y == 0f)
@@ -218,34 +228,53 @@ public class Player : Character
         switch (state)
         {
             case CharacterState.Idle:
-                PlayStateAnim(state);
-                break;
-            case CharacterState.Run:
-                if (!HasState(CharacterState.Jump) && !HasState(CharacterState.Fall))
                 {
                     PlayStateAnim(state);
+                    break;
                 }
-                break;
+            case CharacterState.Run:
+                {
+                    if (!HasState(CharacterState.Jump) && !HasState(CharacterState.Fall))
+                    {
+                        PlayStateAnim(state);
+                    }
+                    break;
+                }
             case CharacterState.Jump:
-                PlayStateAnim(state);
-                break;
+                {
+                    PlayStateAnim(state);
+                    break;
+                }
             case CharacterState.Fall:
-                PlayStateAnim(state);
-                break;
+                {
+                    PlayStateAnim(state);
+                    break;
+                }
             case CharacterState.Attack:
-                DelState(CharacterState.Run);
-                parameter.stateExchangable = false;
-                parameter.animStates[CharacterState.Attack].Start();
-                PlayStateAnim(state);
-                break;
+                {
+                    DelState(CharacterState.Run);
+                    parameter.stateExchangable = false;
+                    parameter.animStates[CharacterState.Attack].Start();
+                    PlayStateAnim(state);
+                    break;
+                }
+            case CharacterState.AttackCooling:
+                {
+                    parameter.attckCoolTimer = 0f;
+                    break;
+                }
             case CharacterState.Hurt:
-                break;
+                {
+                    break;
+                }
             case CharacterState.Death:
-                PlayStateAnim(state);
-                states = (1 << (int)CharacterState.Death);
-                break;
+                {
+                    PlayStateAnim(state);
+                    states = (1 << (int)CharacterState.Death);
+                    break;
+                }
+            }
         }
-    }
 
     private void OnDelState(CharacterState state)
     {
@@ -277,6 +306,7 @@ public class Player : Character
                     {
                         PlayStateAnim(CharacterState.Jump);
                     }
+                    AddState(CharacterState.AttackCooling);
                 }
                 break;
             case CharacterState.Hurt:
