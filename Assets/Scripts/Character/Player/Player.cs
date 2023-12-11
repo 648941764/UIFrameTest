@@ -127,6 +127,7 @@ public class Player : Character
         pos.x += CharacterInfo.moveSpeed * axisX * dt;
         Position = pos;
         Orientation = axisX > 0f;
+        CameraController.Instance.FocusPlayer();
     }
 
     private void JumpHandle()

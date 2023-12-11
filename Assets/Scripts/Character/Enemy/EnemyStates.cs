@@ -66,7 +66,16 @@ public class EnemyAttack : EnemyFSMState
 {
     public override void OnExecute()
     {
-        fsm.Switch(CharacterState.Guard);    
+        //需要添加一个条件，就是当角色在范围内才攻击
+        //fsm.Switch(CharacterState.Attack);
+        if (Mathf.Abs(param.character.Position.x - CharacterManager.Instance.Player.Position.x) < param.character.CharacterInfo.attackRange)
+        {
+            fsm.Switch(CharacterState.Attack);
+        }
+        else
+        {
+            fsm.Switch(CharacterState.Run);
+        }
     }
 
     public override void OnExit()
