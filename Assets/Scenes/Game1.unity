@@ -9533,7 +9533,7 @@ MonoBehaviour:
   characterInfo:
     moveSpeed: 4
     jumpSpeed: 10
-    attackInterval: 1
+    attackInterval: 0.5
     attackRange: 1.15
     patrolRange: 2
     seeRange: 2

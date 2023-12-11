@@ -6,13 +6,12 @@ public class EnemyGuard : EnemyFSMState
     {
         base.OnEnter();
         param.timer = 0f;
+        Debug.Log("EnemyFSM： EnemyGuard");
     }
 
     public override void OnExecute()
     {
-        //当敌人走出巡逻范围的时候就放弃 
-        
-        if (SeePlayer())
+        if (IsPlayerInSight())
         {
             fsm.Switch(CharacterState.Run);
             return;
@@ -35,15 +34,15 @@ public class EnemyPatrol : EnemyFSMState
     public override void OnEnter()
     {
         base.OnEnter();
-        Enemy enemy = param.character as Enemy;
-        param.patrolPosX = enemy.BornPosition.x + Random.Range(-enemy.CharacterInfo.patrolRange, enemy.CharacterInfo.patrolRange);
+        param.patrolPosX = BornPosition.x + Random.Range(-CharacterInfo.patrolRange, CharacterInfo.patrolRange);
         Debug.Log($"巡逻目标点：{param.patrolPosX}");
         param.character.Orientation = param.patrolPosX >= param.character.Position.x;
+        Debug.Log("EnemyFSM： EnemyPatrol");
     }
 
     public override void OnExecute()
     {
-        if (SeePlayer())
+        if (IsPlayerInSight())
         {
             fsm.Switch(CharacterState.Run);
             return;
@@ -60,20 +59,29 @@ public class EnemyPatrol : EnemyFSMState
 
     public override void OnExit()
     {
-        
     }
 }
 
 public class EnemyAttack : EnemyFSMState
 {
+    AnimTime animTime;
+
+    public override void OnInit(FSM fsm)
+    {
+        base.OnInit(fsm);
+        TryGetAnimTime(CharacterState.Attack, out animTime);
+        Debug.Log("EnemyFSM： EnemyAttack");
+    }
+
+    public override void OnEnter()
+    {
+        base.OnEnter();
+        animTime.Start();
+    }
+
     public override void OnExecute()
     {
-        //需要添加一个条件，就是当角色在范围内才攻击
-        if (Mathf.Abs(param.character.Position.x - CharacterManager.Instance.Player.Position.x) < param.character.CharacterInfo.attackRange)
-        {
-            fsm.Switch(CharacterState.Attack);
-        }
-        else
+        if (!animTime.Ticking)
         {
             fsm.Switch(CharacterState.Run);
         }
@@ -81,28 +89,38 @@ public class EnemyAttack : EnemyFSMState
 
     public override void OnExit()
     {
-        
     }
 }
 
 public class EnemyHurt : EnemyFSMState
 {
+    AnimTime animTime;
+
+    public override void OnInit(FSM fsm)
+    {
+        base.OnInit(fsm);
+        TryGetAnimTime(CharacterState.Hurt, out animTime);
+        Debug.Log("EnemyFSM： EnemyHurt");
+    }
+
     public override void OnEnter()
     {
         base.OnEnter();
         param.stateExchangable = false;
+        animTime.Start();
         FacePlayer();
     }
 
     public override void OnExecute()
     {
-        if (SeePlayer())
+        if (IsPlayerInPatrolRange())
         {
+            FacePlayer();
             fsm.Switch(CharacterState.Run);
         }
         else
         {
-            fsm.Switch(CharacterState.Guard);
+            fsm.Switch(CharacterState.Patrol);
         }
     }
 
@@ -116,13 +134,21 @@ public class EnemyMoveToPlayer : EnemyFSMState
     public override void OnEnter()
     {
         base.OnEnter();
-        param.character.Orientation = CharacterManager.Instance.Player.Position.x > param.character.Position.x;
+        Debug.Log("EnemyFSM： EnemyMoveToPlayer");
     }
 
     public override void OnExecute()
     {
-        Move();
-        if (Mathf.Abs(param.character.Position.x - CharacterManager.Instance.Player.Position.x) < param.character.CharacterInfo.attackRange)
+        FacePlayer();
+        if (IsPlayerInPatrolRange())
+        {
+            Move();
+        }
+        else
+        {
+            fsm.Switch(CharacterState.Patrol);
+        }
+        if ((param.character as Enemy).IsPlayerInAttackRange())
         {
             fsm.Switch(CharacterState.Attack);
         }

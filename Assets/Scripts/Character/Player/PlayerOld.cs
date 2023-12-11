@@ -113,4 +113,9 @@ public class PlayerOld : Character
         //    base.ExitFSM();
         //    jumpFSM.OnExit();
     }
+
+    public override void TakeDamage(int damage)
+    {
+        throw new NotImplementedException();
+    }
 }

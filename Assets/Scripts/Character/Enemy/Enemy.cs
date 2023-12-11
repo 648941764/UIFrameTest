@@ -66,7 +66,7 @@ public class Enemy : Character
                     }
                 },
                 [CharacterState.Hurt] = new AnimTime(
-                    450,
+                    300,
                     () => parameter.stateExchangable = true
                 )
             }
@@ -89,9 +89,35 @@ public class Enemy : Character
         fsm.OnStart();
     }
 
-    protected virtual void Attack()
+    public virtual void Attack()
     {
+        if (IsPlayerInAttackRange())
+        {
+            Manager.Player.TakeDamage(CharacterInfo.attackDamage0);
+        }
+    }
 
+    /// <summary>
+    /// ¼ì²âPlayerÊÇ·ñÔÚ¹¥»÷·¶Î§
+    /// </summary>
+    public virtual bool IsPlayerInAttackRange()
+    {
+        Character player = CharacterManager.Instance.Player;
+        if (player == null)
+        {
+            return false;
+        }
+
+        if (Orientation)
+        {
+            return player.Position.x > Position.x
+                && player.Position.x < Position.x + CharacterInfo.attackRange;
+        }
+        else
+        {
+            return player.Position.x < Position.x
+                && player.Position.x > Position.x - CharacterInfo.attackRange;
+        }
     }
 
     private void OnDrawGizmos()
@@ -120,5 +146,9 @@ public class Enemy : Character
         Gizmos.DrawLine(l, r);
 
         Gizmos.color = color;
+    }
+
+    public override void TakeDamage(int damage)
+    {
     }
 }

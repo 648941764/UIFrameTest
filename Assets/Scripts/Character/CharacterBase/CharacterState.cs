@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using TMPro;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public enum CharacterState
 {
@@ -70,6 +72,10 @@ public abstract class EnemyFSMState : IFSMState
     protected FSM fsm;
     public FSM FSM { get => fsm; }
 
+    protected Vector3 BornPosition => (param.character as Enemy).BornPosition;
+
+    protected CharacterInfo CharacterInfo => param.character.CharacterInfo;
+
     public virtual void OnInit(FSM fsm)
     {
         this.fsm = fsm;
@@ -106,6 +112,9 @@ public abstract class EnemyFSMState : IFSMState
         return false;
     }
 
+    /// <summary>
+    /// 面向Player
+    /// </summary>
     protected virtual void FacePlayer()
     {
         Character player = CharacterManager.Instance.Player;
@@ -117,7 +126,10 @@ public abstract class EnemyFSMState : IFSMState
         param.character.Orientation = !(param.character.Position.x > player.Position.x);
     }
 
-    protected virtual bool SeePlayer()
+    /// <summary>
+    /// 检测Player是否在巡逻范围
+    /// </summary>
+    protected virtual bool IsPlayerInSight()
     {
         Character player = CharacterManager.Instance.Player;
         if (player == null)
@@ -125,22 +137,59 @@ public abstract class EnemyFSMState : IFSMState
             return false;
         }
 
-        if (Mathf.Abs(player.Position.x - param.character.Position.x) > param.character.CharacterInfo.seeRange)//判断主角是否在敌人的可视范围内
+        // 这里需要判断是否在一个y轴上
+        if (Mathf.Abs(player.Position.y - param.character.Position.y) >= 1.5f)
         {
             return false;
         }
 
-        //这里需要判断是否在一个y轴上，需要修改下面方法
-        return param.character.CharacterInfo.orientation
-            ? player.Position.x > param.character.Position.x
-            : player.Position.x < param.character.Position.x;
+        if (!IsPlayerInPatrolRange())
+        {
+            // 不在巡逻范围内不检测
+            return false;
+        }
+
+        // 检测视野范围
+        if (param.character.Orientation)
+        {
+            // 朝右
+            return player.Position.x > param.character.Position.x
+                && player.Position.x <= param.character.Position.x + CharacterInfo.seeRange;
+        }
+        else
+        {
+            // 朝左
+            return player.Position.x < param.character.Position.x
+                && player.Position.x >= param.character.Position.x - CharacterInfo.seeRange;
+        }
     }
 
+    /// <summary>
+    /// 检测Player是否在巡逻范围
+    /// </summary>
+    protected virtual bool IsPlayerInPatrolRange()
+    {
+        Character player = CharacterManager.Instance.Player;
+        if (player == null)
+        {
+            return false;
+        }
+        return player.Position.x >= BornPosition.x - CharacterInfo.patrolRange 
+            && player.Position.x <= BornPosition.x + CharacterInfo.patrolRange;
+    }
+
+    /// <summary>
+    /// 移动
+    /// </summary>
     protected virtual void Move()
     {
         int sign = param.character.Orientation ? 1 : -1;
         Vector3 pos = param.character.Position;
         pos.x += sign * param.character.CharacterInfo.moveSpeed * Time.deltaTime;
+        if (pos.x < BornPosition.x - CharacterInfo.patrolRange || pos.x > BornPosition.x + CharacterInfo.patrolRange)
+        {
+            return;
+        }
         param.character.Position = pos;
     }
 }

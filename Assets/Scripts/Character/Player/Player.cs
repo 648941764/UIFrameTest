@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System;
+using System.Runtime.InteropServices;
 
 public class Player : Character
 {
+    public static int[] ignoreStates = new int[] { (int)CharacterState.AttackCooling };
+
     private readonly Dictionary<CharacterState, Action> _stateHandlers = new Dictionary<CharacterState, Action>();
 
     private float dt;
@@ -56,6 +59,21 @@ public class Player : Character
                         [295] = Attack2,
                     }
                 },
+                [CharacterState.Hurt] = new AnimTime(
+                    433,
+                    () =>
+                    {
+                        parameter.stateExchangable = true;
+                        DelState(CharacterState.Attack);
+                    }
+                )
+                {
+                    keyActions = new Dictionary<int, Action>()
+                    {
+                        [86] = Attack1,
+                        [295] = Attack2,
+                    }
+                },
             }
         };
 
@@ -85,7 +103,7 @@ public class Player : Character
         // 攻击
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            if (parameter.stateExchangable && !HasState(CharacterState.Attack) && !HasState(CharacterState.AttackCooling))
+            if (parameter.stateExchangable && !HasState(CharacterState.Attack) && !HasState(CharacterState.AttackCooling, false))
             {
                 AddState(CharacterState.Attack);
             }
@@ -104,7 +122,7 @@ public class Player : Character
 
         foreach (CharacterState state in _stateHandlers.Keys)
         {
-            if (HasState(state))
+            if (HasState(state, false))
             {
                 _stateHandlers[state]();
             }
@@ -168,7 +186,7 @@ public class Player : Character
         parameter.attckCoolTimer += dt;
         if (parameter.attckCoolTimer >= CharacterInfo.attackInterval)
         {
-            DelState(CharacterState.AttackCooling);
+            DelState(CharacterState.AttackCooling, false);
         }
     }
 
@@ -185,33 +203,40 @@ public class Player : Character
 
     }
 
-    private bool HasState(CharacterState state)
+    private bool HasState(CharacterState state, bool igonre = true)
     {
-        return (states & (1 << (int)state)) > 0;
+        int stateCopy = igonre ? StatesCopy() : states;
+        return (stateCopy & (1 << (int)state)) > 0;
     }
 
-    private void AddState(CharacterState state)
+    private void AddState(CharacterState state, bool igonre = true)
     {
-        if (!HasState(state) && !isDead)
+        if (!HasState(state, igonre) && !isDead)
         {
             states |= (1 << (int)state);
             OnAddState(state);
         }
     }
 
+    private int StatesCopy()
+    {
+        int i = -1;
+        int statesCopy = states;
+        while (++i < ignoreStates.Length)
+        {
+            statesCopy &= ~(1 << ignoreStates[i]);
+        }
+        return statesCopy;
+    }
+
     private bool HasAnyState()
     {
-        return states != 0;
+        return StatesCopy() != 0;
     }
 
-    private bool HasOnlyState(CharacterState state)
+    private void DelState(CharacterState state, bool igonre = true)
     {
-        return (states | (1 << (int)state)) == (int)state;
-    }
-
-    private void DelState(CharacterState state)
-    {
-        if (HasState(state))
+        if (HasState(state, igonre))
         {
             states &= ~(1 << (int)state);
             OnDelState(state);
@@ -270,6 +295,7 @@ public class Player : Character
                 }
             case CharacterState.Hurt:
                 {
+                    PlayStateAnim(state);
                     break;
                 }
             case CharacterState.Death:
@@ -283,7 +309,7 @@ public class Player : Character
 
     private void OnDelState(CharacterState state)
     {
-        if (!HasAnyState() || HasOnlyState(CharacterState.AttackCooling))
+        if (!HasAnyState())
         {
             AddState(CharacterState.Idle);
         }
@@ -311,7 +337,7 @@ public class Player : Character
                     {
                         PlayStateAnim(CharacterState.Jump);
                     }
-                    AddState(CharacterState.AttackCooling);
+                    AddState(CharacterState.AttackCooling, false);
                 }
                 break;
             case CharacterState.Hurt:
@@ -348,5 +374,9 @@ public class Player : Character
         Gizmos.DrawSphere(attack, 0.2f);
 
         Gizmos.color = color;
+    }
+
+    public override void TakeDamage(int damage)
+    {
     }
 }

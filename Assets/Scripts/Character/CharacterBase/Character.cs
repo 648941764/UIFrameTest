@@ -14,6 +14,8 @@ public class CharacterInfo
     public float patrolRange = 2.0f;
     public float seeRange = 2.0f;
     public float guardTime = 3f;
+    public int   attackDamage0 = 3;
+    public int   attackDamage1 = 5;
     // 朝X正方向位true
     public bool orientation = true;
 }
@@ -61,4 +63,6 @@ public abstract class Character : MonoBehaviour
     {
 
     }
+
+    public abstract void TakeDamage(int damage);
 }

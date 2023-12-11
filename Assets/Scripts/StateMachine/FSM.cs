@@ -144,4 +144,9 @@ public sealed class FSM
     {
         return (T)_currentStateName;
     }
+
+    public T GetCurrentState<T>() where T : IFSMState
+    {
+        return (T)_currentState;
+    }
 }
