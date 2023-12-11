@@ -204,6 +204,11 @@ public class Player : Character
         return states != 0;
     }
 
+    private bool HasOnlyState(CharacterState state)
+    {
+        return (states | (1 << (int)state)) == (int)state;
+    }
+
     private void DelState(CharacterState state)
     {
         if (HasState(state))
@@ -278,7 +283,7 @@ public class Player : Character
 
     private void OnDelState(CharacterState state)
     {
-        if (!HasAnyState())
+        if (!HasAnyState() || HasOnlyState(CharacterState.AttackCooling))
         {
             AddState(CharacterState.Idle);
         }
