@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Diagnostics.Contracts;
+using UnityEngine;
 
 public class EnemyGuard : EnemyFSMState
 {
@@ -26,6 +27,7 @@ public class EnemyGuard : EnemyFSMState
 
     public override void OnExit()
     {
+
     }
 }
 
