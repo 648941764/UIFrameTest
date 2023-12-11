@@ -10,6 +10,8 @@ public class EnemyGuard : EnemyFSMState
 
     public override void OnExecute()
     {
+        //当敌人走出巡逻范围的时候就放弃 
+        
         if (SeePlayer())
         {
             fsm.Switch(CharacterState.Run);
@@ -67,7 +69,6 @@ public class EnemyAttack : EnemyFSMState
     public override void OnExecute()
     {
         //需要添加一个条件，就是当角色在范围内才攻击
-        //fsm.Switch(CharacterState.Attack);
         if (Mathf.Abs(param.character.Position.x - CharacterManager.Instance.Player.Position.x) < param.character.CharacterInfo.attackRange)
         {
             fsm.Switch(CharacterState.Attack);

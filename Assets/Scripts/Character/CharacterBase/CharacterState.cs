@@ -124,11 +124,12 @@ public abstract class EnemyFSMState : IFSMState
             return false;
         }
 
-        if (Mathf.Abs(player.Position.x - param.character.Position.x) > param.character.CharacterInfo.seeRange)
+        if (Mathf.Abs(player.Position.x - param.character.Position.x) > param.character.CharacterInfo.seeRange)//判断主角是否在敌人的可视范围内
         {
             return false;
         }
 
+        //这里需要判断是否在一个y轴上，需要修改下面方法
         return param.character.CharacterInfo.orientation
             ? player.Position.x > param.character.Position.x
             : player.Position.x < param.character.Position.x;

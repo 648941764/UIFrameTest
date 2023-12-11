@@ -3700,6 +3700,10 @@ PrefabInstance:
       value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 765838089, guid: 51ffed1130528f8488020d2b4911fc6a, type: 3}
+      propertyPath: characterInfo.orientation
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 765838089, guid: 51ffed1130528f8488020d2b4911fc6a, type: 3}
       propertyPath: characterInfo.patrolRange
       value: 7
       objectReference: {fileID: 0}
@@ -3754,6 +3758,10 @@ PrefabInstance:
     - target: {fileID: 4019490480189202198, guid: 51ffed1130528f8488020d2b4911fc6a, type: 3}
       propertyPath: m_Name
       value: MushroomMonster
+      objectReference: {fileID: 0}
+    - target: {fileID: 4019490480189202198, guid: 51ffed1130528f8488020d2b4911fc6a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 51ffed1130528f8488020d2b4911fc6a, type: 3}
