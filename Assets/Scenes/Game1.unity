@@ -3689,7 +3689,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 765838089, guid: 51ffed1130528f8488020d2b4911fc6a, type: 3}
       propertyPath: characterInfo.seeRange
-      value: 4.46
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 765838089, guid: 51ffed1130528f8488020d2b4911fc6a, type: 3}
       propertyPath: characterInfo.moveSpeed
@@ -3697,7 +3697,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 765838089, guid: 51ffed1130528f8488020d2b4911fc6a, type: 3}
       propertyPath: characterInfo.attackRange
-      value: 1.2
+      value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: 765838089, guid: 51ffed1130528f8488020d2b4911fc6a, type: 3}
       propertyPath: characterInfo.patrolRange
@@ -9479,9 +9479,9 @@ GameObject:
   - component: {fileID: 5018562989535246403}
   - component: {fileID: 5018562989535246402}
   - component: {fileID: 5018562989535246401}
+  - component: {fileID: 5018562989535246416}
   - component: {fileID: 5018562989535246404}
   - component: {fileID: 5018562989535246415}
-  - component: {fileID: 5018562989535246416}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -9525,8 +9525,8 @@ MonoBehaviour:
   characterInfo:
     moveSpeed: 4
     jumpSpeed: 10
-    attackInterval: 0
-    attackRange: 1
+    attackInterval: 1
+    attackRange: 1.15
     patrolRange: 2
     seeRange: 2
     guardTime: 3
