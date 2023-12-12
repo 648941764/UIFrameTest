@@ -46,7 +46,7 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
         _enemyEntities.Clear();
     }
 
-    public void GetEnemiesOnSceneLoaded(List<Character> characters)
+    public void GetEnemiesOnSceneLoaded(List<Character> characters)//处理场景里所有角色类物体
     {
         characterUID = 1;
         for (int i = -1; ++i < characters.Count;)
