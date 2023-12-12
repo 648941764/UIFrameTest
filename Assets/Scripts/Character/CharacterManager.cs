@@ -56,10 +56,10 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
             {
                 case Enemy enemy:
                     {
-                        ++characterUID;
-                        enemy.Init(characterUID);
-                        CreateEnemyEntity(characterUID, enemy);
                         _characaters.Add(characterUID, enemy);
+                        CreateEnemyEntity(characterUID);
+                        enemy.Init(characterUID);
+                        ++characterUID;
                         break;
                     }
                 case Player player:
@@ -72,7 +72,7 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
         }
     }
 
-    private void CreateEnemyEntity(int uid, Enemy enemy)
+    private void CreateEnemyEntity(int uid)
     {
         CharacterEntity entity = new CharacterEntity();
         List<int> ids = DataManager.Instance.enemyDatas.Keys.ToList();
@@ -87,10 +87,6 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
         entity.SetGold(data.Gold);
         entity.SetExp(data.Exp);
         _enemyEntities.Add(uid, entity);
-        EventParam eventParam = new EventParam();
-        eventParam.eventName = EventType.OnHealthChange;
-        eventParam.Push(uid);
-        EventManager.Instance.Broadcast(eventParam);
     }
 
     public void CreatePlayerEntity()

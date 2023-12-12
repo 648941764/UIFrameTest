@@ -14,18 +14,18 @@ public sealed class EventManager : Singleton<EventManager>
 public class EventParam
 {
     public EventType eventName;
-    private Queue<object> @params = new Queue<object>();
+    private Queue<object> _params = new Queue<object>();
 
-    public int Count => @params.Count;
+    public int Count => _params.Count;
 
     public EventParam Push<T>(T param)
     {
-        @params.Enqueue(param);//添加元素
+        _params.Enqueue(param);//添加元素
         return this;
     }
 
     public T Get<T>()
     {
-        return (T)@params.Dequeue();//取出元素
+        return (T)_params.Dequeue();//取出元素
     }
 }

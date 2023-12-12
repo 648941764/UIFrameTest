@@ -24,6 +24,7 @@ public sealed class GameManager : SingletonMono<GameManager>
     protected override void OnAwake()
     {
         Application.targetFrameRate = 60;
+        DataManager.Instance.LoadDatas();
     }
 
     private void Start()
@@ -44,10 +45,11 @@ public sealed class GameManager : SingletonMono<GameManager>
 
     IEnumerator LoadScene(GameScene gameScene)
     {
+        AsyncOperation asyncOperation;
         if (levelScene != GameScene.Nothing)
         {
             CharacterManager.Instance.ClearEnemies();
-            AsyncOperation asyncOperation = SceneManager.UnloadSceneAsync((int)levelScene);
+            asyncOperation = SceneManager.UnloadSceneAsync((int)levelScene);
             while (!asyncOperation.isDone)
             {
                 yield return null;
@@ -58,7 +60,11 @@ public sealed class GameManager : SingletonMono<GameManager>
             CharacterManager.Instance.CreatePlayerEntity();
         }
         UIManager.Instance.Close<MainForm>();
-        SceneManager.LoadScene((int)gameScene, LoadSceneMode.Additive);
+        asyncOperation = SceneManager.LoadSceneAsync((int)gameScene, LoadSceneMode.Additive);
+        while (!asyncOperation.isDone)
+        {
+            yield return null;
+        }
         Scene scene = SceneManager.GetSceneAt((int)gameScene);
         GameObject[] objs = scene.GetRootGameObjects();
         List<Character> characters = new List<Character>();

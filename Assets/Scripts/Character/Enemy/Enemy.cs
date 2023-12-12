@@ -25,7 +25,10 @@ public class Enemy : Character
     {
         base.Init(uid);
         healthBar = GetComponentInChildren<HealthBar>();
-        healthBar.Init(UID);
+        if (healthBar)
+        {
+            healthBar.Init(UID);
+        }
         bornPosition = Position;
         Orientation = false;
         InitFSMParameter();
