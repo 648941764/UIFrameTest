@@ -8,7 +8,7 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public enum CharacterState
 {
-    None = 0, Idle, Run, Jump, Fall, Attack, AttackCooling, Hurt, Death, Guard, Patrol
+    None = 0, Idle, Run, Jump, Fall, Attack, AttackCooling, coolDown, Hurt, Death, Guard, Patrol
 }
 
 public class AnimTime
@@ -87,7 +87,7 @@ public abstract class EnemyFSMState : IFSMState
         string animName = param.stateClips[FSM.GetStateName<CharacterState>()];
         if (!string.IsNullOrEmpty(animName))
         {
-            param.animator.Play(animName);
+            param.animator.Play(animName);  
         }
     }
 
@@ -127,7 +127,7 @@ public abstract class EnemyFSMState : IFSMState
     }
 
     /// <summary>
-    /// 检测Player是否在巡逻范围
+    /// 检测Player是否在巡逻范围,让角色跑向Player
     /// </summary>
     protected virtual bool IsPlayerInSight()
     {
@@ -138,7 +138,7 @@ public abstract class EnemyFSMState : IFSMState
         }
 
         // 这里需要判断是否在一个y轴上
-        if (Mathf.Abs(player.Position.y - param.character.Position.y) >= 1.5f)
+        if (Mathf.Abs(player.Position.y - param.character.Position.y) >= 2.0f)
         {
             return false;
         }

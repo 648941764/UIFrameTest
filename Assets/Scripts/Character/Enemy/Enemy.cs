@@ -52,6 +52,8 @@ public class Enemy : Character
                 [CharacterState.Hurt] = "hurt",
                 [CharacterState.Death] = "death",
                 [CharacterState.Run] = "run",
+                [CharacterState.AttackCooling] = "idle",
+                [CharacterState.coolDown] = "idle"
             },
             animStates = new Dictionary<CharacterState, AnimTime>()
             {
@@ -84,6 +86,8 @@ public class Enemy : Character
             [CharacterState.Attack] = new EnemyAttack(),
             [CharacterState.Death] = new EnemyDeath(),
             [CharacterState.Run] = new EnemyMoveToPlayer(),
+            [CharacterState.AttackCooling] = new EnemyAttackCooling(),
+            [CharacterState.coolDown] = new EnemyCollDown()
         };
         fsm.Add(enemyStates);
         fsm.OnStart();

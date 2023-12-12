@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.Contracts;
+﻿
+using System.Diagnostics.Contracts;
 using UnityEngine;
 
 public class EnemyGuard : EnemyFSMState
@@ -7,7 +8,7 @@ public class EnemyGuard : EnemyFSMState
     {
         base.OnEnter();
         param.timer = 0f;
-        Debug.Log("EnemyFSM： EnemyGuard");
+        //Debug.Log("EnemyFSM： EnemyGuard");
     }
 
     public override void OnExecute()
@@ -37,9 +38,9 @@ public class EnemyPatrol : EnemyFSMState
     {
         base.OnEnter();
         param.patrolPosX = BornPosition.x + Random.Range(-CharacterInfo.patrolRange, CharacterInfo.patrolRange);
-        Debug.Log($"巡逻目标点：{param.patrolPosX}");
+        //Debug.Log($"巡逻目标点：{param.patrolPosX}");
         param.character.Orientation = param.patrolPosX >= param.character.Position.x;
-        Debug.Log("EnemyFSM： EnemyPatrol");
+        //Debug.Log("EnemyFSM： EnemyPatrol");
     }
 
     public override void OnExecute()
@@ -67,7 +68,6 @@ public class EnemyPatrol : EnemyFSMState
 public class EnemyAttack : EnemyFSMState
 {
     AnimTime animTime;
-
     public override void OnInit(FSM fsm)
     {
         base.OnInit(fsm);
@@ -79,13 +79,14 @@ public class EnemyAttack : EnemyFSMState
     {
         base.OnEnter();
         animTime.Start();
+        Debug.Log("EnemyFSM： EnemyAttack");
     }
 
     public override void OnExecute()
     {
         if (!animTime.Ticking)
         {
-            fsm.Switch(CharacterState.Run);
+            fsm.Switch(CharacterState.AttackCooling);
         }
     }
 
@@ -102,7 +103,7 @@ public class EnemyHurt : EnemyFSMState
     {
         base.OnInit(fsm);
         TryGetAnimTime(CharacterState.Hurt, out animTime);
-        Debug.Log("EnemyFSM： EnemyHurt");
+        //Debug.Log("EnemyFSM： EnemyHurt");
     }
 
     public override void OnEnter()
@@ -120,10 +121,6 @@ public class EnemyHurt : EnemyFSMState
             FacePlayer();
             fsm.Switch(CharacterState.Run);
         }
-        else
-        {
-            fsm.Switch(CharacterState.Patrol);
-        }
     }
 
     public override void OnExit()
@@ -136,7 +133,7 @@ public class EnemyMoveToPlayer : EnemyFSMState
     public override void OnEnter()
     {
         base.OnEnter();
-        Debug.Log("EnemyFSM： EnemyMoveToPlayer");
+        //Debug.Log("EnemyFSM： EnemyMoveToPlayer");
     }
 
     public override void OnExecute()
@@ -169,5 +166,47 @@ public class EnemyDeath : EnemyFSMState
 
     public override void OnExit()
     {
+    }
+}
+
+public class EnemyAttackCooling : EnemyFSMState
+{
+
+    public override void OnEnter()
+    {
+        base.OnEnter();
+        param.timer = 0;
+    }
+
+    public override void OnExecute()
+    {
+        param.timer += Time.deltaTime;
+        if (param.timer > CharacterInfo.attackInterval) 
+        {
+            fsm.Switch(CharacterState.Run);
+        }
+    }
+
+    public override void OnExit()
+    {
+
+    }
+}
+
+public class EnemyCollDown : EnemyFSMState
+{
+
+    public override void OnExecute()
+    {
+        param.timer = 0f;
+    }
+
+    public override void OnExit()
+    {
+        param.timer += Time.deltaTime;
+        if (param.timer > CharacterInfo.attackInterval)
+        {
+            fsm.Switch(CharacterState.Run);
+        }
     }
 }

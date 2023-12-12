@@ -10,6 +10,7 @@ public class CharacterInfo
     public float moveSpeed;
     public float jumpSpeed;
     public float attackInterval = 1.2f;
+    public float skillInterval = 3f;
     public float attackRange = 0.5f;
     public float patrolRange = 2.0f;
     public float seeRange = 2.0f;

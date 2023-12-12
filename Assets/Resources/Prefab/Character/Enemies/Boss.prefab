@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1806647473164843652
+--- !u!1 &3806696878424591517
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,10 +8,11 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1806647473164843651}
-  - component: {fileID: 1806647473164843650}
-  - component: {fileID: 1806647473164843653}
-  - component: {fileID: 8702904320520203551}
+  - component: {fileID: 3806696878424591514}
+  - component: {fileID: 3806696878424591515}
+  - component: {fileID: 3806696878424591516}
+  - component: {fileID: 6125027112305777414}
+  - component: {fileID: 3298494108759160343}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -19,27 +20,27 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1806647473164843651
+--- !u!4 &3806696878424591514
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1806647473164843652}
+  m_GameObject: {fileID: 3806696878424591517}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.273898, y: -1.3, z: 0}
+  m_LocalPosition: {x: 21.253988, y: -1.3682437, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &1806647473164843650
+--- !u!212 &3806696878424591515
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1806647473164843652}
+  m_GameObject: {fileID: 3806696878424591517}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -84,14 +85,14 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &1806647473164843653
+--- !u!95 &3806696878424591516
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1806647473164843652}
+  m_GameObject: {fileID: 3806696878424591517}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: ea73cbf9644656c49966d584f38a878b, type: 2}
@@ -105,16 +106,42 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!65 &8702904320520203551
+--- !u!65 &6125027112305777414
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1806647473164843652}
+  m_GameObject: {fileID: 3806696878424591517}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 2.4411635, y: 2.6740198, z: 0.2}
   m_Center: {x: -0.06716514, y: -0.35074812, z: 0}
+--- !u!114 &3298494108759160343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3806696878424591517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f1bddbd2e268ea4ba54a07e803d2891, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterInfo:
+    moveSpeed: 1.25
+    jumpSpeed: 0
+    attackInterval: 3
+    skillInterval: 3
+    attackRange: 1.2
+    patrolRange: 5.02
+    seeRange: 3.12
+    guardTime: 3
+    attackDamage0: 3
+    attackDamage1: 5
+    orientation: 1
+  _uid: 0
+  attackDamageTime: 0
