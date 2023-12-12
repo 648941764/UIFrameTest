@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System;
-using System.Runtime.InteropServices;
 
 public class Player : Character
 {
@@ -24,6 +23,9 @@ public class Player : Character
         rigidbody2D = GetComponent<Rigidbody2D>();
         InitParam();
         GameManager.Instance.TimeUpdateHandle += PlayerUpdate;
+        CameraController.Instance.player = transform;
+        CameraController.Instance.CalculateMoveRange();
+        CameraController.Instance.FocusPlayer();
     }
 
     private void InitParam()

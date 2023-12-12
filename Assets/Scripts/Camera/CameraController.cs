@@ -6,7 +6,7 @@ public class CameraController : SingletonMono<CameraController>
 {
     [SerializeField] Transform _leftPoint;
     [SerializeField] Transform _rightPoint;
-    [SerializeField] private Transform _player;
+    public Transform player;
     private float _smoothing = 3f;
     private Camera _cam;
     Vector3 _bottomLeft;
@@ -27,7 +27,6 @@ public class CameraController : SingletonMono<CameraController>
         {
             _cam = Camera.main;
         }
-        CalculateMoveRange();
     }
 
     private void LateUpdate()
@@ -93,7 +92,7 @@ public class CameraController : SingletonMono<CameraController>
 
     public void TestCamerMove()
     {
-        Vector3 playerPos = new Vector3(_player.position.x, transform.position.y, transform.position.z);
+        Vector3 playerPos = new Vector3(player.position.x, transform.position.y, transform.position.z);
         Vector3 difference = playerPos - _lastPlayerPos;
 
         //移动相机前先判断相机是否超过了那两个边界点
@@ -117,8 +116,8 @@ public class CameraController : SingletonMono<CameraController>
 
     public void CalculateMoveRange()
     {
-        Vector3 left = GameObject.Find("CameraStartPoint").transform.position;
-        Vector3 right = GameObject.Find("CameraEndCamera").transform.position;
+        Vector3 left = GameManager.Instance.RestrictLeft;
+        Vector3 right = GameManager.Instance.RestrictRight;
 
         float viewportWithHalf = _cam.orthographicSize * Screen.width / Screen.height;
 
@@ -130,17 +129,19 @@ public class CameraController : SingletonMono<CameraController>
         this.right = right.x - viewportWithHalf;
     }
 
-
-
     public void FocusPlayer()
     {
-        float xPos = _player.position.x;
-        if (xPos < left || xPos > right)
-        {
-            return;
-        }
+        float xPos = player.position.x;
         Vector3 pos = _cam.transform.position;
-        pos.x = _player.position.x;
+        if (xPos < left)
+        {
+            xPos = left;
+        }    
+        if (xPos > right)
+        {
+            xPos = right;
+        }
+        pos.x = xPos;
         _cam.transform.position = pos;
     }
 }

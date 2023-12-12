@@ -21,6 +21,11 @@ public sealed class GameManager : SingletonMono<GameManager>
 
     private GameScene levelScene = GameScene.Nothing;
 
+    private Transform[] cameraRestrictTrans = new Transform[2];
+
+    public Vector3 RestrictLeft => cameraRestrictTrans[0].position;
+    public Vector3 RestrictRight => cameraRestrictTrans[1].position;
+
     protected override void OnAwake()
     {
         Application.targetFrameRate = 60;
@@ -74,6 +79,11 @@ public sealed class GameManager : SingletonMono<GameManager>
             if (character)
             {
                 characters.Add(character);
+            }
+            if (objs[i].name == "CamerSportPoint")
+            {
+                cameraRestrictTrans[0] = objs[i].transform.GetChild(0);
+                cameraRestrictTrans[1] = objs[i].transform.GetChild(1);
             }
         }
         CharacterManager.Instance.GetEnemiesOnSceneLoaded(characters);
