@@ -8,7 +8,7 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public enum CharacterState
 {
-    None = 0, Idle, Run, Jump, Fall, Attack, AttackCooling, coolDown, Hurt, Death, Guard, Patrol
+    None = 0, Idle, Run, Jump, Fall, Attack, AttackCooling, CoolDown, Hurt, Death, Guard, Patrol
 }
 
 public class AnimTime

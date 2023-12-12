@@ -193,7 +193,7 @@ public class EnemyAttackCooling : EnemyFSMState
     }
 }
 
-public class EnemyCollDown : EnemyFSMState
+public class EnemyCoolDown : EnemyFSMState
 {
 
     public override void OnExecute()
