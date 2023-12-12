@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
 [CreateAssetMenu(fileName = "PlayerDatas", menuName = "Datas/PlayerDatas", order = 0)]
 public class PlayerDatas : ScriptableObject
 {
@@ -19,7 +17,7 @@ public class PlayerData
     public int level;
     public int exp;
     public int hp;
-    public int maxhp;
+    public int maxHp;
     public int maxExp;
     public int defence;
     public int gold;

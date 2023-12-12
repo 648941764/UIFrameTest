@@ -17,9 +17,9 @@ public class Player : Character
 
     private bool isDead => HasState(CharacterState.Death);
 
-    protected override void Init()
+    public override void Init(int uid)
     {
-        base.Init();
+        base.Init(uid);
         Manager.SetPlayer(this);
         rigidbody2D = GetComponent<Rigidbody2D>();
         InitParam();

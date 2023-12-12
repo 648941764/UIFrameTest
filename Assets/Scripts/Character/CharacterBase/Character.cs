@@ -7,6 +7,7 @@ using System;
 [Serializable]
 public class CharacterInfo
 {
+    public int   dataID;
     public float moveSpeed;
     public float jumpSpeed;
     public float attackInterval = 1.2f;
@@ -55,14 +56,9 @@ public abstract class Character : MonoBehaviour
         }
     }
 
-    private void Start()
+    public virtual void Init(int uid)
     {
-        Init();
-    }
-
-    protected virtual void Init()
-    {
-
+        _uid = uid;
     }
 
     public abstract void TakeDamage(int damage);

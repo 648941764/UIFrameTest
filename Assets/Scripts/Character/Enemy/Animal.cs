@@ -7,7 +7,6 @@ public class Animal : Enemy
 {
     protected override void InitFSMParameter()
     {
-    
         parameter = new CharacterParameter()
         {
             animator = GetComponent<Animator>(),

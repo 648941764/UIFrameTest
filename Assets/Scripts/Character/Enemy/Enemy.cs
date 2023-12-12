@@ -5,6 +5,9 @@ using System;
 
 public class Enemy : Character
 {
+    [SerializeField]
+    private HealthBar healthBar;
+
     protected FSM fsm;
 
     protected Vector3 bornPosition;
@@ -18,14 +21,11 @@ public class Enemy : Character
     /// <summary>
     /// π÷ŒÔ≤‚ ‘
     /// </summary>
-    protected override void Init()
+    public override void Init(int uid)
     {
-        base.Init();
-        Init(0);
-    }
-
-    public void Init(int uid)
-    {
+        base.Init(uid);
+        healthBar = GetComponentInChildren<HealthBar>();
+        healthBar.Init(UID);
         bornPosition = Position;
         Orientation = false;
         InitFSMParameter();
