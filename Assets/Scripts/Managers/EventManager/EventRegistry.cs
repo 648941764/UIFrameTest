@@ -32,9 +32,9 @@ public sealed class EventRegistry
         }
     }
 
-    public void Broadcast(EventType eventType)
+    public void Broadcast(EventParam eventParam)
     {
-        EventManager.Instance.Broadcast(eventType);
+        EventManager.Instance.Broadcast(eventParam);
     }
 
     public void ClearEvents()

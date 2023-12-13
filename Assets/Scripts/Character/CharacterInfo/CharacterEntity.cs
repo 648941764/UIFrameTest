@@ -43,6 +43,8 @@ public class CharacterEntity
     {
         int final = Mathf.Clamp(_health + value, 0, _maxHealth);
         _health = final;
+
+        EventManager.Instance.Broadcast(EventParam.Get(EventType.OnHealthChange, UID));
     }
 
     public void ChangeExp(int value)

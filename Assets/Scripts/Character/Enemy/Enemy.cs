@@ -30,7 +30,7 @@ public class Enemy : Character
         base.Init(uid);
         _boxCollider2D = GetComponent<BoxCollider2D>();
         healthBar = GetComponentInChildren<HealthBar>();
-        EventManager.Instance.Broadcast(EventType.OnHealthChange);
+        EventManager.Instance.Broadcast(EventParam.Get(EventType.OnHealthChange, uid));
         if (healthBar)
         {
             healthBar.Init(UID);
