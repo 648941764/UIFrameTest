@@ -41,9 +41,12 @@ public class CharacterEntity
 
     public void ChangeHealth(int value)
     {
-        int final = Mathf.Clamp(_health + value, 0, _maxHealth);
-        _health = final;
-
+        _health = Mathf.Clamp(_health + value, 0, _maxHealth);
+        if (_health == 0)
+        {
+            EventManager.Instance.Broadcast(EventParam.Get(EventType.OnDeath, UID));
+            return;
+        }
         EventManager.Instance.Broadcast(EventParam.Get(EventType.OnHealthChange, UID));
     }
 
