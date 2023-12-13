@@ -160,6 +160,12 @@ public class EnemyMoveToPlayer : EnemyFSMState
 
 public class EnemyDeath : EnemyFSMState
 {
+    public override void OnEnter()
+    {
+        base.OnEnter();
+        param.animStates[CharacterState.Death].Start();
+    }
+
     public override void OnExecute()
     {
     }

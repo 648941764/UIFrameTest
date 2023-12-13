@@ -30,7 +30,7 @@ public sealed class EventManager : Singleton<EventManager>
 public class EventParam
 {
     public EventType eventName;
-    private Queue<object> _params = new Queue<object>();
+    private readonly List<object> _params = new List<object>();
 
     public static readonly Stack<EventParam> pool = new Stack<EventParam>();
 
@@ -40,22 +40,26 @@ public class EventParam
 
     public EventParam Push(object param)
     {
-        _params.Enqueue(param);//添加元素
+        _params.Add(param);//添加元素
         return this;
     }
 
-    public T Get<T>()
+    public T Get<T>(int index)
     {
-        return (T)_params.Dequeue();//取出元素
+        if ((uint)index < _params.Count)
+        {
+            return (T)_params[index]; //取出元素
+        }
+        return default;
     }
 
-    public static EventParam Get(EventType eventType, params object[] @params)
+    public static EventParam Get(EventType eventType, params object[] eventParams)
     {
-        EventParam eventParam = pool.Count > 0 ? eventParam = pool.Pop() : new EventParam();
+        EventParam eventParam = pool.Count > 0 ? pool.Pop() : new EventParam();
         eventParam.eventName = eventType;
-        for (int i = -1; ++i < @params.Length;)
+        for (int i = -1; ++i < eventParams.Length;)
         {
-            eventParam.Push(@params[i]);
+            eventParam.Push(eventParams[i]);
         }
         return eventParam;
     }

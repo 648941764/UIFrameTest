@@ -25,6 +25,22 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
     {
         GameManager.Instance.UpdateHandle += CharacterUpdateHandle;
         GameManager.Instance.TimeUpdateHandle += TimeCharacterUpdateHandle;
+
+        EventManager.Instance.Add(OnCharacterDead);
+    }
+
+    private void OnCharacterDead(EventParam eventParam)
+    {
+        if (eventParam.eventName != EventType.OnEnemyDeath) { return; }
+
+        int uid = eventParam.Get<int>(0);
+        if (uid == PLAYER_ID)
+        {
+            // player dead
+            return;
+        }
+        _characaters[uid].FSM.Switch(CharacterState.Death);
+        _characaters[uid].FSM.OnExit();
     }
 
     public CharacterEntity GetEnemyEntity(int uid)
@@ -115,8 +131,14 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
         int direction = _player.Orientation ? 1 : -1;
         float attackRange = _player.Position.x + (_player.CharacterInfo.attackRange * direction);
         
-        foreach (var enemy in _characaters.Values)
+        foreach (var uid in _characaters.Keys)
         {
+            if (_enemyEntities[uid].IsDead())
+            {
+                continue;
+            }
+
+            Enemy enemy = _characaters[uid];
 
             if (Mathf.Abs(_player.Position.y - enemy.Position.y) > 1.6f)
             {

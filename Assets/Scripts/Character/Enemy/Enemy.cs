@@ -25,7 +25,6 @@ public class Enemy : Character
     {
         base.Init(uid);
         healthBar = GetComponentInChildren<HealthBar>();
-        EventManager.Instance.Broadcast(EventParam.Get(EventType.OnHealthChange, uid));
         if (healthBar)
         {
             healthBar.Init(UID);
@@ -74,7 +73,11 @@ public class Enemy : Character
                 [CharacterState.Hurt] = new AnimTime(
                     300,
                     () => parameter.stateExchangable = true
-                )
+                ),
+                [CharacterState.Death] = new AnimTime(
+                    1500,
+                    () => { gameObject.SetActivate(false); FSM.OnExit(); }
+                ),
             }
         };
     }
@@ -111,7 +114,7 @@ public class Enemy : Character
     public virtual bool IsPlayerInAttackRange()
     {
         Character player = CharacterManager.Instance.Player;
-        if (player == null)
+        if (player == null || CharacterManager.Instance.PlayerEntity.IsDead())
         {
             return false;
         }
@@ -157,8 +160,6 @@ public class Enemy : Character
 
         Gizmos.color = color;
     }
-
-  
 
     public override void TakeDamage(int damage)
     {

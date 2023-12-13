@@ -47,8 +47,7 @@ public class CharacterEntity
         if (_health == 0)
         {
             _dead = true;
-            EventManager.Instance.Broadcast(EventParam.Get(EventType.OnDeath, UID));
-            return;
+            EventManager.Instance.Broadcast(EventParam.Get(EventType.OnEnemyDeath, UID));
         }
         EventManager.Instance.Broadcast(EventParam.Get(EventType.OnHealthChange, UID));
     }

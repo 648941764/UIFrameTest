@@ -13,14 +13,12 @@ public class Player : Character
     private int states;
 
     private new Rigidbody2D rigidbody2D;
-    private BoxCollider2D _boxCollider2D;
 
     private bool isDead => HasState(CharacterState.Death);
 
     public override void Init(int uid)
     {
         base.Init(uid);
-        _boxCollider2D = GetComponent<BoxCollider2D>();
         Manager.SetPlayer(this);
         rigidbody2D = GetComponent<Rigidbody2D>();
         InitParam();
@@ -358,21 +356,13 @@ public class Player : Character
 
     private void Attack1()
     {
-        FindAttackTarget();
-        //CharacterEntity enemy = CharacterManager.Instance.GetEnemyEntity(_enemyUID);
-
-        //if (enemy != null)
-        //{
-        //    int damage = CharacterInfo.attackDamage1 - enemy.GetDefence();
-        //    enemy.ChangeHealth(damage);
-        //    //enemy.SetHealth(enemy.GetHealth() - damage);
-        //    EventManager.Instance.Broadcast(EventType.OnHealthChange);
-        //    Debug.Log(CharacterManager.Instance.GetEnemyEntity(_enemyUID).GetHealth());
-        //}
+        AttackApply();
+        Debug.Log("Attack 1");
     }
 
     private void Attack2()
     {
+        AttackApply();
         Debug.Log("Attack 2");
     }
 
@@ -394,15 +384,16 @@ public class Player : Character
     {
     }
 
-    public void FindAttackTarget()
+    public void AttackApply()
     {
         //首先判断角色方向，再找到角色攻击范围内是否
         List<Enemy> enemies = CharacterManager.Instance.FindInAttackRangeEnemies();
         foreach (var enemy in enemies)
         {
             CharacterEntity enemyEntity = CharacterManager.Instance.GetEnemyEntity(enemy.UID);
-            int damage = CharacterInfo.attackDamage1 - enemyEntity.GetDefence();
+            int damage = Mathf.Max(CharacterInfo.attackDamage1 - enemyEntity.GetDefence(), 1);
             enemyEntity.ChangeHealth(-damage);
+            enemy.FSM.Switch(CharacterState.Hurt);
         }
     }
 }

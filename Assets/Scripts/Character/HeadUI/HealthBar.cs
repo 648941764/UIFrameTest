@@ -31,7 +31,7 @@ public class HealthBar : MonoBehaviour
         {
             return;
         }
-        int uid = eventParam.Get<int>();
+        int uid = eventParam.Get<int>(0);
         if (uid != _uid)
         {
             return;
@@ -42,6 +42,8 @@ public class HealthBar : MonoBehaviour
     private void UpdateBar()
     {
         CharacterEntity entity = CharacterManager.Instance.GetEnemyEntity(_uid);
-        imgHp.fillAmount = (float)entity.GetHealth() / entity.GetMaxHealth();
+        int health = entity.GetHealth();
+        gameObject.SetActivate(health > 0);
+        imgHp.fillAmount = (float)health / entity.GetMaxHealth();
     }
 }

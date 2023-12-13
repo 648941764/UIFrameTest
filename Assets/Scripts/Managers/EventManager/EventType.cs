@@ -5,5 +5,5 @@ public enum EventType
     Example2,
     BackpackItemChange,
     OnHealthChange,
-    OnDeath,
+    OnEnemyDeath,
 }
