@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class MainForm : Form
 {
     [SerializeField] Button btnStart, btnStory, btnQuit;
-    [SerializeField] private List<RectTransform> _btnList = new List<RectTransform>();
+    private List<RectTransform> _btnList = new List<RectTransform>();
     private Color _normalColor;
     private Color _changeColor;
     private Vector3 _mousePos;
@@ -18,6 +18,10 @@ public class MainForm : Form
 
     private void Start()
     {
+        _btnList.Add(btnStart.transform as RectTransform);
+        _btnList.Add(btnStory.transform as RectTransform);
+        _btnList.Add(btnQuit.transform as RectTransform);
+
         _normalColor = btnStart.GetComponent<Image>().color;
         _changeColor = new Color(0.42f, 0.79f, 0.63f, 1f);
 
