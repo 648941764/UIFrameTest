@@ -44,7 +44,7 @@ public class Backpack
                 if (items[index] == null)
                 {
                     items[index] = new Item() { id = id, amount = amount };
-                    EventManager.Instance.Broadcast(new EventParam() { eventName = EventType.BackpackItemChange });
+                    EventManager.Instance.Broadcast(EventType.BackpackItemChange);
                     break;
                 }
             }
@@ -59,7 +59,7 @@ public class Backpack
             if (items[i] == item)
             {
                 items[i] = null;
-                EventManager.Instance.Broadcast(new EventParam() { eventName = EventType.BackpackItemChange });
+                EventManager.Instance.Broadcast(EventType.BackpackItemChange);
                 break;
             }
         }
@@ -80,7 +80,8 @@ public class Backpack
         items[target] = items[origin];
         items[origin] = item;
         UIManager.Instance.GetForm<BackpackForm>().RefreshSlotImage();
-        EventManager.Instance.Broadcast(new EventParam() { eventName = EventType.BackpackItemChange });
+        //EventManager.Instance.Broadcast(new EventParam() { eventName = EventType.BackpackItemChange });
+        EventManager.Instance.Broadcast(EventType.BackpackItemChange);
     }
 
     //public void UseItem(Item item, int amount)

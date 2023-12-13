@@ -11,14 +11,17 @@ public class Player : Character
     private float dt;
     private float _curJumpSpeed;
     private int states;
+    private int _enemyUID;
 
     private new Rigidbody2D rigidbody2D;
+    private BoxCollider2D _boxCollider2D;
 
     private bool isDead => HasState(CharacterState.Death);
 
     public override void Init(int uid)
     {
         base.Init(uid);
+        _boxCollider2D = GetComponent<BoxCollider2D>();
         Manager.SetPlayer(this);
         rigidbody2D = GetComponent<Rigidbody2D>();
         InitParam();
@@ -150,7 +153,7 @@ public class Player : Character
         Orientation = axisX > 0f;
         CameraController.Instance.FocusPlayer();
     }
-
+    
     private void JumpHandle()
     {
         if (_curJumpSpeed > 0.0f)
@@ -356,7 +359,19 @@ public class Player : Character
 
     private void Attack1()
     {
-        Debug.Log("Attack 1");
+        if (_enemyUID == default)
+        {
+            return;
+        }
+        CharacterEntity enemy = CharacterManager.Instance.GetEnemyEntity(_enemyUID);
+
+        if (enemy != null)
+        {
+            int damage = CharacterInfo.attackDamage1 - enemy.GetDefence();
+            enemy.SetHealth(enemy.GetHealth() - damage);
+            EventManager.Instance.Broadcast(EventType.OnHealthChange);
+            Debug.Log(CharacterManager.Instance.GetEnemyEntity(_enemyUID).GetHealth());
+        }
     }
 
     private void Attack2()
@@ -376,6 +391,20 @@ public class Player : Character
         Gizmos.DrawSphere(attack, 0.2f);
 
         Gizmos.color = color;
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        Enemy enemy = other.gameObject.GetComponent<Enemy>();
+
+        if (enemy == null)
+        {
+            return;
+        }
+        else
+        {
+            _enemyUID = enemy.UID;
+        }
     }
 
     public override void TakeDamage(int damage)

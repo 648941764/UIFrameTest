@@ -598,6 +598,10 @@ MonoBehaviour:
   btnStart: {fileID: 8202897180647430875}
   btnStory: {fileID: 8202897179927759187}
   btnQuit: {fileID: 8202897179845443617}
+  _btnList:
+  - {fileID: 8202897180647430872}
+  - {fileID: 8202897179927759184}
+  - {fileID: 8202897179845443622}
 --- !u!1 &8202897180405107219
 GameObject:
   m_ObjectHideFlags: 0

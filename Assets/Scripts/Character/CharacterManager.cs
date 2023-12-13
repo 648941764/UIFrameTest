@@ -16,6 +16,7 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
 
     public CharacterEntity PlayerEntity => _playerEntity;
 
+
     public event Action CharacterUpdateHandle;
     public event Action<float> TimeCharacterUpdateHandle;
 

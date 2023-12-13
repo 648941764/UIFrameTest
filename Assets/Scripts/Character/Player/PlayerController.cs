@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] Transform rayTrans;
 
-    [SerializeField] float rayDistance = 0.5f;
+    //[SerializeField] float rayDistance = 0.5f;
 
     void Start()
     {

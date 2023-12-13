@@ -25,7 +25,7 @@ public class Test : SingletonMono<Test>
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            EventManager.Instance.Broadcast(new EventParam() { eventName = EventType.Example });
+            EventManager.Instance.Broadcast(EventType.Example);
         }
 
         if (Input.GetKeyDown(KeyCode.B))
@@ -36,7 +36,7 @@ public class Test : SingletonMono<Test>
         if (Input.GetKeyDown(KeyCode.D))
         {
             Backpack.UseItem(Backpack.Items[1], 1);
-            EventManager.Instance.Broadcast(new EventParam() { eventName = EventType.BackpackItemChange });
+            EventManager.Instance.Broadcast(EventType.BackpackItemChange);
         }
 
         if (Input.GetKeyDown(KeyCode.C))

@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using static UnityEngine.EventSystems.EventTrigger;
+using UnityEditor;
 
 public class Enemy : Character
 {
     [SerializeField]
     private HealthBar healthBar;
+
+    private BoxCollider2D _boxCollider2D;
 
     protected FSM fsm;
 
@@ -24,7 +28,9 @@ public class Enemy : Character
     public override void Init(int uid)
     {
         base.Init(uid);
+        _boxCollider2D = GetComponent<BoxCollider2D>();
         healthBar = GetComponentInChildren<HealthBar>();
+        EventManager.Instance.Broadcast(EventType.OnHealthChange);
         if (healthBar)
         {
             healthBar.Init(UID);
@@ -154,6 +160,8 @@ public class Enemy : Character
 
         Gizmos.color = color;
     }
+
+  
 
     public override void TakeDamage(int damage)
     {
