@@ -8,8 +8,6 @@ public class Enemy : Character
     [SerializeField]
     private HealthBar healthBar;
 
-    private BoxCollider2D _boxCollider2D;
-
     protected FSM fsm;
 
     protected Vector3 bornPosition;
@@ -26,7 +24,6 @@ public class Enemy : Character
     public override void Init(int uid)
     {
         base.Init(uid);
-        _boxCollider2D = GetComponent<BoxCollider2D>();
         healthBar = GetComponentInChildren<HealthBar>();
         EventManager.Instance.Broadcast(EventParam.Get(EventType.OnHealthChange, uid));
         if (healthBar)
