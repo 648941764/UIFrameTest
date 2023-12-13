@@ -28,6 +28,7 @@ public class CharacterEntity
     public int GetAttack() => _attack;
     public int GetDefence() => _defence;
     public int GetGold() => _gold;
+    public bool IsDead() => _dead;
 
     public void SetID(int value) => _id = value;
     public void SetUID(int value) => _uid = value;
@@ -38,12 +39,14 @@ public class CharacterEntity
     public void SetAttack(int value) => _attack = value;
     public void SetDefence(int value) => _defence = value;
     public void SetGold(int value) => _gold = value;
+    public void SetAlive() => _dead = false;
 
     public void ChangeHealth(int value)
     {
         _health = Mathf.Clamp(_health + value, 0, _maxHealth);
         if (_health == 0)
         {
+            _dead = true;
             EventManager.Instance.Broadcast(EventParam.Get(EventType.OnDeath, UID));
             return;
         }

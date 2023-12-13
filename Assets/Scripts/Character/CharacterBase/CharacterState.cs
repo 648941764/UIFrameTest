@@ -132,7 +132,7 @@ public abstract class EnemyFSMState : IFSMState
     protected virtual bool IsPlayerInSight()
     {
         Character player = CharacterManager.Instance.Player;
-        if (player == null)
+        if (player == null || CharacterManager.Instance.PlayerEntity.IsDead())
         {
             return false;
         }
@@ -170,7 +170,7 @@ public abstract class EnemyFSMState : IFSMState
     protected virtual bool IsPlayerInPatrolRange()
     {
         Character player = CharacterManager.Instance.Player;
-        if (player == null)
+        if (player == null || CharacterManager.Instance.PlayerEntity.IsDead())
         {
             return false;
         }
