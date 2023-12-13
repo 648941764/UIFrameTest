@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using static UnityEngine.EventSystems.EventTrigger;
-using UnityEditor;
 
 public class Enemy : Character
 {
@@ -136,12 +134,14 @@ public class Enemy : Character
     private void OnDrawGizmos()
     {
         Color color = Gizmos.color;
+
         // π•ª˜∑∂Œß
         Gizmos.color = Color.red;
         Vector3 position = Position;
         Vector3 attack = position;
         attack.x += (Orientation ? 1 : -1) * CharacterInfo.attackRange;
         Gizmos.DrawSphere(attack, 0.2f);
+
         // ø… ”æ‡¿Î
         Gizmos.color = Color.green;
         Vector3 see = position;

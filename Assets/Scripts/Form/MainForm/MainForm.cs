@@ -17,7 +17,6 @@ public class MainForm : Form
     private Vector3 _mousePos;
     private bool _needChange;
     
-
     private void Start()
     {
         _btnList.Add(btnStart.transform as RectTransform);
@@ -96,7 +95,4 @@ public class MainForm : Form
         }
         return -1;
     }
-
-
-
 }
