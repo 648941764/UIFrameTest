@@ -358,6 +358,7 @@ public class Player : Character
 
     private void Attack1()
     {
+        FindAttackTarget();
         //CharacterEntity enemy = CharacterManager.Instance.GetEnemyEntity(_enemyUID);
 
         //if (enemy != null)
@@ -401,6 +402,7 @@ public class Player : Character
         {
             CharacterEntity enemyEntity = CharacterManager.Instance.GetEnemyEntity(enemy.UID);
             int damage = CharacterInfo.attackDamage1 - enemyEntity.GetDefence();
+            enemyEntity.ChangeHealth(-damage);
         }
     }
 }

@@ -38,7 +38,7 @@ public class EventParam
 
     public int Count => _params.Count;
 
-    public EventParam Push<T>(T param)
+    public EventParam Push(object param)
     {
         _params.Enqueue(param);//Ìí¼ÓÔªËØ
         return this;
