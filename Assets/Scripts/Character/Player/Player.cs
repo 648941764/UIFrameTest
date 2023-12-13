@@ -392,4 +392,9 @@ public class Player : Character
     public override void TakeDamage(int damage)
     {
     }
+
+    public void FindAttackTarget()
+    {
+        //首先判断角色方向，再找到角色攻击范围内的物体
+    }
 }

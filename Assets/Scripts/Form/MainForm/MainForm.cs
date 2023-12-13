@@ -11,9 +11,11 @@ public class MainForm : Form
 {
     [SerializeField] Button btnStart, btnStory, btnQuit;
     private List<RectTransform> _btnList = new List<RectTransform>();
+    private List<Image> _imaList = new List<Image>();
     private Color _normalColor;
     private Color _changeColor;
     private Vector3 _mousePos;
+    private bool _needChange;
     
 
     private void Start()
@@ -21,6 +23,10 @@ public class MainForm : Form
         _btnList.Add(btnStart.transform as RectTransform);
         _btnList.Add(btnStory.transform as RectTransform);
         _btnList.Add(btnQuit.transform as RectTransform);
+
+        _imaList.Add(btnStart.image);
+        _imaList.Add(btnStory.image);
+        _imaList.Add(btnQuit.image);
 
         _normalColor = btnStart.GetComponent<Image>().color;
         _changeColor = new Color(0.42f, 0.79f, 0.63f, 1f);
@@ -36,15 +42,20 @@ public class MainForm : Form
         _mousePos = Input.mousePosition;
         int index = FindNearestBtnIndex(_mousePos);
 
-        foreach (var btn in _btnList)
+        if (_needChange) 
         {
-            btn.GetComponent<Image>().color = _normalColor;
+            foreach (var image in _imaList)
+            {
+                image.color = _normalColor;
+            }
+            _needChange = false;
+            
         }
 
         if (index >= 0)
         {
-            RectTransform rect = _btnList[index];
-            rect.GetComponent<Image>().color = _changeColor;
+            _imaList[index].color = _changeColor;
+            _needChange = true;
         }
     }
 
