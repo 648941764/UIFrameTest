@@ -88,6 +88,7 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
         entity.SetHealth(data.hp);
         entity.SetGold(data.Gold);
         entity.SetExp(data.Exp);
+        entity.SetAlive();
         _enemyEntities.Add(uid, entity);
     }
 
@@ -104,6 +105,7 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
             _playerEntity.SetMaxHealth(data.maxHp);
             _playerEntity.SetLevel(1);
             _playerEntity.SetExp(0);
+            _playerEntity.SetAlive();
         }
     }
     
