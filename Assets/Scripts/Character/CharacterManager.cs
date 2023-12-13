@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public sealed class CharacterManager : SingletonMono<CharacterManager>
 {
@@ -105,4 +106,30 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
             _playerEntity.SetExp(0);
         }
     }
+    
+    public List<Enemy> FindInAttackRangeEnemies()
+    {
+        List<Enemy> list = new List<Enemy>();
+        int direction = _player.Orientation ? 1 : -1;
+        float attackRange = _player.Position.x + (_player.CharacterInfo.attackRange * direction);
+        
+        foreach (var enemy in _characaters.Values)
+        {
+
+            if (Mathf.Abs(_player.Position.y - enemy.Position.y) > 1.6f)
+            {
+                continue;
+            }
+
+            if (_player.Orientation && enemy.Position.x > _player.Position.x && enemy.Position.x < attackRange)
+            {
+                list.Add(enemy);
+            }
+            else if (!_player.Orientation && enemy.Position.x < _player.Position.x && enemy.Position.x > attackRange)
+            {
+                list.Add(enemy);
+            }
+        }
+        return list;
+    } 
 }

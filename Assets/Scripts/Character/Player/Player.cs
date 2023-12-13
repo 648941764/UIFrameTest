@@ -395,6 +395,12 @@ public class Player : Character
 
     public void FindAttackTarget()
     {
-        //首先判断角色方向，再找到角色攻击范围内的物体
+        //首先判断角色方向，再找到角色攻击范围内是否
+        List<Enemy> enemies = CharacterManager.Instance.FindInAttackRangeEnemies();
+        foreach (var enemy in enemies)
+        {
+            CharacterEntity enemyEntity = CharacterManager.Instance.GetEnemyEntity(enemy.UID);
+            int damage = CharacterInfo.attackDamage1 - enemyEntity.GetDefence();
+        }
     }
 }
