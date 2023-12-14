@@ -2,27 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class HealthForm : Form
 {
-    [SerializeField] private Image _imaHeatlthBuffer, _imaHealth;
+    [SerializeField] private Image _imgHeatlthBuffer, _imgHealth;
     private int _uid;
     private bool _isHealthChange = true;
     private CharacterEntity entity;
-
-    private void OnEnable()
+    private void Start()
     {
         _uid = CharacterManager.Instance.Player.UID;
         entity = CharacterManager.Instance.PlayerEntity;
         EventManager.Instance.Add(OnPlayerHealthChange);
-        GameManager.Instance.UpdateHandle += UpdateHeathBar;
+        GameManager.Instance.UpdateHandle += UpdateHealthBar;
     }
 
-    private void OnDisable()
-    {
-        EventManager.Instance.Del(OnPlayerHealthChange);
-        GameManager.Instance.UpdateHandle -= UpdateHeathBar;
-    }
 
     private void OnPlayerHealthChange(EventParam eventParam)
     {
@@ -38,7 +33,7 @@ public class HealthForm : Form
         _isHealthChange = true;
     }
 
-    private void UpdateHeathBar()
+    private void UpdateHealthBar()
     {
         if (!_isHealthChange)
         {
@@ -47,17 +42,18 @@ public class HealthForm : Form
         
         int health = entity.GetHealth();
         float tempFillAmount = (float)health / entity.GetMaxHealth();
-        _imaHealth.fillAmount = tempFillAmount;
+        _imgHealth.fillAmount = tempFillAmount;
 
-        if(_imaHeatlthBuffer.fillAmount > _imaHealth.fillAmount)
+        if(_imgHeatlthBuffer.fillAmount > _imgHealth.fillAmount)
         {
-            _imaHeatlthBuffer.fillAmount -= Time.deltaTime;
+            _imgHeatlthBuffer.fillAmount -= Time.deltaTime;
         }
         else
         {
-            _imaHeatlthBuffer.fillAmount = _imaHealth.fillAmount;
+            _imgHeatlthBuffer.fillAmount = _imgHealth.fillAmount;
             _isHealthChange = false;
         }
 
     }
+
 }

@@ -9,9 +9,6 @@ public class GameOverForm : Form
 
     private void Start()
     {
-        _btnTry = GetComponent<Button>();
-        _btnQuit = GetComponent<Button>();
-
         _btnTry.onClick.AddListener(OnBtnTryClicked);
         _btnQuit.onClick.AddListener(OnBtnQuitCliked);
     }
@@ -34,6 +31,6 @@ public class GameOverForm : Form
 
     private void OnBtnTryClicked()//”–¥˝…Ã»∂
     {
-
+        Debug.Log("1");
     }
 }
