@@ -439,5 +439,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   formLayer: 0
-  _imaHeatlthBuffer: {fileID: 5010571224513906886}
-  _imaHealth: {fileID: 5010571224282431557}
+  _imgHeatlthBuffer: {fileID: 5010571224513906886}
+  _imgHealth: {fileID: 5010571224282431557}

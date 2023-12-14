@@ -125,7 +125,8 @@ public sealed class FSM
         }
 
         GameManager.Instance.UpdateHandle -= OnExecute;
-        _parameter.running = false; 
+        _parameter.running = false;
+        _states.Clear();
         _currentState.OnExit();
     }
 

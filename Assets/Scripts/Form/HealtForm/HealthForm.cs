@@ -53,7 +53,6 @@ public class HealthForm : Form
             _imgHeatlthBuffer.fillAmount = _imgHealth.fillAmount;
             _isHealthChange = false;
         }
-
     }
 
 }

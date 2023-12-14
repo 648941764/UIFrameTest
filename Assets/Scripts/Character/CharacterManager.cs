@@ -18,7 +18,6 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
 
     public CharacterEntity PlayerEntity => _playerEntity;
 
-
     public event Action CharacterUpdateHandle;
     public event Action<float> TimeCharacterUpdateHandle;
 
@@ -62,6 +61,10 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
 
     public void ClearEnemies()
     {
+        foreach (var character in _characaters.Values)
+        {
+            character.FSM.OnExit();
+        }
         _characaters.Clear();
         _enemyEntities.Clear();
     }
@@ -112,8 +115,8 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
 
     public void CreatePlayerEntity()
     {
-        //if (_playerEntity == null)
-        //{
+        if (_playerEntity == null)
+        {
             PlayerData data = DataManager.Instance.playerDatas[PLAYER_ID];
             _playerEntity.SetID(data.id);
             _playerEntity.SetUID(PLAYER_ID);
@@ -124,7 +127,7 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
             _playerEntity.SetLevel(1);
             _playerEntity.SetExp(0);
             _playerEntity.SetAlive();
-        //}
+        }
     }
     
     public List<Enemy> FindInAttackRangeEnemies()
