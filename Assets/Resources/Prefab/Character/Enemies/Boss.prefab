@@ -146,7 +146,8 @@ MonoBehaviour:
     attackDamage1: 5
     orientation: 1
   _uid: 0
-  attackDamageTime: 0
+  healthBar: {fileID: 0}
+  attackDamageTime: 276
 --- !u!1001 &5413745343160549383
 PrefabInstance:
   m_ObjectHideFlags: 0

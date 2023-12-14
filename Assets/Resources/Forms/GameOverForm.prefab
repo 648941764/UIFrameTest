@@ -170,6 +170,7 @@ GameObject:
   - component: {fileID: 183882529440052820}
   - component: {fileID: 183882529440052821}
   - component: {fileID: 183882529440052822}
+  - component: {fileID: 1047434634225018808}
   m_Layer: 5
   m_Name: TryBtn
   m_TagString: Untagged
@@ -279,6 +280,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1047434634225018808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 183882529440052816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11a1bacb5d4820842948cd7e7e6af8ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &183882529496638600
 GameObject:
   m_ObjectHideFlags: 0
@@ -449,6 +462,7 @@ GameObject:
   - component: {fileID: 183882529946119915}
   - component: {fileID: 183882529946119924}
   - component: {fileID: 183882529946119925}
+  - component: {fileID: 4209804559744713439}
   m_Layer: 5
   m_Name: QuitBtn
   m_TagString: Untagged
@@ -558,6 +572,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4209804559744713439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 183882529946119927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11a1bacb5d4820842948cd7e7e6af8ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &183882530508649410
 GameObject:
   m_ObjectHideFlags: 0
@@ -647,6 +673,7 @@ GameObject:
   - component: {fileID: 183882530539422973}
   - component: {fileID: 183882530539422974}
   - component: {fileID: 183882530539422975}
+  - component: {fileID: 5175183137091422987}
   m_Layer: 5
   m_Name: GameOverForm
   m_TagString: Untagged
@@ -737,3 +764,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &5175183137091422987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 183882530539422968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6e576b0b5a7b7846be26af715b164b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  formLayer: 0
+  _btnTry: {fileID: 183882529440052822}
+  _btnQuit: {fileID: 183882529946119925}

@@ -43,6 +43,7 @@ public class Player : Character
                 [CharacterState.Death] = "death",
                 [CharacterState.Jump] = "jump",
                 [CharacterState.Fall] = "fall",
+                [CharacterState.Hurt] = "hurt"
             },
             animStates = new Dictionary<CharacterState, AnimTime>()
             {
@@ -61,25 +62,44 @@ public class Player : Character
                         [295] = Attack2,
                     }
                 },
+
                 [CharacterState.Hurt] = new AnimTime(
                     433,
                     () =>
                     {
+                        DelState(CharacterState.Hurt);
                         parameter.stateExchangable = true;
-                        DelState(CharacterState.Attack);
                     }
                 )
                 {
                     keyActions = new Dictionary<int, Action>()
                     {
-                        [86] = Attack1,
-                        [295] = Attack2,
+                        [86] = () => { Debug.Log("玩家受伤"); }
+                    }
+                },
+
+                [CharacterState.Death] = new AnimTime(
+                    417,
+                    () =>
+                    {
+                        DelState(CharacterState.Hurt);
+                        //parameter.stateExchangable = true;
+                        this.gameObject.SetActive(false);
+                        UIManager.Instance.Close<HealthForm>();
+                        UIManager.Instance.Open<GameOverForm>();
+                    }
+                )
+                {
+                    keyActions = new Dictionary<int, Action>()
+                    {
+                        [417] = () => { Debug.Log("玩家死亡"); }
                     }
                 },
             }
         };
 
         _stateHandlers.Add(CharacterState.Idle, IdleHandle);
+        _stateHandlers.Add(CharacterState.Hurt, HurtHandle);
         _stateHandlers.Add(CharacterState.Run, RunHandle);
         _stateHandlers.Add(CharacterState.Jump, JumpHandle);
         _stateHandlers.Add(CharacterState.Attack, AttackHandle);
@@ -192,6 +212,11 @@ public class Player : Character
         }
     }
 
+    private void HurtHandle()
+    {
+
+    }
+
     private void FallHandle()
     {
         if (rigidbody2D.velocity.y == 0f)
@@ -202,7 +227,6 @@ public class Player : Character
 
     private void DeathHandle()
     {
-
     }
 
     private bool HasState(CharacterState state, bool igonre = true)
@@ -297,11 +321,15 @@ public class Player : Character
                 }
             case CharacterState.Hurt:
                 {
+                    parameter.stateExchangable = false;
+                    parameter.animStates[CharacterState.Hurt].Start();
                     PlayStateAnim(state);
                     break;
                 }
             case CharacterState.Death:
                 {
+                    parameter.stateExchangable = false;
+                    parameter.animStates[CharacterState.Death].Start();
                     PlayStateAnim(state);
                     states = (1 << (int)CharacterState.Death);
                     break;
@@ -343,8 +371,14 @@ public class Player : Character
                 }
                 break;
             case CharacterState.Hurt:
+                {
+                    parameter.animStates[CharacterState.Hurt].Break();
+                }
                 break;
             case CharacterState.Death:
+                {
+                    parameter.animStates[CharacterState.Hurt].Break();
+                }
                 break;
         }
     }
@@ -356,13 +390,13 @@ public class Player : Character
 
     private void Attack1()
     {
-        AttackApply();
+        AttackApply(CharacterInfo.attackDamage0);
         Debug.Log("Attack 1");
     }
 
     private void Attack2()
     {
-        AttackApply();
+        AttackApply(CharacterInfo.attackDamage1);
         Debug.Log("Attack 2");
     }
 
@@ -382,16 +416,40 @@ public class Player : Character
 
     public override void TakeDamage(int damage)
     {
+        CharacterEntity player = CharacterManager.Instance.PlayerEntity;
+        int actualDamage = Mathf.Max(damage - player.GetDefence(), 1);
+        player.ChangeHealth(-actualDamage);
+
+        if (!HasState(CharacterState.Hurt))
+        {
+            if (HasState(CharacterState.Run))
+            {
+                DelState(CharacterState.Run);
+            }
+            AddState(CharacterState.Hurt);
+        }
     }
 
-    public void AttackApply()
+    public void OnPlayerDeath()
+    {
+        if (!HasState(CharacterState.Death))
+        {
+            if (HasState(CharacterState.Run))
+            {
+                DelState(CharacterState.Run);
+            }
+            AddState(CharacterState.Death);
+        }
+    } 
+
+    public void AttackApply(int attackDamage)
     {
         //首先判断角色方向，再找到角色攻击范围内是否
         List<Enemy> enemies = CharacterManager.Instance.FindInAttackRangeEnemies();
         foreach (var enemy in enemies)
         {
             CharacterEntity enemyEntity = CharacterManager.Instance.GetEnemyEntity(enemy.UID);
-            int damage = Mathf.Max(CharacterInfo.attackDamage1 - enemyEntity.GetDefence(), 1);
+            int damage = Mathf.Max(attackDamage - enemyEntity.GetDefence(), 1);
             enemyEntity.ChangeHealth(-damage);
             enemy.FSM.Switch(CharacterState.Hurt);
         }
