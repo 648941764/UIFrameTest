@@ -3764,7 +3764,7 @@ Transform:
   - {fileID: 778048337}
   - {fileID: 532860540}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &642592069
 GameObject:
@@ -8149,6 +8149,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3298494108759160343, guid: 2be541f1181ae6c43b035c7b45a9f4b2, type: 3}
+      propertyPath: attackDamageTime
+      value: 70
+      objectReference: {fileID: 0}
     - target: {fileID: 3806696878424591514, guid: 2be541f1181ae6c43b035c7b45a9f4b2, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -9525,6 +9529,14 @@ PrefabInstance:
     - target: {fileID: 4946669531318649702, guid: 51ffed1130528f8488020d2b4911fc6a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8317586598756032383, guid: 51ffed1130528f8488020d2b4911fc6a, type: 3}
+      propertyPath: characterInfo.attackRange
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8317586598756032383, guid: 51ffed1130528f8488020d2b4911fc6a, type: 3}
+      propertyPath: characterInfo.attackInterval
+      value: 1.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 51ffed1130528f8488020d2b4911fc6a, type: 3}

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5010571224282431554}
   - component: {fileID: 5010571224282431556}
   - component: {fileID: 5010571224282431557}
+  - component: {fileID: 6880676227884920174}
   m_Layer: 5
   m_Name: Hp
   m_TagString: Untagged
@@ -75,6 +76,27 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!223 &6880676227884920174
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5010571224282431555}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1 &5010571224451915965
 GameObject:
   m_ObjectHideFlags: 0
@@ -162,7 +184,7 @@ GameObject:
   - component: {fileID: 5010571224513906873}
   - component: {fileID: 5010571224513906886}
   m_Layer: 5
-  m_Name: HPTemp
+  m_Name: HpBuffer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -312,6 +334,7 @@ GameObject:
   - component: {fileID: 5010571225361378161}
   - component: {fileID: 5010571225361378174}
   - component: {fileID: 5010571225361378175}
+  - component: {fileID: 7945851338991939898}
   m_Layer: 5
   m_Name: HealthForm
   m_TagString: Untagged
@@ -403,3 +426,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &7945851338991939898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5010571225361378172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b19fb4b380ba094cbf4aa47d3d6b202, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  formLayer: 0
+  _imaHeatlthBuffer: {fileID: 5010571224513906886}
+  _imaHealth: {fileID: 5010571224282431557}

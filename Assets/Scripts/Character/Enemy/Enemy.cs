@@ -74,6 +74,7 @@ public class Enemy : Character
                     300,
                     () => parameter.stateExchangable = true
                 ),
+
                 [CharacterState.Death] = new AnimTime(
                     1500,
                     () => { gameObject.SetActivate(false); FSM.OnExit(); }
@@ -104,7 +105,8 @@ public class Enemy : Character
     {
         if (IsPlayerInAttackRange())
         {
-            Manager.Player.TakeDamage(CharacterInfo.attackDamage0);
+            //Manager.Player.TakeDamage(CharacterInfo.attackDamage0);
+            Manager.Player.TakeDamage(CharacterManager.Instance.GetEnemyEntity(UID).GetAttack());
         }
     }
 

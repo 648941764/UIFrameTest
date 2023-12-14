@@ -72,7 +72,7 @@ public class EventParam
     }
 }
 
-public class EventParamPool<T> where T : new()
+public class ObjectPool<T> where T : new()
 {
     private Queue<T> _pool = new Queue<T>();
 

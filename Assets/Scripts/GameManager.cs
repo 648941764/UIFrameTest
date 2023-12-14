@@ -88,5 +88,6 @@ public sealed class GameManager : SingletonMono<GameManager>
         }
         CharacterManager.Instance.GetEnemiesOnSceneLoaded(characters);
         levelScene = gameScene;
+        UIManager.Instance.Open<HealthForm>();
     }
 }

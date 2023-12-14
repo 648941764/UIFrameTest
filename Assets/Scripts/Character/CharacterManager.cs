@@ -13,6 +13,7 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
     private readonly CharacterEntity _playerEntity = new CharacterEntity();
 
     private Player _player;
+
     public Player Player => _player;
 
     public CharacterEntity PlayerEntity => _playerEntity;
@@ -36,7 +37,8 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
         int uid = eventParam.Get<int>(0);
         if (uid == PLAYER_ID)
         {
-            // player dead
+            _player.OnPlayerDeath();
+            //UIManager.Instance.Close<HealthForm>();
             return;
         }
         _characaters[uid].FSM.Switch(CharacterState.Death);
@@ -110,8 +112,8 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
 
     public void CreatePlayerEntity()
     {
-        if (_playerEntity == null)
-        {
+        //if (_playerEntity == null)
+        //{
             PlayerData data = DataManager.Instance.playerDatas[PLAYER_ID];
             _playerEntity.SetID(data.id);
             _playerEntity.SetUID(PLAYER_ID);
@@ -122,7 +124,7 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
             _playerEntity.SetLevel(1);
             _playerEntity.SetExp(0);
             _playerEntity.SetAlive();
-        }
+        //}
     }
     
     public List<Enemy> FindInAttackRangeEnemies()
