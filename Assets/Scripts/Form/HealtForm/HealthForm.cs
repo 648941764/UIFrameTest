@@ -10,12 +10,21 @@ public class HealthForm : Form
     private int _uid;
     private bool _isHealthChange = true;
     private CharacterEntity entity;
-    private void Start()
+
+    protected override void OnOpen()
     {
+        base.OnOpen();
         _uid = CharacterManager.Instance.Player.UID;
         entity = CharacterManager.Instance.PlayerEntity;
-        EventManager.Instance.Add(OnPlayerHealthChange);
-        GameManager.Instance.UpdateHandle += UpdateHealthBar;
+        AddEvent(OnPlayerHealthChange);
+
+        _imgHealth.fillAmount = (float)entity.GetHealth() / entity.GetMaxHealth();
+    }
+
+    protected override void OnClose()
+    {
+        base.OnClose();
+        DelEvent(OnPlayerHealthChange);
     }
 
 
@@ -30,29 +39,12 @@ public class HealthForm : Form
         {
             return;
         }
-        _isHealthChange = true;
-    }
-
-    private void UpdateHealthBar()
-    {
-        if (!_isHealthChange)
-        {
-            return;
-        }
-        
         int health = entity.GetHealth();
+
         float tempFillAmount = (float)health / entity.GetMaxHealth();
-        _imgHealth.fillAmount = tempFillAmount;
-
-        if(_imgHeatlthBuffer.fillAmount > _imgHealth.fillAmount)
-        {
-            _imgHeatlthBuffer.fillAmount -= Time.deltaTime;
-        }
-        else
-        {
-            _imgHeatlthBuffer.fillAmount = _imgHealth.fillAmount;
-            _isHealthChange = false;
-        }
+        DOTween.To(
+            () => _imgHealth.fillAmount,
+            _ => _imgHealth.fillAmount = _,
+            tempFillAmount, 2f);
     }
-
 }

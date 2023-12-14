@@ -45,6 +45,7 @@ public sealed class GameManager : SingletonMono<GameManager>
 
     public void StartGame()
     {
+        CharacterManager.Instance.CreatePlayerEntity();
         StartCoroutine(LoadScene(GameScene.Level1));
     }
 
@@ -60,10 +61,7 @@ public sealed class GameManager : SingletonMono<GameManager>
                 yield return null;
             }
         }
-        else
-        {
-            CharacterManager.Instance.CreatePlayerEntity();
-        }
+        
         UIManager.Instance.Close<MainForm>();
         asyncOperation = SceneManager.LoadSceneAsync((int)gameScene, LoadSceneMode.Additive);
         while (!asyncOperation.isDone)
@@ -88,6 +86,5 @@ public sealed class GameManager : SingletonMono<GameManager>
         }
         CharacterManager.Instance.GetEnemiesOnSceneLoaded(characters);
         levelScene = gameScene;
-        UIManager.Instance.Open<HealthForm>();
     }
 }

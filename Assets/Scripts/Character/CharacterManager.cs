@@ -89,6 +89,7 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
                     {
                         player.Init(PLAYER_ID);
                         _player = player;
+                        UIManager.Instance.Open<HealthForm>();
                         break;
                     }
             }
@@ -115,19 +116,16 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
 
     public void CreatePlayerEntity()
     {
-        if (_playerEntity == null)
-        {
-            PlayerData data = DataManager.Instance.playerDatas[PLAYER_ID];
-            _playerEntity.SetID(data.id);
-            _playerEntity.SetUID(PLAYER_ID);
-            _playerEntity.SetDefence(data.defence);
-            _playerEntity.SetAttack(data.attack);
-            _playerEntity.SetHealth(data.hp);
-            _playerEntity.SetMaxHealth(data.maxHp);
-            _playerEntity.SetLevel(1);
-            _playerEntity.SetExp(0);
-            _playerEntity.SetAlive();
-        }
+        PlayerData data = DataManager.Instance.playerDatas[PLAYER_ID];
+        _playerEntity.SetID(data.id);
+        _playerEntity.SetUID(PLAYER_ID);
+        _playerEntity.SetDefence(data.defence);
+        _playerEntity.SetAttack(data.attack);
+        _playerEntity.SetHealth(data.hp);
+        _playerEntity.SetMaxHealth(data.maxHp);
+        _playerEntity.SetLevel(1);
+        _playerEntity.SetExp(0);
+        _playerEntity.SetAlive();
     }
     
     public List<Enemy> FindInAttackRangeEnemies()

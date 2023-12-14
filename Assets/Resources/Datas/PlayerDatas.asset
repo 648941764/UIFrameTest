@@ -17,7 +17,7 @@ MonoBehaviour:
     id: 4001
     level: 0
     exp: 0
-    hp: 10
+    hp: 72
     maxHp: 100
     maxExp: 30
     defence: 0

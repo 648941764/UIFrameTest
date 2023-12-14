@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -43,7 +44,10 @@ public class HealthBar : MonoBehaviour
     {
         CharacterEntity entity = CharacterManager.Instance.GetEnemyEntity(_uid);
         int health = entity.GetHealth();
-        gameObject.SetActivate(health > 0);
-        imgHp.fillAmount = (float)health / entity.GetMaxHealth();
+        float currentFillAmount = (float)health / entity.GetMaxHealth();
+        DOVirtual
+            .Float(imgHp.fillAmount, currentFillAmount, 1f, _ => { imgHp.fillAmount = _; })
+            .OnComplete(() => gameObject.SetActivate(health > 0));
+        
     }
 }
