@@ -62,6 +62,7 @@ public sealed class GameManager : SingletonMono<GameManager>
             }
         }
 
+        levelScene = gameScene;
         if (gameScene == GameScene.Nothing)
         {
             yield break;
@@ -90,7 +91,6 @@ public sealed class GameManager : SingletonMono<GameManager>
             }
         }
         CharacterManager.Instance.GetEnemiesOnSceneLoaded(characters);
-        levelScene = gameScene;
     }
 
     public void SwithScene(GameScene gameScene)
