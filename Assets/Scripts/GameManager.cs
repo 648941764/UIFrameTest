@@ -64,7 +64,6 @@ public sealed class GameManager : SingletonMono<GameManager>
 
         if (gameScene == GameScene.Nothing)
         {
-            UIManager.Instance.Open<MainForm>();
             yield break;
         }
         
