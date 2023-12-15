@@ -16,6 +16,7 @@ public class HealthForm : Form
         _uid = CharacterManager.Instance.Player.UID;
         entity = CharacterManager.Instance.PlayerEntity;
         _imgHealth.fillAmount = (float)entity.GetHealth() / entity.GetMaxHealth();
+        _imgHeatlthBuffer.fillAmount = (float)entity.GetHealth() / entity.GetMaxHealth();
     }
 
     protected override void RegisterEvents()
@@ -45,9 +46,20 @@ public class HealthForm : Form
         int health = entity.GetHealth();
 
         float tempFillAmount = (float)health / entity.GetMaxHealth();
-        DOTween.To(
+        //DOTween.To(
+        //    () => _imgHealth.fillAmount,
+        //    _ => _imgHealth.fillAmount = _,
+        //    tempFillAmount, 2f);
+        DOTween.Sequence()
+            .Append(DOTween.To(
             () => _imgHealth.fillAmount,
             _ => _imgHealth.fillAmount = _,
-            tempFillAmount, 2f);
+            tempFillAmount, 1f))
+
+            .Append(DOTween.To(
+            () => _imgHeatlthBuffer.fillAmount,
+            _ => _imgHeatlthBuffer.fillAmount = _,
+            tempFillAmount, 1f))
+            ;
     }
 }

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,20 +11,31 @@ public class BtnController : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     private Color _normalColor;
     private Color _changeColor;
 
+    private Image _btnImg;
+
     private void Awake()
     {
         _btn = GetComponent<Button>();
-        _normalColor = _btn.GetComponent<Image>().color;
+        _btnImg = _btn.image;
+        _normalColor = _btnImg.color;
         _changeColor = new Color(0.42f, 0.79f, 0.63f, 1f);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _btn.GetComponent<Image>().color = _changeColor;
+        DOTween.To(
+            () => _btnImg.color,
+            _ => _btnImg.color = _,
+            _changeColor,
+            0.5f);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        _btn.GetComponent<Image>().color = _normalColor;
+        DOTween.To(
+            () => _btnImg.color,
+            _ => _btnImg.color = _,
+            _normalColor,
+            0.5f);
     }
 }

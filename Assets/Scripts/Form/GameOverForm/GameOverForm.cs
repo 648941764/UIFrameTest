@@ -27,11 +27,13 @@ public class GameOverForm : Form
     {
         UIManager.Instance.Open<MainForm>();
         GameManager.Instance.SwithScene(GameScene.Nothing);
-        this.gameObject.SetActive(false);
+        UIManager.Instance.Close<GameOverForm>();
     }
 
     private void OnBtnTryClicked()//”–¥˝…Ã»∂
     {
         Debug.Log("1");
+        GameManager.Instance.SwithScene(GameScene.Level1);
+        UIManager.Instance.Close<GameOverForm>();
     }
 }

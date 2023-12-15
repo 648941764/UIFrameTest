@@ -6,6 +6,7 @@ using UnityEditor.PackageManager.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class MainForm : Form
 {
@@ -46,7 +47,10 @@ public class MainForm : Form
         {
             foreach (var image in _imaList)
             {
-                image.color = _normalColor;
+                DOTween.To(
+                    () => image.color,
+                    _ => image.color = _,
+                    _normalColor, 0.5f);
             }
             _needChange = false;
             
@@ -55,6 +59,12 @@ public class MainForm : Form
         if (index >= 0)
         {
             _imaList[index].color = _changeColor;
+
+            DOTween.To(
+                () => _imaList[index].color,
+                _ => _imaList[index].color = _,
+                _changeColor, 0.5f);
+
             _needChange = true;
         }
     }
@@ -63,6 +73,10 @@ public class MainForm : Form
     {
         base.OnClose();
         GameManager.Instance.UpdateHandle -= MainFormUpdate;
+        foreach (var image in _imaList)
+        {
+            image.color = _normalColor;
+        }
     }
 
     private void OnBtnStartClick()

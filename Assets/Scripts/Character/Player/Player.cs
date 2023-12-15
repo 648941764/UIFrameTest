@@ -87,6 +87,8 @@ public class Player : Character
                         this.gameObject.SetActive(false);
                         UIManager.Instance.Close<HealthForm>();
                         CharacterManager.Instance.ClearEnemies();
+
+
                         UIManager.Instance.Open<GameOverForm>();
                     }
                 )

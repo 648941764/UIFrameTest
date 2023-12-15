@@ -40,7 +40,6 @@ public class LearnDoTween : MonoBehaviour
             .Join(topBall.DORotate(new Vector3(0f, 360f, 0f), 1f, RotateMode.FastBeyond360).SetLoops(10000, LoopType.Restart).SetEase(Ease.Linear))
             .Join(middleBall.DORotate(new Vector3(0, 360, 0), 1f, RotateMode.FastBeyond360).SetLoops(10000, LoopType.Restart).SetEase(Ease.Linear))
             .Join(bottom.DORotate(new Vector3(0f, 360f, 0f), 1f, RotateMode.FastBeyond360).SetLoops(10000, LoopType.Restart).SetEase(Ease.Linear))
-
         ;
     }
 }
