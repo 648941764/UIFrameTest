@@ -8,7 +8,6 @@ public class HealthForm : Form
 {
     [SerializeField] private Image _imgHeatlthBuffer, _imgHealth;
     private int _uid;
-    private bool _isHealthChange = true;
     private CharacterEntity entity;
 
     protected override void OnOpen()
@@ -16,9 +15,13 @@ public class HealthForm : Form
         base.OnOpen();
         _uid = CharacterManager.Instance.Player.UID;
         entity = CharacterManager.Instance.PlayerEntity;
-        AddEvent(OnPlayerHealthChange);
-
         _imgHealth.fillAmount = (float)entity.GetHealth() / entity.GetMaxHealth();
+    }
+
+    protected override void RegisterEvents()
+    {
+        base.RegisterEvents();
+        AddEvent(OnPlayerHealthChange);
     }
 
     protected override void OnClose()

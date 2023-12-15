@@ -86,6 +86,7 @@ public class Player : Character
                         //parameter.stateExchangable = true;
                         this.gameObject.SetActive(false);
                         UIManager.Instance.Close<HealthForm>();
+                        CharacterManager.Instance.ClearEnemies();
                         UIManager.Instance.Open<GameOverForm>();
                     }
                 )
@@ -419,7 +420,6 @@ public class Player : Character
         CharacterEntity player = CharacterManager.Instance.PlayerEntity;
         int actualDamage = Mathf.Max(damage - player.GetDefence(), 1);
         player.ChangeHealth(-actualDamage);
-
         if (!HasState(CharacterState.Hurt))
         {
             if (HasState(CharacterState.Run))
@@ -451,6 +451,7 @@ public class Player : Character
             CharacterEntity enemyEntity = CharacterManager.Instance.GetEnemyEntity(enemy.UID);
             int damage = Mathf.Max(attackDamage - enemyEntity.GetDefence(), 1);
             enemyEntity.ChangeHealth(-damage);
+            
             enemy.FSM.Switch(CharacterState.Hurt);
         }
     }
