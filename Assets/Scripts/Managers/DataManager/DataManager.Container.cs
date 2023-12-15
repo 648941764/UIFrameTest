@@ -8,4 +8,5 @@ public partial class DataManager
     public Dictionary<int, EnemyData> enemyDatas { get; private set; }
     public Dictionary<int, ShopData> shopDatas { get; private set; }
     public Dictionary<int, EquipmentData> equipmentDatas { get; private set; }
+    public Dictionary<int, DropData> dropDatas { get; private set; }
 }

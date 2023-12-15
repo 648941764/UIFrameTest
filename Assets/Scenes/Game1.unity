@@ -9441,8 +9441,8 @@ MonoBehaviour:
     patrolRange: 2
     seeRange: 2
     guardTime: 3
-    attackDamage0: 3
-    attackDamage1: 5
+    attackDamage0: 151
+    attackDamage1: 208
     orientation: 1
   _uid: 0
 --- !u!4 &5018562989672457440

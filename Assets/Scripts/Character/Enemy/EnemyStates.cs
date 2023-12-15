@@ -72,7 +72,6 @@ public class EnemyAttack : EnemyFSMState
     {
         base.OnInit(fsm);
         TryGetAnimTime(CharacterState.Attack, out animTime);
-        Debug.Log("EnemyFSM： EnemyAttack");
     }
 
     public override void OnEnter()
@@ -116,9 +115,9 @@ public class EnemyHurt : EnemyFSMState
 
     public override void OnExecute()
     {
+        FacePlayer();
         if (IsPlayerInPatrolRange())
         {
-            FacePlayer();
             fsm.Switch(CharacterState.Run);
         }
     }
@@ -163,6 +162,7 @@ public class EnemyDeath : EnemyFSMState
     public override void OnEnter()
     {
         base.OnEnter();
+        param.stateExchangable = false;
         param.animStates[CharacterState.Death].Start();
     }
 
@@ -177,7 +177,6 @@ public class EnemyDeath : EnemyFSMState
 
 public class EnemyAttackCooling : EnemyFSMState
 {
-
     public override void OnEnter()
     {
         base.OnEnter();
@@ -201,7 +200,6 @@ public class EnemyAttackCooling : EnemyFSMState
 
 public class EnemyCoolDown : EnemyFSMState
 {
-
     public override void OnExecute()
     {
         param.timer = 0f;

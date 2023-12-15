@@ -16,6 +16,7 @@ public class CharacterEntity
     private int _attack;
     private int _defence;
     private int _gold;
+    private int _dropId;
     private bool _dead;
 
     public int ID => _id;
@@ -28,6 +29,7 @@ public class CharacterEntity
     public int GetAttack() => _attack;
     public int GetDefence() => _defence;
     public int GetGold() => _gold;
+    public int GetDropId() => _dropId;
     public bool IsDead() => _dead;
 
     public void SetID(int value) => _id = value;
@@ -39,6 +41,7 @@ public class CharacterEntity
     public void SetAttack(int value) => _attack = value;
     public void SetDefence(int value) => _defence = value;
     public void SetGold(int value) => _gold = value;
+    public void SetDropId(int value) => _dropId = value;
     public void SetAlive() => _dead = false;
 
     public void ChangeHealth(int value)

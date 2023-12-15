@@ -68,4 +68,14 @@ public partial class DataManager
         }
     }
 
+    public void LoadDropDatas()
+    {
+        dropDatas = new Dictionary<int, DropData>();
+        DropDatas config = Resources.Load<DropDatas>(string.Format(DATA_PATH, typeof(DropDatas).Name));
+        int i = -1;
+        while (++i < config.datas.Count)
+        {
+            dropDatas.Add(config.datas[i].id, config.datas[i]);
+        }
+    }
 }

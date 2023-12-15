@@ -67,6 +67,7 @@ public sealed partial class Timer
                 if (--repeate <= 0)
                 {
                     Complete(true);
+                    break;
                 }
                 else
                 {

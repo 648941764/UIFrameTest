@@ -10,7 +10,7 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
 
     private readonly Dictionary<int, Enemy> _characaters = new Dictionary<int, Enemy>();
     private readonly Dictionary<int, CharacterEntity> _enemyEntities = new Dictionary<int, CharacterEntity>();
-    private readonly CharacterEntity _playerEntity = new CharacterEntity();
+    private CharacterEntity _playerEntity;
 
     private Player _player;
 
@@ -18,14 +18,8 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
 
     public CharacterEntity PlayerEntity => _playerEntity;
 
-    public event Action CharacterUpdateHandle;
-    public event Action<float> TimeCharacterUpdateHandle;
-
     protected override void OnAwake()
     {
-        GameManager.Instance.UpdateHandle += CharacterUpdateHandle;
-        GameManager.Instance.TimeUpdateHandle += TimeCharacterUpdateHandle;
-
         EventManager.Instance.Add(OnCharacterDead);
     }
 
@@ -37,11 +31,21 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
         if (uid == PLAYER_ID)
         {
             _player.OnPlayerDeath();
+            foreach (var key in _characaters.Keys)
+            {
+                _characaters[key].FSM.Switch(CharacterState.Idle);
+            }
             //UIManager.Instance.Close<HealthForm>();
             return;
         }
         _characaters[uid].FSM.Switch(CharacterState.Death);
         _characaters[uid].FSM.OnExit();
+    }
+
+    public Enemy GetEnemy(int enemyId)
+    {
+        _characaters.TryGetValue(enemyId, out Enemy enemy);
+        return enemy;
     }
 
     public CharacterEntity GetEnemyEntity(int uid)
@@ -69,7 +73,7 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
         _enemyEntities.Clear();
     }
 
-    public void GetEnemiesOnSceneLoaded(List<Character> characters)//处理场景里所有角色类物体
+    public void CreateEnemiesOnSceneLoaded(List<Character> characters)//处理场景里所有角色类物体
     {
         characterUID = 1;
         for (int i = -1; ++i < characters.Count;)
@@ -110,22 +114,34 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
         entity.SetHealth(data.hp);
         entity.SetGold(data.Gold);
         entity.SetExp(data.Exp);
+        var drops = DataManager.Instance.dropDatas.Keys.ToList();
+        drops.Add(0);
+        entity.SetDropId(drops[UnityEngine.Random.Range(0, drops.Count)]);
         entity.SetAlive();
         _enemyEntities.Add(uid, entity);
     }
 
     public void CreatePlayerEntity()
     {
-        PlayerData data = DataManager.Instance.playerDatas[PLAYER_ID];
-        _playerEntity.SetID(data.id);
-        _playerEntity.SetUID(PLAYER_ID);
-        _playerEntity.SetDefence(data.defence);
-        _playerEntity.SetAttack(data.attack);
-        _playerEntity.SetHealth(data.hp);
-        _playerEntity.SetMaxHealth(data.maxHp);
-        _playerEntity.SetLevel(1);
-        _playerEntity.SetExp(0);
-        _playerEntity.SetAlive();
+        if (_playerEntity == null)
+        {
+            _playerEntity = new CharacterEntity();
+            PlayerData data = DataManager.Instance.playerDatas[PLAYER_ID];
+            _playerEntity.SetID(data.id);
+            _playerEntity.SetUID(PLAYER_ID);
+            _playerEntity.SetDefence(data.defence);
+            _playerEntity.SetAttack(data.attack);
+            _playerEntity.SetHealth(data.maxHp);
+            _playerEntity.SetMaxHealth(data.maxHp);
+            _playerEntity.SetLevel(1);
+            _playerEntity.SetExp(0);
+            _playerEntity.SetAlive();
+        }
+        else if (_playerEntity.IsDead())
+        {
+            _playerEntity.SetHealth(_playerEntity.GetMaxHealth());
+            _player.SetAlive();
+        }
     }
     
     public List<Enemy> FindInAttackRangeEnemies()

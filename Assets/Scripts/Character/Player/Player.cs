@@ -116,6 +116,11 @@ public class Player : Character
     {
         this.dt = dt;
 
+        if (HasState(CharacterState.Death))
+        {
+            return;
+        }
+
         // 移动
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
         {
@@ -394,13 +399,11 @@ public class Player : Character
     private void Attack1()
     {
         AttackApply(CharacterInfo.attackDamage0);
-        Debug.Log("Attack 1");
     }
 
     private void Attack2()
     {
         AttackApply(CharacterInfo.attackDamage1);
-        Debug.Log("Attack 2");
     }
 
     private void OnDrawGizmos()
@@ -421,15 +424,8 @@ public class Player : Character
     {
         CharacterEntity player = CharacterManager.Instance.PlayerEntity;
         int actualDamage = Mathf.Max(damage - player.GetDefence(), 1);
+        AddState(CharacterState.Hurt);
         player.ChangeHealth(-actualDamage);
-        if (!HasState(CharacterState.Hurt))
-        {
-            if (HasState(CharacterState.Run))
-            {
-                DelState(CharacterState.Run);
-            }
-            AddState(CharacterState.Hurt);
-        }
     }
 
     public void OnPlayerDeath()
@@ -442,7 +438,13 @@ public class Player : Character
             }
             AddState(CharacterState.Death);
         }
-    } 
+    }
+
+    public void SetAlive()
+    {
+        DelState(CharacterState.Death);
+        AddState(CharacterState.Idle);
+    }
 
     public void AttackApply(int attackDamage)
     {
@@ -450,11 +452,11 @@ public class Player : Character
         List<Enemy> enemies = CharacterManager.Instance.FindInAttackRangeEnemies();
         foreach (var enemy in enemies)
         {
-            CharacterEntity enemyEntity = CharacterManager.Instance.GetEnemyEntity(enemy.UID);
-            int damage = Mathf.Max(attackDamage - enemyEntity.GetDefence(), 1);
-            enemyEntity.ChangeHealth(-damage);
-            
-            enemy.FSM.Switch(CharacterState.Hurt);
+            enemy.TakeDamage(attackDamage);
+            //CharacterEntity enemyEntity = CharacterManager.Instance.GetEnemyEntity(enemy.UID);
+            //int damage = Mathf.Max(attackDamage - enemyEntity.GetDefence(), 1);
+            //enemy.FSM.Switch(CharacterState.Hurt);
+            //enemyEntity.ChangeHealth(-damage);
         }
     }
 }

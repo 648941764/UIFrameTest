@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "ItemDatas", menuName = "Datas/ItemDatas", order = 0)]
+[CreateAssetMenu(fileName = "ItemDatas", menuName = "Datas/ItemDatas")]
 public class ItemDatas : ScriptableObject
 {
     public List<ItemData> datas = new List<ItemData>();
 }
+
 [Serializable]
 public class ItemData
 {

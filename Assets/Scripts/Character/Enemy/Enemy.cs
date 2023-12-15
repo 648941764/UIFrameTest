@@ -77,7 +77,11 @@ public class Enemy : Character
 
                 [CharacterState.Death] = new AnimTime(
                     1500,
-                    () => { gameObject.SetActivate(false); FSM.OnExit(); }
+                    () => 
+                    {
+                        DropManager.Instance.DropFromEnemy(UID);
+                        gameObject.SetActivate(false);
+                    }
                 ),
             }
         };
@@ -165,5 +169,9 @@ public class Enemy : Character
 
     public override void TakeDamage(int damage)
     {
+        CharacterEntity enemyEntity = CharacterManager.Instance.GetEnemyEntity(UID);
+        damage = Mathf.Max(damage - enemyEntity.GetDefence(), 1);
+        enemyEntity.ChangeHealth(-damage);
+        FSM.Switch(CharacterState.Hurt);
     }
 }

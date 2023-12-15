@@ -51,6 +51,7 @@ public sealed class GameManager : SingletonMono<GameManager>
 
     IEnumerator SwitchScene(GameScene gameScene)
     {
+        UpdateHandle -= DropManager.Instance.OnUpdatePick;
         AsyncOperation asyncOperation;
         CharacterManager.Instance.ClearEnemies();
         if (levelScene != GameScene.Nothing)
@@ -90,7 +91,8 @@ public sealed class GameManager : SingletonMono<GameManager>
                 cameraRestrictTrans[1] = objs[i].transform.GetChild(1);
             }
         }
-        CharacterManager.Instance.GetEnemiesOnSceneLoaded(characters);
+        CharacterManager.Instance.CreateEnemiesOnSceneLoaded(characters);
+        UpdateHandle += DropManager.Instance.OnUpdatePick;
     }
 
     public void SwithScene(GameScene gameScene)
