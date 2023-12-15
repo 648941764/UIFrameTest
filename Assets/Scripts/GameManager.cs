@@ -46,10 +46,10 @@ public sealed class GameManager : SingletonMono<GameManager>
     public void StartGame()
     {
         CharacterManager.Instance.CreatePlayerEntity();
-        StartCoroutine(LoadScene(GameScene.Level1));
+        StartCoroutine(SwitchScene(GameScene.Level1));
     }
 
-    IEnumerator LoadScene(GameScene gameScene)
+    IEnumerator SwitchScene(GameScene gameScene)
     {
         AsyncOperation asyncOperation;
         if (levelScene != GameScene.Nothing)
@@ -61,13 +61,19 @@ public sealed class GameManager : SingletonMono<GameManager>
                 yield return null;
             }
         }
+
+        if (gameScene == GameScene.Nothing)
+        {
+            UIManager.Instance.Open<MainForm>();
+            yield break;
+        }
         
-        UIManager.Instance.Close<MainForm>();
         asyncOperation = SceneManager.LoadSceneAsync((int)gameScene, LoadSceneMode.Additive);
         while (!asyncOperation.isDone)
         {
             yield return null;
         }
+        UIManager.Instance.Close<MainForm>();
         Scene scene = SceneManager.GetSceneAt((int)gameScene);
         GameObject[] objs = scene.GetRootGameObjects();
         List<Character> characters = new List<Character>();
