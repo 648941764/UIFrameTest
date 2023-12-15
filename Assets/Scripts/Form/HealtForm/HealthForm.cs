@@ -52,15 +52,19 @@ public class HealthForm : Form
         //    _ => _imgHealth.fillAmount = _,
         //    tempFillAmount, 2f);
         DOTween.Sequence()
-            .Append(DOTween.To(
-            () => _imgHealth.fillAmount,
-            _ => _imgHealth.fillAmount = _,
-            tempFillAmount, 0.25f))
-
-            .Append(DOTween.To(
-            () => _imgHeatlthBuffer.fillAmount,
-            _ => _imgHeatlthBuffer.fillAmount = _,
-            tempFillAmount, 0.25f))
-            ;
+            .Append(
+                DOTween.To(
+                    () => _imgHealth.fillAmount,
+                    _ => _imgHealth.fillAmount = _,
+                    tempFillAmount, 0.25f
+                )
+            )
+            .Append(
+                DOTween.To(
+                    () => _imgHeatlthBuffer.fillAmount,
+                    _ => _imgHeatlthBuffer.fillAmount = _,
+                    tempFillAmount, 0.25f
+                )
+            );
     }
 }
