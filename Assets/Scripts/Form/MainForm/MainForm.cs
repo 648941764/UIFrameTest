@@ -34,7 +34,11 @@ public class MainForm : Form
         btnStart.onClick.AddListener(OnBtnStartClick);
         btnStory.onClick.AddListener(OnBtnStoryClick);
         btnQuit.onClick.AddListener(OnBtnQuitClick);
+    }
 
+    protected override void OnOpen()
+    {
+        base.OnOpen();
         GameManager.Instance.UpdateHandle += MainFormUpdate;
     }
 

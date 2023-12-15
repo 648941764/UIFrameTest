@@ -17,6 +17,7 @@ public class HealthForm : Form
         entity = CharacterManager.Instance.PlayerEntity;
         _imgHealth.fillAmount = (float)entity.GetHealth() / entity.GetMaxHealth();
         _imgHeatlthBuffer.fillAmount = (float)entity.GetHealth() / entity.GetMaxHealth();
+        AddEvent(OnPlayerHealthChange);
     }
 
     protected override void RegisterEvents()
@@ -54,12 +55,12 @@ public class HealthForm : Form
             .Append(DOTween.To(
             () => _imgHealth.fillAmount,
             _ => _imgHealth.fillAmount = _,
-            tempFillAmount, 1f))
+            tempFillAmount, 0.25f))
 
             .Append(DOTween.To(
             () => _imgHeatlthBuffer.fillAmount,
             _ => _imgHeatlthBuffer.fillAmount = _,
-            tempFillAmount, 1f))
+            tempFillAmount, 0.25f))
             ;
     }
 }
