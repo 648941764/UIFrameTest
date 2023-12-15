@@ -11,6 +11,7 @@ public class Player : Character
     private float dt;
     private float _curJumpSpeed;
     private int states;
+    private float _lastPosY;
 
     private new Rigidbody2D rigidbody2D;
 
@@ -19,6 +20,7 @@ public class Player : Character
     public override void Init(int uid)
     {
         base.Init(uid);
+        _lastPosY = transform.position.y;
         Manager.SetPlayer(this);
         rigidbody2D = GetComponent<Rigidbody2D>();
         InitParam();
@@ -166,16 +168,26 @@ public class Player : Character
 
     private void RunHandle()
     {
+      
         float axisX = Input.GetAxisRaw("Horizontal");
+
+        if (transform.position.y < _lastPosY)
+        {
+            AddState(CharacterState.Fall);
+        }
+
         if (axisX == 0f)
         {
             DelState(CharacterState.Run);
             return;
         }
+
+
         Vector3 pos = Position;
         pos.x += CharacterInfo.moveSpeed * axisX * dt;
         Position = pos;
         Orientation = axisX > 0f;
+        _lastPosY = transform.position.y;
         CameraController.Instance.FocusPlayer();
     }
     
