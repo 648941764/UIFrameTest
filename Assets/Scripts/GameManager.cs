@@ -46,7 +46,7 @@ public sealed class GameManager : SingletonMono<GameManager>
     public void StartGame()
     {
         CharacterManager.Instance.CreatePlayerEntity();
-        StartCoroutine(SwitchScene(GameScene.Level1));
+        SwithScene(GameScene.Level1);
     }
 
     IEnumerator SwitchScene(GameScene gameScene)
@@ -92,5 +92,10 @@ public sealed class GameManager : SingletonMono<GameManager>
         }
         CharacterManager.Instance.GetEnemiesOnSceneLoaded(characters);
         levelScene = gameScene;
+    }
+
+    public void SwithScene(GameScene gameScene)
+    {
+        StartCoroutine(SwitchScene(gameScene));
     }
 }

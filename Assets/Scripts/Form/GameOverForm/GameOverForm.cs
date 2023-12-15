@@ -26,6 +26,7 @@ public class GameOverForm : Form
     private void OnBtnQuitCliked()
     {
         UIManager.Instance.Open<MainForm>();
+        GameManager.Instance.SwithScene(GameScene.Nothing);
         this.gameObject.SetActive(false);
     }
 
