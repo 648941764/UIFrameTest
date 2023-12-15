@@ -52,9 +52,9 @@ public sealed class GameManager : SingletonMono<GameManager>
     IEnumerator SwitchScene(GameScene gameScene)
     {
         AsyncOperation asyncOperation;
+        CharacterManager.Instance.ClearEnemies();
         if (levelScene != GameScene.Nothing)
         {
-            CharacterManager.Instance.ClearEnemies();
             asyncOperation = SceneManager.UnloadSceneAsync((int)levelScene);
             while (!asyncOperation.isDone)
             {
