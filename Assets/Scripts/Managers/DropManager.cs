@@ -17,7 +17,9 @@ public sealed class DropManager : Singleton<DropManager>
         int dropItemId = dropData.items[index];
         int dropItemAmount = dropData.amounts[index];
         Enemy enemy = CharacterManager.Instance.GetEnemy(enemyId);
-        Drop(dropItemId, dropItemAmount, enemy.Position);
+        Vector3 dropPos = enemy.transform.GetChild(1).position;
+        Drop(dropItemId, dropItemAmount, dropPos);
+        Debug.Log("ŒÔ∆∑µÙ¬‰");
     }
     
     public void OnUpdatePick()

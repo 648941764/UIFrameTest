@@ -7,6 +7,7 @@ public class Test : SingletonMono<Test>
     public Backpack Backpack { get; private set; }
     public PlayerOld Player { get; private set; }
 
+    public GameBackpack GameBackpack { get; private set; }
 
 
     protected override void OnAwake()
@@ -17,8 +18,9 @@ public class Test : SingletonMono<Test>
 
     private void Start()
     {
-        Backpack = new Backpack();
+        //Backpack = new Backpack();
         //Player = new Player();
+        GameBackpack = new GameBackpack();
     }
 
     private void Update()
@@ -30,7 +32,16 @@ public class Test : SingletonMono<Test>
 
         if (Input.GetKeyDown(KeyCode.B))
         {
-            Backpack.AddItem(Random.Range(3001, 3006), Random.Range(1,4));
+            //Backpack.AddItem(Random.Range(3001, 3006), Random.Range(1,4));
+            if (UIManager.Instance.IsOpen<PrepareForm>())
+            {
+                UIManager.Instance.Close<PrepareForm>();
+            }
+            else
+            {
+                UIManager.Instance.Open<PrepareForm>();
+            }
+
         }
 
         if (Input.GetKeyDown(KeyCode.D))
@@ -39,17 +50,19 @@ public class Test : SingletonMono<Test>
             EventManager.Instance.Broadcast(EventParam.Get(EventType.BackpackItemChange));
         }
 
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            if (UIManager.Instance.IsOpen<BackpackForm>())
-            {
-                UIManager.Instance.Close<BackpackForm>();
-            }
-            else
-            {
-                UIManager.Instance.Open<BackpackForm>();
-            }
-        }
+        //if (Input.GetKeyDown(KeyCode.C))
+        //{
+        //    if (UIManager.Instance.IsOpen<BackpackForm>())
+        //    {
+        //        UIManager.Instance.Close<BackpackForm>();
+        //    }
+        //    else
+        //    {
+        //        UIManager.Instance.Open<BackpackForm>();
+        //    }
+        //}
+
+
 
 
 

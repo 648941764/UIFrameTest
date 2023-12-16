@@ -17,7 +17,7 @@ public class DropItem : MonoBehaviour
     public void Init(int itemId, int amount, Vector3 postion)
     {
         _itemId = itemId;
-        _itemId = amount;
+        _amount = amount;
         ItemData data = DataManager.Instance.itemDatas[itemId];
         _sprite.sprite = data.sprite;
         _sprite.transform.position = postion;
