@@ -11,7 +11,9 @@ public class GameItem
 public class GameBackpack
 {
     public const int ITEM_NUM = 30;
-    public GameItem[] items = new GameItem[ITEM_NUM];
+    private GameItem[] items = new GameItem[ITEM_NUM];
+
+    public GameItem[] Items => items;
 
     public Dictionary<int, ItemData> itemdata => DataManager.Instance.itemDatas;
 
@@ -28,6 +30,7 @@ public class GameBackpack
                 {
                     items[i] = new GameItem() { amount = amount, id = id };
                     EventManager.Instance.Broadcast(EventParam.Get(EventType.BackpackItemChange));
+                    break;
                 }
             }
         }

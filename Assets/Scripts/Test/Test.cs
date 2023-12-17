@@ -46,8 +46,11 @@ public class Test : SingletonMono<Test>
 
         if (Input.GetKeyDown(KeyCode.D))
         {
-            Backpack.UseItem(Backpack.Items[1], 1);
-            EventManager.Instance.Broadcast(EventParam.Get(EventType.BackpackItemChange));
+            //Backpack.UseItem(Backpack.Items[1], 1);
+            //EventManager.Instance.Broadcast(EventParam.Get(EventType.BackpackItemChange));
+            GameBackpack.Additem(3001, 4);
+
+
         }
 
         //if (Input.GetKeyDown(KeyCode.C))
