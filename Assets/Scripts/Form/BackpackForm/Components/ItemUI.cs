@@ -13,7 +13,6 @@ public class ItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
 
     private bool isDragging;
     private Vector2 mousePos;
-    private int cilckIndex;
     private Image UI;
 
     public void OnBeginDrag(PointerEventData eventData)

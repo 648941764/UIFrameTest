@@ -10,14 +10,14 @@ public class PrepareForm : Form
     [SerializeField] private BackpackUI _backpackUIPrefab;
     [SerializeField] private Button _btnClose;
     [SerializeField] private Image  _imgDrag;
+    [SerializeField] private RectTransform[] _itmeSlots;
     private BackpackUI[] _backpackUIs;
     private bool _isOpen = true;
 
     public RectTransform BackpackParent => _backParent;
 
-    public Image Image => _imgDrag;
+    public Image ImgDrag => _imgDrag;
     
-
     [Header("RolePanel")]
     [SerializeField] private Text _playerMaxHealth;
     [SerializeField] private Text _playerAttack;
@@ -44,22 +44,34 @@ public class PrepareForm : Form
     protected override void OnRefresh()
     {
         base.OnRefresh();
-        GameItem[] items = Test.Instance.GameBackpack.items;
+        GameItem[] items = Test.Instance.GameBackpack.Items;
         int i = -1;
         while (++i < GameBackpack.ITEM_NUM)
         {
-            if (items[i] == null && _backpackUIs[i] != null)
+            if (items[i] == null)
             {
-                _backpackUIs[i].SetActivate(false);
+                if (_backpackUIs[i] != null)
+                {
+                    _backpackUIs[i].SetActivate(false);
+                }
                 continue;
             }
 
             if (_backpackUIs[i] == null)
             {
-                _backpackUIs[i] = Instantiate<BackpackUI>(_backpackUIPrefab, _backParent);
+                _backpackUIs[i] = Instantiate<BackpackUI>(_backpackUIPrefab, _itmeSlots[i]);
+                _backpackUIs[i].transform.localPosition = Vector3.zero;
                 //还差一个设置值的方法
+                _backpackUIs[i].SetIndex(i);
             }
 
+            else
+            {
+                _backpackUIs[i].SetActivate(true);
+            }
+
+            //刷新每一个UI的图片
+            _backpackUIs[i].RefreshBackpackUI(items[i]);
         }
     }
 
@@ -72,6 +84,7 @@ public class PrepareForm : Form
     protected override void OnOpen()
     {
         base.OnOpen();
+        AddEvent(OnBackpackItemChange);
     }
 
     protected override void OnClose()
@@ -120,6 +133,16 @@ public class PrepareForm : Form
     #endregion
 
     #region 特有的背包的方法
-
+    public int FindNearestBackpackItems(Image image)
+    {
+        for (int i = 0; i < _itmeSlots.Length; i++)
+        {
+            if (RectTransformUtility.RectangleContainsScreenPoint(_itmeSlots[i], image.transform.position))
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
     #endregion
 }
