@@ -17,7 +17,9 @@ public class MainForm : Form
     private Color _changeColor;
     private Vector3 _mousePos;
     private bool _needChange;
-    
+
+
+
     private void Start()
     {
         _btnList.Add(btnStart.transform as RectTransform);
@@ -85,7 +87,8 @@ public class MainForm : Form
 
     private void OnBtnStartClick()
     {
-        GameManager.Instance.StartGame();
+        UIManager.Instance.Open<PrepareForm>();
+        UIManager.Instance.Close<MainForm>();
     }
 
     private void OnBtnStoryClick()

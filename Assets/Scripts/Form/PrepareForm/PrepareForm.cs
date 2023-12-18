@@ -10,6 +10,7 @@ public class PrepareForm : Form
     [SerializeField] private BackpackUI _backpackUIPrefab;
     [SerializeField] private Button _btnClose;
     [SerializeField] private Image  _imgDrag;
+    [SerializeField] private RectTransform _backpackPanel;
     [SerializeField] private RectTransform[] _itmeSlots;
     private BackpackUI[] _backpackUIs;
     private bool _isOpen = true;
@@ -28,6 +29,21 @@ public class PrepareForm : Form
     [SerializeField] private Button _btnShop;
     [SerializeField] private Button _btnEnterGame;
 
+    [Header("Shop")]
+    [SerializeField] private RectTransform _shopPanel;
+    [SerializeField] private RectTransform[] _shopImgs;
+    [SerializeField] private Button[] _buttons;
+    [SerializeField] private Text _txtGold;
+    
+    private int _goldCount;
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            GameManager.Instance.GameBackpack.Additem(3004, 1);
+        }
+    }
 
     #region Form基类
     protected override void InitComponents()
@@ -44,7 +60,7 @@ public class PrepareForm : Form
     protected override void OnRefresh()
     {
         base.OnRefresh();
-        GameItem[] items = Test.Instance.GameBackpack.Items;
+        GameItem[] items = GameManager.Instance.GameBackpack.Items;
         int i = -1;
         while (++i < GameBackpack.ITEM_NUM)
         {
@@ -61,16 +77,12 @@ public class PrepareForm : Form
             {
                 _backpackUIs[i] = Instantiate<BackpackUI>(_backpackUIPrefab, _itmeSlots[i]);
                 _backpackUIs[i].transform.localPosition = Vector3.zero;
-                //还差一个设置值的方法
                 _backpackUIs[i].SetIndex(i);
             }
-
             else
             {
                 _backpackUIs[i].SetActivate(true);
             }
-
-            //刷新每一个UI的图片
             _backpackUIs[i].RefreshBackpackUI(items[i]);
         }
     }
@@ -85,6 +97,17 @@ public class PrepareForm : Form
     {
         base.OnOpen();
         AddEvent(OnBackpackItemChange);
+        CharacterEntity player = CharacterManager.Instance.PlayerEntity;
+        if (player == null) 
+        {
+            _goldCount = 0;
+        }
+        else
+        {
+            _goldCount = player.GetGold();
+        }
+        _txtGold.text = _goldCount.ToString();
+        _txtGold.text = _goldCount.ToString();
     }
 
     protected override void OnClose()
@@ -106,6 +129,8 @@ public class PrepareForm : Form
 
     private void OnBtnEnterGameClicked()
     {
+        GameManager.Instance.StartGame();
+        UIManager.Instance.Close<PrepareForm>();
         //把选择好的物品放到快捷栏里
         //进入游戏
         //把携带好的物品加入到游戏的背包里面
@@ -114,8 +139,7 @@ public class PrepareForm : Form
 
     private void OnBtnShopClicked()
     {
-        //打开商店的Form;
-        //关闭当前场景
+        //把原来背包的格子全部删除，重新加载新的格子
     }
 
     private void OnBtnBackpackClicked()
@@ -144,5 +168,9 @@ public class PrepareForm : Form
         }
         return -1;
     }
+    #endregion
+
+    #region 商店的方法
+
     #endregion
 }

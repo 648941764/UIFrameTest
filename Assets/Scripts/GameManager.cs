@@ -26,6 +26,11 @@ public sealed class GameManager : SingletonMono<GameManager>
     public Vector3 RestrictLeft => cameraRestrictTrans[0].position;
     public Vector3 RestrictRight => cameraRestrictTrans[1].position;
 
+    private GameBackpack gameBackpack;
+
+    public GameBackpack GameBackpack => gameBackpack;
+
+
     protected override void OnAwake()
     {
         Application.targetFrameRate = 60;
@@ -35,6 +40,7 @@ public sealed class GameManager : SingletonMono<GameManager>
     private void Start()
     {
         UIManager.Instance.Open<MainForm>();
+        gameBackpack =new GameBackpack();
     }
 
     private void Update()

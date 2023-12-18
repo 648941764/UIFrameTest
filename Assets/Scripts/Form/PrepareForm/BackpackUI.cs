@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -37,7 +38,7 @@ public class BackpackUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         if (_isDragging && eventData.button == PointerEventData.InputButton.Left)
         {
             _mousePos = eventData.position;
-            _imgDrag.gameObject.transform.position = _mousePos;
+            _imgDrag.transform.position = _mousePos;
         }
     }
 
@@ -47,16 +48,37 @@ public class BackpackUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         _mousePos = eventData.position;
 
         int index = UIManager.Instance.GetForm<PrepareForm>().FindNearestBackpackItems(_imgDrag);
-        if (index >= 0) 
+        if (index < 0)
         {
             _imgUISprite.color = _normalColor;
-            _txtItemAmount.text = default; 
-
-            GameItem currentItem = Test.Instance.GameBackpack.Items[this.UIIndex];
-            GameItem nearestItme = Test.Instance.GameBackpack.Items[index];
-
-
+            _txtItemAmount.text = GameManager.Instance.GameBackpack.Items[UIIndex].amount.ToString();
+            Destroy(_imgDrag.gameObject);
+            return;
         }
+
+        _txtItemAmount.text = default;
+        GameItem currentItem = GameManager.Instance.GameBackpack.Items[UIIndex];
+        GameItem nearestItem = GameManager.Instance.GameBackpack.Items[index];
+
+        if (nearestItem != null && index != this.UIIndex)
+        {
+            if (currentItem.id == nearestItem.id)
+            {
+                nearestItem.amount += currentItem.amount;
+                GameManager.Instance.GameBackpack.RemoveItme(currentItem);
+            }
+            else
+            {
+                GameManager.Instance.GameBackpack.SwapItem(this.UIIndex, index);
+            }
+        }
+        else
+        {
+            GameManager.Instance.GameBackpack.SwapItem(this.UIIndex, index);
+        }
+
+        _imgUISprite.color = _normalColor;
+        Destroy(_imgDrag.gameObject);
     }
 
     public void RefreshBackpackUI(GameItem item)
@@ -64,7 +86,6 @@ public class BackpackUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         ItemData data = DataManager.Instance.itemDatas[item.id];
         _imgUISprite.sprite = data.sprite;
         _txtItemAmount.text = item.amount.ToString();
-
     }
 
     public void SetIndex(int index)

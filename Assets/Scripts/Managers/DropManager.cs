@@ -59,5 +59,6 @@ public sealed class DropManager : Singleton<DropManager>
     {
         dropItem.SetActivate(false);
         // 将数据添加进背包
+        GameManager.Instance.GameBackpack.Additem(dropItem.ItemID, dropItem.Amount);//测试用
     }
 }

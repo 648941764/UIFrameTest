@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 
@@ -10,7 +11,7 @@ public class GameItem
 
 public class GameBackpack
 {
-    public const int ITEM_NUM = 30;
+    public const int ITEM_NUM = 38;
     private GameItem[] items = new GameItem[ITEM_NUM];
 
     public GameItem[] Items => items;
@@ -46,6 +47,7 @@ public class GameBackpack
             {
                 items[i] = null;
                 EventManager.Instance.Broadcast(EventParam.Get(EventType.BackpackItemChange));
+                break;
             }
         }
     }

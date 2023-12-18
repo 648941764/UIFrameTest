@@ -12,7 +12,6 @@ public class Player : Character
     private float _curJumpSpeed;
     private int states;
     private float _lastPosY;
-
     private new Rigidbody2D rigidbody2D;
 
     private bool isDead => HasState(CharacterState.Death);

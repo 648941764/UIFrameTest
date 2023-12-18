@@ -7,7 +7,7 @@ public class Test : SingletonMono<Test>
     public Backpack Backpack { get; private set; }
     public PlayerOld Player { get; private set; }
 
-    public GameBackpack GameBackpack { get; private set; }
+    //public GameBackpack GameBackpack { get; private set; }
 
 
     protected override void OnAwake()
@@ -20,7 +20,7 @@ public class Test : SingletonMono<Test>
     {
         //Backpack = new Backpack();
         //Player = new Player();
-        GameBackpack = new GameBackpack();
+        //GameBackpack = new GameBackpack();
     }
 
     private void Update()
@@ -48,7 +48,8 @@ public class Test : SingletonMono<Test>
         {
             //Backpack.UseItem(Backpack.Items[1], 1);
             //EventManager.Instance.Broadcast(EventParam.Get(EventType.BackpackItemChange));
-            GameBackpack.Additem(3001, 4);
+            int itemId = Random.Range(3001, 3007);
+            //GameBackpack.Additem(itemId, 4);
 
 
         }
