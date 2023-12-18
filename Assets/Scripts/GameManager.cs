@@ -40,7 +40,6 @@ public sealed class GameManager : SingletonMono<GameManager>
     private void Start()
     {
         UIManager.Instance.Open<MainForm>();
-        gameBackpack =new GameBackpack();
     }
 
     private void Update()
@@ -51,7 +50,6 @@ public sealed class GameManager : SingletonMono<GameManager>
 
     public void StartGame()
     {
-        CharacterManager.Instance.CreatePlayerEntity();
         SwithScene(GameScene.Level1);
     }
 

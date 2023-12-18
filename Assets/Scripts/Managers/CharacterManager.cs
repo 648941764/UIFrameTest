@@ -121,7 +121,7 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
         _enemyEntities.Add(uid, entity);
     }
 
-    public void CreatePlayerEntity()
+    private void CreatePlayerEntity()
     {
         if (_playerEntity == null)
         {
@@ -174,5 +174,10 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
             }
         }
         return list;
-    } 
+    }
+
+    public void LoadPlayerData()
+    {
+        CreatePlayerEntity();
+    }
 }
