@@ -10,18 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6dfa0a687d7129949be89ee643339429, type: 3}
-  m_Name: ShopDatas
+  m_Name: ShopDatas 1
   m_EditorClassIdentifier: 
   datas:
-  - id: 3001
-    price: 362
-  - id: 3002
-    price: 356
-  - id: 3003
-    price: 356
-  - id: 3004
-    price: 356
-  - id: 3005
-    price: 356
-  - id: 3006
-    price: 356
+  - id: 0
+    price: 0
+  - id: 0
+    price: 0

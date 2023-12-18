@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 [CreateAssetMenu(fileName = "ShopDatas", menuName = "Datas/ShopDatas")]
 public class ShopDatas : ScriptableObject
 {
@@ -14,5 +15,5 @@ public class ShopData
 {
     public int id;
     public int price;
-    public ItemData item;
+
 }

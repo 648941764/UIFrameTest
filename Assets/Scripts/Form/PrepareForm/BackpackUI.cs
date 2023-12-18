@@ -51,30 +51,30 @@ public class BackpackUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         if (index < 0)
         {
             _imgUISprite.color = _normalColor;
-            _txtItemAmount.text = GameManager.Instance.GameBackpack.Items[UIIndex].amount.ToString();
+            _txtItemAmount.text = CharacterManager.Instance.GameBackpack.Items[UIIndex].amount.ToString();
             Destroy(_imgDrag.gameObject);
             return;
         }
 
         _txtItemAmount.text = default;
-        GameItem currentItem = GameManager.Instance.GameBackpack.Items[UIIndex];
-        GameItem nearestItem = GameManager.Instance.GameBackpack.Items[index];
+        GameItem currentItem = CharacterManager.Instance.GameBackpack.Items[UIIndex];
+        GameItem nearestItem = CharacterManager.Instance.GameBackpack.Items[index];
 
         if (nearestItem != null && index != this.UIIndex)
         {
             if (currentItem.id == nearestItem.id)
             {
                 nearestItem.amount += currentItem.amount;
-                GameManager.Instance.GameBackpack.RemoveItme(currentItem);
+                CharacterManager.Instance.GameBackpack.RemoveItme(currentItem);
             }
             else
             {
-                GameManager.Instance.GameBackpack.SwapItem(this.UIIndex, index);
+                CharacterManager.Instance.GameBackpack.SwapItem(this.UIIndex, index);
             }
         }
         else
         {
-            GameManager.Instance.GameBackpack.SwapItem(this.UIIndex, index);
+            CharacterManager.Instance.GameBackpack.SwapItem(this.UIIndex, index);
         }
 
         _imgUISprite.color = _normalColor;

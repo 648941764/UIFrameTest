@@ -13,11 +13,12 @@ public class ItemDatas : ScriptableObject
 [Serializable]
 public class ItemData
 {
-    public int id;
     public ItemEnum itemType;
+    public int id;
     public Sprite sprite;
     public string name;
     public int incraseHp;
     public float attack;
     public float defence;
+
 }

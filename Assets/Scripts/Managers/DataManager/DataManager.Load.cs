@@ -46,28 +46,6 @@ public partial class DataManager
         }
     }
 
-    public void LoadShopDatas()
-    {
-        shopDatas = new Dictionary<int, ShopData>();
-        ShopDatas config = Resources.Load<ShopDatas>(string.Format(DATA_PATH, typeof(ShopDatas).Name));
-        int i = -1;
-        while (++i < config.datas.Count)
-        {
-            shopDatas.Add(config.datas[i].id, config.datas[i]);
-        }
-    }
-
-    public void LoadEquipmentDatas()
-    {
-        equipmentDatas = new Dictionary<int, EquipmentData>();
-        EquipmentDatas config = Resources.Load<EquipmentDatas>(string.Format(DATA_PATH, typeof(EquipmentDatas).Name));
-        int i = -1;
-        while (++i < config.datas.Count)
-        {
-            equipmentDatas.Add(config.datas[i].id, config.datas[i]);
-        }
-    }
-
     public void LoadDropDatas()
     {
         dropDatas = new Dictionary<int, DropData>();
@@ -76,6 +54,17 @@ public partial class DataManager
         while (++i < config.datas.Count)
         {
             dropDatas.Add(config.datas[i].id, config.datas[i]);
+        }
+    }
+
+    public void LoadShopDatas()
+    {
+        shopDatas = new Dictionary<int, ShopData>();
+        ShopDatas config = Resources.Load<ShopDatas>(string.Format(DATA_PATH, typeof(ShopDatas).Name));
+        int i = -1;
+        while (++i < config.datas.Count)
+        {
+            shopDatas.Add(config.datas[i].id, config.datas[i]);
         }
     }
 }

@@ -34,14 +34,15 @@ public class PrepareForm : Form
     [SerializeField] private RectTransform[] _shopImgs;
     [SerializeField] private Button[] _buttons;
     [SerializeField] private Text _txtGold;
-    
     private int _goldCount;
+    private Dictionary<int, ShopData> shopDatas = DataManager.Instance.shopDatas; 
+
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.W))
         {
-            GameManager.Instance.GameBackpack.Additem(3004, 1);
+            CharacterManager.Instance.GameBackpack.Additem(3004, 1);
         }
     }
 
@@ -60,7 +61,7 @@ public class PrepareForm : Form
     protected override void OnRefresh()
     {
         base.OnRefresh();
-        GameItem[] items = GameManager.Instance.GameBackpack.Items;
+        GameItem[] items = CharacterManager.Instance.GameBackpack.Items;
         int i = -1;
         while (++i < GameBackpack.ITEM_NUM)
         {
@@ -106,7 +107,6 @@ public class PrepareForm : Form
         {
             _goldCount = player.GetGold();
         }
-        _txtGold.text = _goldCount.ToString();
         _txtGold.text = _goldCount.ToString();
     }
 
@@ -171,6 +171,12 @@ public class PrepareForm : Form
     #endregion
 
     #region 商店的方法
+
+    public void GetItemByShop()
+    {
+
+    }
+
 
     #endregion
 }

@@ -1,4 +1,4 @@
 ﻿public enum ItemEnum
 {
-    Noraml, Foodm, Equipment,
+    Noraml, Food, Equipment,
 }

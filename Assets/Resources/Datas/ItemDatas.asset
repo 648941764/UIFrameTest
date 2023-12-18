@@ -13,43 +13,64 @@ MonoBehaviour:
   m_Name: ItemDatas
   m_EditorClassIdentifier: 
   datas:
-  - id: 3001
-    itemType: 1
+  - itemType: 1
+    id: 3001
     sprite: {fileID: 21300000, guid: d0c05b9125ed56349a5385e1a77547b7, type: 3}
     name: Beer
     incraseHp: 10
     attack: 0
     defence: 0
-  - id: 3002
-    itemType: 1
+  - itemType: 1
+    id: 3002
     sprite: {fileID: 21300000, guid: 1a58749f555f75e48baa41893215b26e, type: 3}
     name: Bread
     incraseHp: 12
     attack: 0
     defence: 0
-  - id: 3003
-    itemType: 1
+  - itemType: 1
+    id: 3003
     sprite: {fileID: 21300000, guid: 988aad686dc1fec48bbc0dee20cead64, type: 3}
     name: Cheese
     incraseHp: 10
     attack: 0
     defence: 0
-  - id: 3004
-    itemType: 1
+  - itemType: 1
+    id: 3004
     sprite: {fileID: 21300000, guid: 14e62563269c11443b9c936be93b95f4, type: 3}
     name: Meat
     incraseHp: 15
     attack: 0
     defence: 0
-  - id: 3005
-    itemType: 1
+  - itemType: 1
+    id: 3005
     sprite: {fileID: 21300000, guid: 966ff550585ec504896a28b55fd7281c, type: 3}
     name: Mushroom
     incraseHp: 5
     attack: 0
     defence: 0
-  - id: 3006
-    itemType: 1
+  - itemType: 1
+    id: 3006
+    sprite: {fileID: 21300000, guid: c1101a972f67d164db2754844fbeeda2, type: 3}
+    name: Ham
+    incraseHp: 5
+    attack: 0
+    defence: 0
+  - itemType: 2
+    id: 3007
+    sprite: {fileID: 21300000, guid: 6139cd37aafba5840b25f4e6af127acc, type: 3}
+    name: Sword
+    incraseHp: 0
+    attack: 3
+    defence: 0
+  - itemType: 2
+    id: 3008
+    sprite: {fileID: 21300000, guid: f3b5c0ca3735a1c4abf65103006329d6, type: 3}
+    name: Ham
+    incraseHp: 0
+    attack: 5
+    defence: 0
+  - itemType: 2
+    id: 3009
     sprite: {fileID: 21300000, guid: c1101a972f67d164db2754844fbeeda2, type: 3}
     name: Ham
     incraseHp: 5

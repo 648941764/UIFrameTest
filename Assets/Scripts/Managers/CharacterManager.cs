@@ -13,7 +13,8 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
     private CharacterEntity _playerEntity;
 
     private Player _player;
-
+    private GameBackpack gameBackpack;
+    public GameBackpack GameBackpack => gameBackpack;
     public Player Player => _player;
 
     public CharacterEntity PlayerEntity => _playerEntity;
@@ -136,6 +137,7 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
             _playerEntity.SetLevel(1);
             _playerEntity.SetExp(0);
             _playerEntity.SetAlive();
+            _playerEntity.SetGold(1);
         }
         else if (_playerEntity.IsDead())
         {
@@ -179,5 +181,6 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
     public void LoadPlayerData()
     {
         CreatePlayerEntity();
+        gameBackpack = new GameBackpack();
     }
 }
