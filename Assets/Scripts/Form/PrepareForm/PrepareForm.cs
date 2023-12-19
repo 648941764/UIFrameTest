@@ -2,6 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
+using System.Reflection;
+
+
+public class ShopItem
+{
+    public int id;
+    public int amount;
+    public int price;
+}
 
 public class PrepareForm : Form
 {
@@ -13,7 +23,7 @@ public class PrepareForm : Form
     [SerializeField] private RectTransform _backpackPanel;
     [SerializeField] private RectTransform[] _itmeSlots;
     private BackpackUI[] _backpackUIs;
-    private bool _isOpen = true;
+    private bool _isOpen = false;
 
     public RectTransform BackpackParent => _backParent;
 
@@ -34,10 +44,12 @@ public class PrepareForm : Form
     [SerializeField] private RectTransform[] _shopImgs;
     [SerializeField] private Button[] _buttons;
     [SerializeField] private Text _txtGold;
+    [SerializeField] private Text _txtTitle;
     private int _goldCount;
-    private Dictionary<int, ShopData> shopDatas = DataManager.Instance.shopDatas; 
+    private Dictionary<int, ShopData> _shopDatas = new Dictionary<int, ShopData>();
+    private List<ShopItem> _dataList = new List<ShopItem>();
 
-
+    
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.W))
@@ -54,8 +66,23 @@ public class PrepareForm : Form
         _btnShop.onClick.AddListener(OnBtnShopClicked);
         _btnBackPack.onClick.AddListener(OnBtnBackpackClicked);
         _btnClose.onClick.AddListener(OnBtnCloseClicked);
-
         _backpackUIs = new BackpackUI[GameBackpack.ITEM_NUM];
+        int i = -1;
+        while (++i < _buttons.Length)
+        {
+            int index = i;
+            _buttons[i].onClick.AddListener(() => BtnBuyClicked(index));
+        }
+        //=====================================================================读取数据
+        _shopDatas = DataManager.Instance.shopDatas;
+        foreach (var item in _shopDatas.Values)
+        {
+            ShopItem temp = new ShopItem();
+            temp.id = item.id;
+            temp.amount = item.amount;
+            temp.price = item.price;
+            _dataList.Add(temp);
+        }
     }
 
     protected override void OnRefresh()
@@ -98,16 +125,7 @@ public class PrepareForm : Form
     {
         base.OnOpen();
         AddEvent(OnBackpackItemChange);
-        CharacterEntity player = CharacterManager.Instance.PlayerEntity;
-        if (player == null) 
-        {
-            _goldCount = 0;
-        }
-        else
-        {
-            _goldCount = player.GetGold();
-        }
-        _txtGold.text = _goldCount.ToString();
+        RefreshShopUI();
     }
 
     protected override void OnClose()
@@ -121,6 +139,23 @@ public class PrepareForm : Form
         if (eventParam.eventName == EventType.BackpackItemChange)
         {
             OnRefresh();
+        }
+    }
+
+    private void RefreshShopUI()
+    {
+        CharacterEntity player = CharacterManager.Instance.PlayerEntity;
+        {
+            if (player == null)
+            {
+                _goldCount = 0;
+            }
+            else
+            {
+                _goldCount = player.GetGold();
+            }
+            _txtGold.text = _goldCount.ToString();
+            RefreshShopImgAndBtn();
         }
     }
     #endregion
@@ -139,19 +174,21 @@ public class PrepareForm : Form
 
     private void OnBtnShopClicked()
     {
-        //把原来背包的格子全部删除，重新加载新的格子
+        _shopPanel.SetActivate(true);
+        _backpackPanel.SetActivate(false);
+        _txtTitle.text = "Shop";
+
     }
 
     private void OnBtnBackpackClicked()
     {
-        _backParent.SetActivate(!_isOpen);
-        _isOpen = !_isOpen;
+        _shopPanel.SetActivate(false);
+        _backpackPanel.SetActivate(true);
+        _txtTitle.text = "Backpack";
     }
 
     private void OnBtnCloseClicked()
     {
-        _backParent.SetActivate(!_isOpen);
-        _isOpen = !_isOpen;
     }
 
     #endregion
@@ -172,10 +209,40 @@ public class PrepareForm : Form
 
     #region 商店的方法
 
-    public void GetItemByShop()
+    private void RefreshShopImgAndBtn()
     {
-
+        int i = -1;
+        while (++i < _shopImgs.Length)
+        {
+            ShopData shopData = DataManager.Instance.shopDatas[_dataList[i].id];
+            _shopImgs[i].transform.GetComponent<Image>().sprite = DataManager.Instance.itemDatas[shopData.id].sprite;
+            if(shopData.amount == 0)
+            {
+                _buttons[i].interactable = false;
+                _buttons[i].transform.GetChild(0).GetComponent<Text>().text = "售罄";
+                return;
+            } 
+            _buttons[i].transform.GetChild(0).GetComponent<Text>().text = _dataList[i].price.ToString();
+        }
     }
+
+    private void BtnBuyClicked(int index)
+    {
+        CharacterEntity player = CharacterManager.Instance.PlayerEntity;
+        ShopData shopData = DataManager.Instance.shopDatas[_dataList[index].id];
+        int sum = player.GetGold() - shopData.price;
+        if (sum < 0)
+        {
+            Debug.Log("余额不足");
+            return;
+        }
+        player.SetGold(sum);
+        CharacterManager.Instance.GameBackpack.Additem(shopData.id, 1);
+        shopData.amount -= 1;
+        RefreshShopUI();
+    }
+
+
 
 
     #endregion

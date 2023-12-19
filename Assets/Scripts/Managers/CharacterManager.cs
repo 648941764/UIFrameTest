@@ -14,6 +14,7 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
 
     private Player _player;
     private GameBackpack gameBackpack;
+
     public GameBackpack GameBackpack => gameBackpack;
     public Player Player => _player;
 

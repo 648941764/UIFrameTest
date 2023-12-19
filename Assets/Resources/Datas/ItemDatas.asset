@@ -71,8 +71,8 @@ MonoBehaviour:
     defence: 0
   - itemType: 2
     id: 3009
-    sprite: {fileID: 21300000, guid: c1101a972f67d164db2754844fbeeda2, type: 3}
-    name: Ham
-    incraseHp: 5
-    attack: 0
+    sprite: {fileID: 21300000, guid: b95e465f0acfd0741841d9d8c64ec5c8, type: 3}
+    name: SwordWood
+    incraseHp: 0
+    attack: 2
     defence: 0

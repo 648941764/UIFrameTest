@@ -14,14 +14,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   datas:
   - id: 3001
-    price: 362
+    price: 1
+    amount: 1
   - id: 3002
-    price: 356
+    price: 60
+    amount: 2
   - id: 3003
-    price: 356
+    price: 20
+    amount: 1
   - id: 3004
-    price: 356
+    price: 30
+    amount: 2
   - id: 3005
-    price: 356
+    price: 15
+    amount: 1
   - id: 3006
-    price: 356
+    price: 124
+    amount: 1
+  - id: 3007
+    price: 80
+    amount: 1
+  - id: 3008
+    price: 120
+    amount: 1
+  - id: 3009
+    price: 60
+    amount: 1

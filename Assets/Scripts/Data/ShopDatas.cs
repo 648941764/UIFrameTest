@@ -15,5 +15,5 @@ public class ShopData
 {
     public int id;
     public int price;
-
+    public int amount;
 }
