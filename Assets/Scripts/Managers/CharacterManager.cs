@@ -133,7 +133,7 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
             _playerEntity.SetUID(PLAYER_ID);
             _playerEntity.SetDefence(data.defence);
             _playerEntity.SetAttack(data.attack);
-            _playerEntity.SetHealth(data.maxHp);
+            _playerEntity.SetHealth(data.hp);
             _playerEntity.SetMaxHealth(data.maxHp);
             _playerEntity.SetLevel(1);
             _playerEntity.SetExp(0);

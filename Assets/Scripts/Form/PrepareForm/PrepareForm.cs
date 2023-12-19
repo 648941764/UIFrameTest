@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using System.Reflection;
-
+using DG.Tweening;
 
 public class ShopItem
 {
@@ -22,17 +22,11 @@ public class PrepareForm : Form
     [SerializeField] private Image  _imgDrag;
     [SerializeField] private RectTransform _backpackPanel;
     [SerializeField] private RectTransform[] _itmeSlots;
-    private BackpackUI[] _backpackUIs;
-    private bool _isOpen = false;
-
-    public RectTransform BackpackParent => _backParent;
-
-    public Image ImgDrag => _imgDrag;
     
     [Header("RolePanel")]
-    [SerializeField] private Text _playerMaxHealth;
-    [SerializeField] private Text _playerAttack;
-    [SerializeField] private Text _playerDefence;
+    [SerializeField] private Text _txtPlayerHealth;
+    [SerializeField] private Text _txtPlayerAttack;
+    [SerializeField] private Text _txtPlayerDefence;
 
     [Header("Btns")]
     [SerializeField] private Button _btnBackPack;
@@ -45,9 +39,17 @@ public class PrepareForm : Form
     [SerializeField] private Button[] _buttons;
     [SerializeField] private Text _txtGold;
     [SerializeField] private Text _txtTitle;
+    [SerializeField] private Text _txtSign;
+    [SerializeField] private CanvasGroup _canvasGroupTitle;
+
     private int _goldCount;
     private Dictionary<int, ShopData> _shopDatas = new Dictionary<int, ShopData>();
     private List<ShopItem> _dataList = new List<ShopItem>();
+    private BackpackUI[] _backpackUIs;
+
+    public RectTransform BackpackParent => _backParent;
+
+    public Image ImgDrag => _imgDrag;
 
     
     private void Update()
@@ -126,6 +128,7 @@ public class PrepareForm : Form
         base.OnOpen();
         AddEvent(OnBackpackItemChange);
         RefreshShopUI();
+        RefreshRolePanel();
     }
 
     protected override void OnClose()
@@ -193,7 +196,7 @@ public class PrepareForm : Form
 
     #endregion
 
-    #region 特有的背包的方法
+    #region 背包的逻辑
     public int FindNearestBackpackItems(Image image)
     {
         for (int i = 0; i < _itmeSlots.Length; i++)
@@ -207,7 +210,7 @@ public class PrepareForm : Form
     }
     #endregion
 
-    #region 商店的方法
+    #region 商店的逻辑
 
     private void RefreshShopImgAndBtn()
     {
@@ -215,8 +218,9 @@ public class PrepareForm : Form
         while (++i < _shopImgs.Length)
         {
             ShopData shopData = DataManager.Instance.shopDatas[_dataList[i].id];
+            ShopItem item = _dataList[i];
             _shopImgs[i].transform.GetComponent<Image>().sprite = DataManager.Instance.itemDatas[shopData.id].sprite;
-            if(shopData.amount == 0)
+            if(item.amount == 0)
             {
                 _buttons[i].interactable = false;
                 _buttons[i].transform.GetChild(0).GetComponent<Text>().text = "售罄";
@@ -230,20 +234,37 @@ public class PrepareForm : Form
     {
         CharacterEntity player = CharacterManager.Instance.PlayerEntity;
         ShopData shopData = DataManager.Instance.shopDatas[_dataList[index].id];
+        ShopItem item = _dataList[index];
         int sum = player.GetGold() - shopData.price;
         if (sum < 0)
         {
-            Debug.Log("余额不足");
+            _txtSign.SetActivate(true);
+            DOVirtual.Float(1f, 0f, 3f, _ => _canvasGroupTitle.alpha = _).OnComplete(() => _txtSign.SetActivate(false));
             return;
         }
         player.SetGold(sum);
         CharacterManager.Instance.GameBackpack.Additem(shopData.id, 1);
-        shopData.amount -= 1;
+        item.amount -= 1;
         RefreshShopUI();
     }
 
 
 
+
+
+
+    #endregion
+
+    #region 角色面板的逻辑
+
+    private void RefreshRolePanel()
+    {
+        CharacterEntity player = CharacterManager.Instance.PlayerEntity;
+        _txtPlayerAttack.text = player.GetAttack().ToString();
+        _txtPlayerDefence.text = player.GetDefence().ToString();
+        _txtPlayerHealth.text = player.GetHealth().ToString();
+
+    }
 
     #endregion
 }
