@@ -138,7 +138,7 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
             _playerEntity.SetLevel(1);
             _playerEntity.SetExp(0);
             _playerEntity.SetAlive();
-            _playerEntity.SetGold(1);
+            _playerEntity.SetGold(data.gold);
         }
         else if (_playerEntity.IsDead())
         {

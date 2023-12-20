@@ -9,11 +9,12 @@ public class ItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
     [SerializeField] private Image itemSpriteImg;
     [SerializeField] private Text  itemAmountText;
     private int itemUIIndex;
-
-
     private bool isDragging;
     private Vector2 mousePos;
     private Image UI;
+
+    public Image ItemSpriteImg => itemSpriteImg;
+    public Text ItemAmountText => itemAmountText;
 
     public void OnBeginDrag(PointerEventData eventData)
     {
