@@ -93,7 +93,7 @@ public class PrepareForm : Form, IPointerClickHandler
         while (++k < _btnDischarge.Length) 
         {
             int index = k;
-            _btnDischarge[i].onClick.AddListener(() => OnBtnDischargeClicked(index));
+            _btnDischarge[k].onClick.AddListener(() => OnBtnDischargeClicked(index));
         }
         //==============================================================================================================读取数据
         _shopDatas = DataManager.Instance.shopDatas;
@@ -231,7 +231,7 @@ public class PrepareForm : Form, IPointerClickHandler
     }
 
     /// <summary>
-    /// 把物品放入快捷栏的方法
+    /// 把物品放入装备栏的方法
     /// </summary>
     public void OnBtnEquipmentEnterClicked()
     {
@@ -254,11 +254,15 @@ public class PrepareForm : Form, IPointerClickHandler
         {
             if (_shopEquipmentItemSlots[i] == null)
             {
+                CharacterEntity player = CharacterManager.Instance.PlayerEntity;
+                player.SetAttack(player.GetAttack() + itemData.attack);
+                player.SetDefence(player.GetDefence() + itemData.defence);
                 _shopEquipmentItemSlots[i] = _chooseItem;
+                CharacterManager.Instance.GameBackpack.RemoveItme(_chooseItem);
+                _chooseItem = null;
+                _promptTitle.SetActivate(false);
+                break;
             }
-            CharacterManager.Instance.GameBackpack.RemoveItme(_chooseItem);
-            _chooseItem = null;
-            _promptTitle.SetActivate(false);
         }
         RefreshRolePanel();
         RefreshEquipmentslot();
@@ -356,26 +360,24 @@ public class PrepareForm : Form, IPointerClickHandler
     private void RefreshRolePanel()
     {
         CharacterEntity player = CharacterManager.Instance.PlayerEntity;
-        int attack = 0;
-        int defence = 0;
         _txtPlayerAttack.text = player.GetAttack().ToString();
         _txtPlayerDefence.text = player.GetDefence().ToString();
         _txtPlayerHealth.text = player.GetHealth().ToString();
-        ItemData item = new ItemData();
-        int i = -1;
-        while (++i < _shopEquipmentItemSlots.Length)
-        {
-            if (_shopEquipmentItemSlots[i] != null)
-            {
-                item = DataManager.Instance.itemDatas[_shopEquipmentItemSlots[i].id];
-                attack = item.attack + player.GetAttack();
-                defence = item.defence + +player.GetDefence();
-                player.SetAttack(attack);
-                player.SetDefence(defence);
-                _txtPlayerAttack.text = player.GetAttack().ToString();
-                _txtPlayerDefence.text = player.GetDefence().ToString();
-            }
-        }
+        //ItemData item = new ItemData();
+        //int i = -1;
+        //while (++i < _shopEquipmentItemSlots.Length)
+        //{
+        //    if (_shopEquipmentItemSlots[i] != null)
+        //    {
+        //        item = DataManager.Instance.itemDatas[_shopEquipmentItemSlots[i].id];
+        //        attack = item.attack + player.GetAttack();
+        //        defence = item.defence + +player.GetDefence();
+        //        player.SetAttack(attack);
+        //        player.SetDefence(defence);
+        //        _txtPlayerAttack.text = player.GetAttack().ToString();
+        //        _txtPlayerDefence.text = player.GetDefence().ToString();
+        //    }
+        //}
 
         //DOTO改变玩家的数值，下面的字段需要修改
         
@@ -411,9 +413,23 @@ public class PrepareForm : Form, IPointerClickHandler
         }
     }
 
-    public void OnBtnDischargeClicked(int index)
+    public void OnBtnDischargeClicked(int index)//卸下装备，刷新角色面板数据
     {
-
+        GameItem item = _shopEquipmentItemSlots[index];
+        if (item != null)
+        {
+            ItemData data = DataManager.Instance.itemDatas[item.id];
+            CharacterEntity player = CharacterManager.Instance.PlayerEntity;
+            int attack = player.GetAttack() - data.attack;
+            int defence = player.GetDefence() - data.defence;
+            player.SetAttack(attack);
+            player.SetDefence(defence);
+            _txtPlayerAttack.text = player.GetAttack().ToString();
+            _txtPlayerDefence.text = player.GetDefence().ToString();
+            _shopEquipmentItemSlots[index] = null;
+            CharacterManager.Instance.GameBackpack.Additem(data.id,1);
+            RefreshEquipmentslot();
+        }
     }
 
 

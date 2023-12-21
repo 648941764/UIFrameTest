@@ -44,41 +44,45 @@ public class BackpackUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        _isDragging = false;
-        _mousePos = eventData.position;
-
-        int index = UIManager.Instance.GetForm<PrepareForm>().FindNearestBackpackItems(_imgDrag);
-        if (index < 0)
+        if (_isDragging && eventData.button == PointerEventData.InputButton.Left)
         {
-            _imgUISprite.color = _normalColor;
-            _txtItemAmount.text = CharacterManager.Instance.GameBackpack.Items[UIIndex].amount.ToString();
-            Destroy(_imgDrag.gameObject);
-            return;
-        }
+            _isDragging = false;
+            _mousePos = eventData.position;
 
-        _txtItemAmount.text = default;
-        GameItem currentItem = CharacterManager.Instance.GameBackpack.Items[UIIndex];
-        GameItem nearestItem = CharacterManager.Instance.GameBackpack.Items[index];
-
-        if (nearestItem != null && index != this.UIIndex)
-        {
-            if (currentItem.id == nearestItem.id)
+            int index = UIManager.Instance.GetForm<PrepareForm>().FindNearestBackpackItems(_imgDrag);
+            if (index < 0)
             {
-                nearestItem.amount += currentItem.amount;
-                CharacterManager.Instance.GameBackpack.RemoveItme(currentItem);
+                _imgUISprite.color = _normalColor;
+                _txtItemAmount.text = CharacterManager.Instance.GameBackpack.Items[UIIndex].amount.ToString();
+                Destroy(_imgDrag.gameObject);
+                return;
+            }
+
+            _txtItemAmount.text = default;
+            GameItem currentItem = CharacterManager.Instance.GameBackpack.Items[UIIndex];
+            GameItem nearestItem = CharacterManager.Instance.GameBackpack.Items[index];
+
+            if (nearestItem != null && index != this.UIIndex)
+            {
+                if (currentItem.id == nearestItem.id)
+                {
+                    nearestItem.amount += currentItem.amount;
+                    CharacterManager.Instance.GameBackpack.RemoveItme(currentItem);
+                }
+                else
+                {
+                    CharacterManager.Instance.GameBackpack.SwapItem(this.UIIndex, index);
+                }
             }
             else
             {
                 CharacterManager.Instance.GameBackpack.SwapItem(this.UIIndex, index);
             }
-        }
-        else
-        {
-            CharacterManager.Instance.GameBackpack.SwapItem(this.UIIndex, index);
-        }
 
-        _imgUISprite.color = _normalColor;
-        Destroy(_imgDrag.gameObject);
+            _imgUISprite.color = _normalColor;
+            Destroy(_imgDrag.gameObject);
+        }
+        
     }
 
     public void RefreshBackpackUI(GameItem item)
