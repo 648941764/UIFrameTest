@@ -150,6 +150,7 @@ public class PrepareForm : Form, IPointerClickHandler
         AddEvent(OnBackpackItemChange);
         RefreshShopUI();
         RefreshRolePanel();
+        GameManager.Instance.UpdateHandle += PrepareFormUpdate;
     }
 
     protected override void OnClose()
@@ -268,6 +269,22 @@ public class PrepareForm : Form, IPointerClickHandler
         RefreshEquipmentslot();
     }
 
+    public void PrepareFormUpdate()
+    {
+        if (Input.GetKeyDown(KeyCode.K) && _chooseItem != null)
+        {
+            CharacterEntity player = CharacterManager.Instance.PlayerEntity;
+            ItemData item = DataManager.Instance.itemDatas[_chooseItem.id];
+            if (item.itemType == ItemEnum.Food)
+            {
+                player.SetHealth(Mathf.Min(player.GetHealth() + item.incraseHp, player.GetMaxHealth()));
+                RefreshRolePanel();
+                //减少背包的物品
+            }
+
+        }
+    }
+
     public void OnBtnEquipmentReduceClicked() 
     {
 
@@ -358,28 +375,11 @@ public class PrepareForm : Form, IPointerClickHandler
     #region 角色面板的逻辑
 
     private void RefreshRolePanel()
-    {
+    { 
         CharacterEntity player = CharacterManager.Instance.PlayerEntity;
         _txtPlayerAttack.text = player.GetAttack().ToString();
         _txtPlayerDefence.text = player.GetDefence().ToString();
         _txtPlayerHealth.text = player.GetHealth().ToString();
-        //ItemData item = new ItemData();
-        //int i = -1;
-        //while (++i < _shopEquipmentItemSlots.Length)
-        //{
-        //    if (_shopEquipmentItemSlots[i] != null)
-        //    {
-        //        item = DataManager.Instance.itemDatas[_shopEquipmentItemSlots[i].id];
-        //        attack = item.attack + player.GetAttack();
-        //        defence = item.defence + +player.GetDefence();
-        //        player.SetAttack(attack);
-        //        player.SetDefence(defence);
-        //        _txtPlayerAttack.text = player.GetAttack().ToString();
-        //        _txtPlayerDefence.text = player.GetDefence().ToString();
-        //    }
-        //}
-
-        //DOTO改变玩家的数值，下面的字段需要修改
         
     }
 

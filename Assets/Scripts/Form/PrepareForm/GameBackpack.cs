@@ -35,6 +35,10 @@ public class GameBackpack
                 }
             }
         }
+    }
+
+    public void UseItem(GameItem item, int amount)
+    {
 
     }
 
