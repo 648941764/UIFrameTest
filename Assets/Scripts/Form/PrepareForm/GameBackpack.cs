@@ -39,7 +39,13 @@ public class GameBackpack
 
     public void UseItem(GameItem item, int amount)
     {
-
+        ItemData data = DataManager.Instance.itemDatas[item.id];
+        int differ = Mathf.Max(0, item.amount - amount);
+        if (differ <= 0)
+        {
+            RemoveItme(item);
+        }
+        EventManager.Instance.Broadcast(EventParam.Get(EventType.BackpackItemChange));
     }
 
     public void RemoveItme(GameItem item)

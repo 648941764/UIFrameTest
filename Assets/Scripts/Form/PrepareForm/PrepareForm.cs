@@ -23,6 +23,8 @@ public class PrepareForm : Form, IPointerClickHandler
     [SerializeField] private Image  _imgDrag;
     [SerializeField] private RectTransform _backpackPanel;
     [SerializeField] private RectTransform[] _itemSlots;
+    //需要添加一个使用物品的逻辑
+    //使用完物品过后就减少物品
     
     [Header("RolePanel")]
     [SerializeField] private Text _txtPlayerHealth;
@@ -157,6 +159,7 @@ public class PrepareForm : Form, IPointerClickHandler
     {
         base.OnClose();
         DelEvent(OnBackpackItemChange);
+        GameManager.Instance.UpdateHandle -= PrepareFormUpdate;
     }
 
     private void OnBackpackItemChange(EventParam eventParam)
@@ -275,11 +278,12 @@ public class PrepareForm : Form, IPointerClickHandler
         {
             CharacterEntity player = CharacterManager.Instance.PlayerEntity;
             ItemData item = DataManager.Instance.itemDatas[_chooseItem.id];
-            if (item.itemType == ItemEnum.Food)
+            if (item.itemType == ItemEnum.Food && _chooseItem.amount > 0)
             {
                 player.SetHealth(Mathf.Min(player.GetHealth() + item.incraseHp, player.GetMaxHealth()));
                 RefreshRolePanel();
                 //减少背包的物品
+                CharacterManager.Instance.GameBackpack.UseItem(_chooseItem, 1);
             }
 
         }
