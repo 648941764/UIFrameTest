@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using UnityEngine;
 
 public sealed class CharacterManager : SingletonMono<CharacterManager>
@@ -184,4 +185,49 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
         CreatePlayerEntity();
         gameBackpack = new GameBackpack();
     }
+
+    public void ChangePlayerDataForEquipment(GameItem[] EquipmentSlot, GameItem chooseItem)
+    {
+        ItemData data = DataManager.Instance.itemDatas[chooseItem.id];
+        int i = -1;
+        while (++i < EquipmentSlot.Length)
+        {
+            if (EquipmentSlot[i] == null)
+            {
+                _playerEntity.SetAttack(PlayerEntity.GetAttack() + data.attack);
+                _playerEntity.SetDefence(PlayerEntity.GetDefence() + data.defence);
+                EquipmentSlot[i] = chooseItem;
+                gameBackpack.RemoveItme(chooseItem);
+                chooseItem = null;
+                break;
+            }
+        }
+    }
+
+    public void UseItemForFood(GameItem chooseItem)
+    {
+        ItemData item = DataManager.Instance.itemDatas[chooseItem.id];
+        if (item.itemType == ItemEnum.Food && chooseItem.amount > 0)
+        {
+            _playerEntity.SetHealth(Mathf.Min(_playerEntity.GetHealth() + item.incraseHp, _playerEntity.GetMaxHealth()));
+            CharacterManager.Instance.GameBackpack.UseItem(chooseItem, 1);
+            chooseItem = null;
+        }
+    }
+
+    public void DischargeItem(GameItem[] EquipmentSlot, int index)
+    {
+        GameItem item = EquipmentSlot[index];
+        if (item != null)
+        {
+            ItemData data = DataManager.Instance.itemDatas[item.id];
+            CharacterEntity player = CharacterManager.Instance.PlayerEntity;
+            int attack = player.GetAttack() - data.attack;
+            int defence = player.GetDefence() - data.defence;
+            player.SetAttack(attack);
+            player.SetDefence(defence);
+            CharacterManager.Instance.GameBackpack.Additem(data.id, 1);
+        }
+    }
+
 }

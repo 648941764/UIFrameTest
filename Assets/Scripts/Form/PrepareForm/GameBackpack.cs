@@ -18,7 +18,6 @@ public class GameBackpack
 
     public Dictionary<int, ItemData> itemdata => DataManager.Instance.itemDatas;
 
-
     public void Additem(int id, int amount)
     {
         ItemData data = GetData(id);

@@ -63,15 +63,6 @@ public class PrepareForm : Form, IPointerClickHandler
 
     public Image ImgDrag => _imgDrag;
 
-    
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            CharacterManager.Instance.GameBackpack.Additem(3004, 1);
-        }
-    }
-
     #region Form基类
     protected override void InitComponents()
     {
@@ -254,38 +245,34 @@ public class PrepareForm : Form, IPointerClickHandler
             return;
         }
         //把chooseItem的数据放到格子里面
-        for (int i = 0; i < _shopEquipmentItemSlots.Length; i++)
-        {
-            if (_shopEquipmentItemSlots[i] == null)
-            {
-                CharacterEntity player = CharacterManager.Instance.PlayerEntity;
-                player.SetAttack(player.GetAttack() + itemData.attack);
-                player.SetDefence(player.GetDefence() + itemData.defence);
-                _shopEquipmentItemSlots[i] = _chooseItem;
-                CharacterManager.Instance.GameBackpack.RemoveItme(_chooseItem);
-                _chooseItem = null;
-                _promptTitle.SetActivate(false);
-                break;
-            }
-        }
+        //for (int i = 0; i < _shopEquipmentItemSlots.Length; i++)
+        //{
+        //    if (_shopEquipmentItemSlots[i] == null)//数据逻辑，后面放到CharacterManager
+        //    {
+        //        CharacterEntity player = CharacterManager.Instance.PlayerEntity;
+        //        player.SetAttack(player.GetAttack() + itemData.attack);
+        //        player.SetDefence(player.GetDefence() + itemData.defence);
+        //        _shopEquipmentItemSlots[i] = _chooseItem;
+        //        CharacterManager.Instance.GameBackpack.RemoveItme(_chooseItem);
+        //        _chooseItem = null;
+        //        _promptTitle.SetActivate(false);
+        //        break;
+        //    }
+        //}
+        CharacterManager.Instance.ChangePlayerDataForEquipment(_shopEquipmentItemSlots, _chooseItem);//把上面代码改写成方法
+        _promptTitle.SetActivate(false);
         RefreshRolePanel();
         RefreshEquipmentslot();
     }
 
-    public void PrepareFormUpdate()
+    public void PrepareFormUpdate()//数据逻辑，后面放到CharacterManager
     {
         if (Input.GetKeyDown(KeyCode.K) && _chooseItem != null)
         {
-            CharacterEntity player = CharacterManager.Instance.PlayerEntity;
-            ItemData item = DataManager.Instance.itemDatas[_chooseItem.id];
-            if (item.itemType == ItemEnum.Food && _chooseItem.amount > 0)
-            {
-                player.SetHealth(Mathf.Min(player.GetHealth() + item.incraseHp, player.GetMaxHealth()));
-                RefreshRolePanel();
-                //减少背包的物品
-                CharacterManager.Instance.GameBackpack.UseItem(_chooseItem, 1);
-            }
-
+            CharacterManager.Instance.UseItemForFood(_chooseItem);
+            RefreshRolePanel();
+            _promptTitle.SetActivate(false);
+            RefreshSlotImage();
         }
     }
 
@@ -368,7 +355,7 @@ public class PrepareForm : Form, IPointerClickHandler
             DOVirtual.Float(1f, 0f, 3f, _ => _canvasGroupTitle.alpha = _).OnComplete(() => _txtSign.SetActivate(false));
             return;
         }
-        player.SetGold(sum);
+        player.SetGold(sum);//数据逻辑，后面放到CharacterManager
         CharacterManager.Instance.GameBackpack.Additem(shopData.id, 1);
         item.amount -= 1;
         RefreshShopUI();
@@ -417,7 +404,7 @@ public class PrepareForm : Form, IPointerClickHandler
         }
     }
 
-    public void OnBtnDischargeClicked(int index)//卸下装备，刷新角色面板数据
+    public void OnBtnDischargeClicked(int index)//卸下装备，刷新角色面板数据 //数据逻辑，后面放到CharacterManager
     {
         GameItem item = _shopEquipmentItemSlots[index];
         if (item != null)
