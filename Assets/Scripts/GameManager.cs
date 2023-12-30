@@ -42,6 +42,12 @@ public sealed class GameManager : SingletonMono<GameManager>
     {
         UpdateHandle?.Invoke();
         TimeUpdateHandle?.Invoke(Time.deltaTime);
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            DataManager.Instance.SavePlayerJsonData(CharacterManager.Instance.PlayerEntity);
+            Debug.Log("数据保存成功");
+        }
     }
 
     public void StartGame()

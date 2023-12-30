@@ -124,10 +124,12 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
         _enemyEntities.Add(uid, entity);
     }
 
-    private void CreatePlayerEntity()
+    private void CreatePlayerEntity()//此处用来创建playerData的数据
     {
+        _playerEntity = DataManager.Instance.LoadPlayerJsonData();
         if (_playerEntity == null)
         {
+            Debug.Log("创建新的角色数据");
             _playerEntity = new CharacterEntity();
             PlayerData data = DataManager.Instance.playerDatas[PLAYER_ID];
             _playerEntity.SetID(data.id);

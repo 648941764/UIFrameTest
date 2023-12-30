@@ -59,6 +59,7 @@ public class PrepareForm : Form, IPointerClickHandler
     private List<ShopItem> _dataList = new List<ShopItem>();
     private BackpackUI[] _backpackUIs;
     private Color _normalColor;
+
     public RectTransform BackpackParent => _backParent;
 
     public Image ImgDrag => _imgDrag;
@@ -259,7 +260,7 @@ public class PrepareForm : Form, IPointerClickHandler
         //        break;
         //    }
         //}
-        CharacterManager.Instance.ChangePlayerDataForEquipment(_shopEquipmentItemSlots, _chooseItem);//把上面代码改写成方法
+        CharacterManager.Instance.ChangePlayerDataForEquipment(_shopEquipmentItemSlots, _chooseItem);//把上面代码改写了成方法
         _promptTitle.SetActivate(false);
         RefreshRolePanel();
         RefreshEquipmentslot();
@@ -269,16 +270,26 @@ public class PrepareForm : Form, IPointerClickHandler
     {
         if (Input.GetKeyDown(KeyCode.K) && _chooseItem != null)
         {
+            CharacterEntity player = CharacterManager.Instance.PlayerEntity;
+            if (player.GetHealth() == player.GetMaxHealth())
+            {
+                //弹窗显示最大血量已满无法使用
+                _txtSign.SetActivate(true);
+                _txtSign.text = "血量已满，无需使用任何物品";
+                DOVirtual.Float(1f, 0f, 3f, _ => _canvasGroupTitle.alpha = _).OnComplete(() => _txtSign.SetActivate(false));
+                _chooseItem = null;
+                return;
+            }
             CharacterManager.Instance.UseItemForFood(_chooseItem);
             RefreshRolePanel();
             _promptTitle.SetActivate(false);
             RefreshSlotImage();
+            _chooseItem = null;
         }
     }
 
     public void OnBtnEquipmentReduceClicked() 
     {
-
         _promptTitle.SetActivate(false);
         RefreshSlotImage();
         _chooseItem = null;
@@ -352,6 +363,7 @@ public class PrepareForm : Form, IPointerClickHandler
         if (sum < 0)
         {
             _txtSign.SetActivate(true);
+            _txtSign.text = "余额不足，请尝试获得更多金币";
             DOVirtual.Float(1f, 0f, 3f, _ => _canvasGroupTitle.alpha = _).OnComplete(() => _txtSign.SetActivate(false));
             return;
         }
@@ -371,7 +383,6 @@ public class PrepareForm : Form, IPointerClickHandler
         _txtPlayerAttack.text = player.GetAttack().ToString();
         _txtPlayerDefence.text = player.GetDefence().ToString();
         _txtPlayerHealth.text = player.GetHealth().ToString();
-        
     }
 
     /// <summary>
@@ -400,27 +411,17 @@ public class PrepareForm : Form, IPointerClickHandler
                 _equipmentUIs[i].SetActivate(true);
             }
             _equipmentUIs[i].sprite = DataManager.Instance.itemDatas[_shopEquipmentItemSlots[i].id].sprite;
-
         }
     }
 
     public void OnBtnDischargeClicked(int index)//卸下装备，刷新角色面板数据 //数据逻辑，后面放到CharacterManager
     {
-        GameItem item = _shopEquipmentItemSlots[index];
-        if (item != null)
-        {
-            ItemData data = DataManager.Instance.itemDatas[item.id];
-            CharacterEntity player = CharacterManager.Instance.PlayerEntity;
-            int attack = player.GetAttack() - data.attack;
-            int defence = player.GetDefence() - data.defence;
-            player.SetAttack(attack);
-            player.SetDefence(defence);
-            _txtPlayerAttack.text = player.GetAttack().ToString();
-            _txtPlayerDefence.text = player.GetDefence().ToString();
-            _shopEquipmentItemSlots[index] = null;
-            CharacterManager.Instance.GameBackpack.Additem(data.id,1);
-            RefreshEquipmentslot();
-        }
+        CharacterManager.Instance.DischargeItem(_shopEquipmentItemSlots, index);
+        CharacterEntity player = CharacterManager.Instance.PlayerEntity;
+        _txtPlayerAttack.text = player.GetAttack().ToString();
+        _txtPlayerDefence.text = player.GetDefence().ToString();
+        _shopEquipmentItemSlots[index] = null;
+        RefreshEquipmentslot();
     }
 
 

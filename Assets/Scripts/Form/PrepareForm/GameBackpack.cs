@@ -43,7 +43,9 @@ public class GameBackpack
         if (differ <= 0)
         {
             RemoveItme(item);
+            return;
         }
+        item.amount -= amount;
         EventManager.Instance.Broadcast(EventParam.Get(EventType.BackpackItemChange));
     }
 

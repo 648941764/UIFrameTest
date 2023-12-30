@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class CharacterEntity
 {
-    public Character character;
-
     /// <summary> config id /// </summary>
     private int _id;
     private int _uid;

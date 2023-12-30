@@ -20,7 +20,6 @@ public class Backpack
 
     public Item[] Items => items;
 
-
     public void AddItem(int id, int amount)
     {
         ItemData cfg = GetCfg(id);
