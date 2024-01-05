@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using DG.Tweening;
 using UnityEngine.EventSystems;
+using System;
 
 public class ShopItem
 {
@@ -51,6 +52,7 @@ public class PrepareForm : Form, IPointerClickHandler
     [SerializeField] private Text _txtGold;
     [SerializeField] private Text _txtTitle;
     [SerializeField] private Text _txtSign;
+    [SerializeField] private Text _txtRefreshTime;
     [SerializeField] private CanvasGroup _canvasGroupTitle;
 
     private int _goldCount;
@@ -59,6 +61,7 @@ public class PrepareForm : Form, IPointerClickHandler
     private List<ShopItem> _dataList = new List<ShopItem>();
     private BackpackUI[] _backpackUIs;
     private Color _normalColor;
+    private DateTime _refreshTime;
 
     public RectTransform BackpackParent => _backParent;
 
@@ -99,6 +102,8 @@ public class PrepareForm : Form, IPointerClickHandler
             temp.price = item.price;
             _dataList.Add(temp);
         }
+
+        _refreshTime = DataManager.Instance.LoadRefreshTime();
     }
 
     protected override void OnRefresh()
@@ -286,6 +291,7 @@ public class PrepareForm : Form, IPointerClickHandler
             RefreshSlotImage();
             _chooseItem = null;
         }
+        RefreshShopTime();
     }
 
     public void OnBtnEquipmentReduceClicked() 
@@ -422,6 +428,13 @@ public class PrepareForm : Form, IPointerClickHandler
         _txtPlayerDefence.text = player.GetDefence().ToString();
         _shopEquipmentItemSlots[index] = null;
         RefreshEquipmentslot();
+    }
+
+    public void RefreshShopTime()
+    {
+        DateTime currentDate = DateTime.Now;
+        TimeSpan differenceTime = _refreshTime - currentDate;
+        _txtRefreshTime.text = $"{differenceTime.Hours}:{differenceTime.Minutes}:{differenceTime.Seconds}";
     }
 
 

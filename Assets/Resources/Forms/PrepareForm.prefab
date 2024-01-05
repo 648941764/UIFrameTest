@@ -8309,6 +8309,7 @@ MonoBehaviour:
   _txtGold: {fileID: 4365330303944266476}
   _txtTitle: {fileID: 4154229022636055907}
   _txtSign: {fileID: 182874843502026150}
+  _txtRefreshTime: {fileID: 7186373007011899015}
   _canvasGroupTitle: {fileID: 5556790468360650421}
 --- !u!1 &9022106652838121645
 GameObject:

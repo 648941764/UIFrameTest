@@ -5,7 +5,7 @@ using System.Xml.Linq;
 using UnityEngine;
 using System.IO;
 using Newtonsoft.Json;
-
+using System;
 
 /// <summary>
 /// 测试类代码
@@ -76,6 +76,31 @@ public partial class DataManager
             return playerEntity;
         }
         return null;
+    }
+
+    public void SaveRefreshTime()
+    {
+        if (!File.Exists(Application.persistentDataPath + "/Players"))
+        {
+            System.IO.Directory.CreateDirectory(Application.persistentDataPath + "/Players");
+        }
+        DateTime refreshTime = DateTime.Now;
+        refreshTime.AddDays(3);
+        string jsonData = JsonConvert.SerializeObject(refreshTime);
+        File.WriteAllText(Application.persistentDataPath + "/Players/ShopRefreshTime.json", jsonData);
+        Debug.Log("时间保存成功");
+    }
+
+    public DateTime LoadRefreshTime()
+    {
+        string path = Application.persistentDataPath + string.Format("/Players/ShopRefreshTime.json");
+        if (File.Exists(path))
+        {
+            string jsonData = File.ReadAllText(path);
+            DateTime refreshTime = JsonConvert.DeserializeObject<DateTime>(jsonData);
+            return refreshTime;
+        }
+        return DateTime.Now.AddDays(3);
     }
 }
 

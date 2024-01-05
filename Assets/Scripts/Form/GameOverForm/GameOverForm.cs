@@ -34,6 +34,8 @@ public class GameOverForm : Form
     {
         Debug.Log("1");
         GameManager.Instance.SwithScene(GameScene.Level1);
+        CharacterEntity characterEntity = DataManager.Instance.LoadPlayerJsonData();
+        Debug.Log(characterEntity.IsDead());
         UIManager.Instance.Close<GameOverForm>();
     }
 }
