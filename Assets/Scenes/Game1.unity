@@ -282,7 +282,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 178371206}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -8.01}
+  m_LocalPosition: {x: -17, y: 0, z: -8.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3746,29 +3746,24 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 399226474}
+  - component: {fileID: 399226476}
   - component: {fileID: 399226475}
+  - component: {fileID: 399226474}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: DialogueSign
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &399226474
-Transform:
+  m_IsActive: 0
+--- !u!222 &399226474
+CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 399226473}
-  m_LocalRotation: {x: -0, y: -0, z: 0.70042264, w: 0.7137283}
-  m_LocalPosition: {x: 0, y: 12.499999, z: 0}
-  m_LocalScale: {x: 3, y: 5, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1146510394}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 88.922}
+  m_CullTransparentMesh: 1
 --- !u!212 &399226475
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3820,6 +3815,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!224 &399226476
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 399226473}
+  m_LocalRotation: {x: -0, y: -0, z: 0.7036634, w: 0.7105335}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3, y: 5, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1146510394}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 89.443}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 13}
+  m_SizeDelta: {x: 1.875, y: 1.75}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &449993048
 GameObject:
   m_ObjectHideFlags: 0
@@ -9315,7 +9329,7 @@ Transform:
   m_LocalPosition: {x: -18.69, y: 2.94, z: 0}
   m_LocalScale: {x: 0.0755, y: 0.1109, z: 1}
   m_Children:
-  - {fileID: 399226474}
+  - {fileID: 399226476}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -9338,6 +9352,7 @@ MonoBehaviour:
   - "\u4F60\u662F\u8C01\uFF1F\u4E3A\u4EC0\u4E48\u4F1A\u5230\u8FD9\u91CC\u9762\u6765"
   - n-Player
   - "\u6211\u4E0D\u77E5\u9053...\u5F53\u6211\u9192\u6765\u5C31\u5230\u8FD9\u91CC\u4E86"
+  _dialogueSign: {fileID: 399226473}
 --- !u!61 &1146510396
 BoxCollider2D:
   m_ObjectHideFlags: 0

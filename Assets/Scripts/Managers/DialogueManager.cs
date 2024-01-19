@@ -12,7 +12,7 @@ public class DialogueManager : SingletonMono<DialogueManager>
     [TextArea]
     public string[] DialogueLines;
 
-    private bool _isTalking;//TODO可以增加一个功能
+    private bool _isTalking;//TODO可以增加一个让角色不能移动功能
 
     public bool IsTalking => _isTalking;
 
@@ -22,7 +22,7 @@ public class DialogueManager : SingletonMono<DialogueManager>
         //GameManager.Instance.UpdateHandle += DialogueUpdate;
     }
 
-    private void Update()
+    private void Update()//UPdate测试使用，后面会使用GameManager的Update
     {
         if (Input.GetMouseButtonUp(0) && _isTalking)
         {
