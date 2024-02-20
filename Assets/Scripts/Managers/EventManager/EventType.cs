@@ -7,4 +7,6 @@ public enum EventType
     OnHealthChange,
     OnEnemyDeath,
     OnPlayerGoldChange,
+    //QuestEventType
+    OnWaiting,
 }

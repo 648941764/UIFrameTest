@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.XR;
 using UnityEngine;
 
 public class Talkable : MonoBehaviour
 {
-    [SerializeField]private bool _canTalk, _isPerson;
+    [SerializeField] private bool _canTalk, _isPerson;
     [TextArea][SerializeField] private string[] _lines;
     [SerializeField] private GameObject _dialogueSign;
-
+    [SerializeField] private Questable _questable;
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
@@ -28,9 +29,11 @@ public class Talkable : MonoBehaviour
 
     private void Update()//UPdate测试使用，后面会使用GameManager的Update
     {
-        if (_canTalk && Input.GetKeyDown(KeyCode.R) && !DialogueManager.Instance.IsTalking)
+        if (_canTalk && Input.GetKeyDown(KeyCode.R) && !UIManager.Instance.GetForm<DialogueForm>().IsTalking)
         {
-            DialogueManager.Instance.ShowDialogue(_lines, _isPerson);
+            UIManager.Instance.Open<DialogueForm>();
+            UIManager.Instance.GetForm<DialogueForm>().ShowDialogue(_lines, _isPerson);
+            UIManager.Instance.GetForm<DialogueForm>().CurrentQuestable = _questable;
         }
     }
 }

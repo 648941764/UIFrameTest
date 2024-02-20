@@ -8,13 +8,17 @@ public class Player : Character
 
     private readonly Dictionary<CharacterState, Action> _stateHandlers = new Dictionary<CharacterState, Action>();
 
-    private float dt;
+    [SerializeField]private List<Quest> questList= new List<Quest>();
+
+    private float _dt;
     private float _curJumpSpeed;
-    private int states;
     private float _lastPosY;
+    private int _states;
     private new Rigidbody2D rigidbody2D;
 
     private bool isDead => HasState(CharacterState.Death);
+
+    public List<Quest> QuestList => questList;
 
     public override void Init(int uid)
     {
@@ -115,7 +119,7 @@ public class Player : Character
 
     private void PlayerUpdate(float dt)
     {
-        this.dt = dt;
+        this._dt = dt;
 
         if (HasState(CharacterState.Death))
         {
@@ -183,7 +187,7 @@ public class Player : Character
 
 
         Vector3 pos = Position;
-        pos.x += CharacterInfo.moveSpeed * axisX * dt;
+        pos.x += CharacterInfo.moveSpeed * axisX * _dt;
         Position = pos;
         Orientation = axisX > 0f;
         _lastPosY = transform.position.y;
@@ -195,9 +199,9 @@ public class Player : Character
         if (_curJumpSpeed > 0.0f)
         {
             Vector3 pos = Position;
-            pos.y += _curJumpSpeed * dt;
+            pos.y += _curJumpSpeed * _dt;
             Position = pos;
-            _curJumpSpeed -= 9.8f * dt;
+            _curJumpSpeed -= 9.8f * _dt;
         }
         else
         {
@@ -224,7 +228,7 @@ public class Player : Character
 
     private void AttackCoolingHandle()
     {
-        parameter.attckCoolTimer += dt;
+        parameter.attckCoolTimer += _dt;
         if (parameter.attckCoolTimer >= CharacterInfo.attackInterval)
         {
             DelState(CharacterState.AttackCooling, false);
@@ -250,7 +254,7 @@ public class Player : Character
 
     private bool HasState(CharacterState state, bool igonre = true)
     {
-        int stateCopy = igonre ? StatesCopy() : states;
+        int stateCopy = igonre ? StatesCopy() : _states;
         return (stateCopy & (1 << (int)state)) > 0;
     }
 
@@ -258,7 +262,7 @@ public class Player : Character
     {
         if (!HasState(state, igonre) && !isDead)
         {
-            states |= (1 << (int)state);
+            _states |= (1 << (int)state);
             OnAddState(state);
         }
     }
@@ -266,7 +270,7 @@ public class Player : Character
     private int StatesCopy()
     {
         int i = -1;
-        int statesCopy = states;
+        int statesCopy = _states;
         while (++i < ignoreStates.Length)
         {
             statesCopy &= ~(1 << ignoreStates[i]);
@@ -283,7 +287,7 @@ public class Player : Character
     {
         if (HasState(state, igonre))
         {
-            states &= ~(1 << (int)state);
+            _states &= ~(1 << (int)state);
             OnDelState(state);
         }
     }
@@ -350,7 +354,7 @@ public class Player : Character
                     parameter.stateExchangable = false;
                     parameter.animStates[CharacterState.Death].Start();
                     PlayStateAnim(state);
-                    states = (1 << (int)CharacterState.Death);
+                    _states = (1 << (int)CharacterState.Death);
                     break;
                 }
             }

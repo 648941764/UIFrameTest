@@ -89,6 +89,8 @@ public class MainForm : Form
     {
         UIManager.Instance.Open<PrepareForm>();
         UIManager.Instance.Close<MainForm>();
+        UIManager.Instance.Open<DialogueForm>();
+        UIManager.Instance.GetForm<DialogueForm>().DialogueBox.SetActivate(false);
     }
 
     private void OnBtnStoryClick()
