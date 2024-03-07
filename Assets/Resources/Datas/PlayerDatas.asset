@@ -21,4 +21,4 @@ MonoBehaviour:
     maxHp: 100
     maxExp: 30
     defence: 0
-    gold: 100
+    gold: 200

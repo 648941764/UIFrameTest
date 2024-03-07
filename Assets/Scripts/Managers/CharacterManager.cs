@@ -34,10 +34,10 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
         if (uid == PLAYER_ID)
         {
             _player.OnPlayerDeath();
-            foreach (var key in _characaters.Keys)
-            {
-                _characaters[key].FSM.Switch(CharacterState.Idle);
-            }
+            //foreach (var key in _characaters.Keys)
+            //{
+            //    _characaters[key].FSM.Switch(CharacterState.Idle);
+            //}
             //UIManager.Instance.Close<HealthForm>();
             return;
         }
@@ -126,7 +126,7 @@ public sealed class CharacterManager : SingletonMono<CharacterManager>
 
     private void CreatePlayerEntity()//此处用来创建playerData的数据
     {
-        _playerEntity = DataManager.Instance.LoadPlayerJsonData();
+        //_playerEntity = DataManager.Instance.LoadPlayerJsonData();
         if (_playerEntity == null)
         {
             Debug.Log("创建新的角色数据");

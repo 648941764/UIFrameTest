@@ -32,9 +32,9 @@ public class GameOverForm : Form
 
     private void OnBtnTryClicked()//”–¥˝…Ã»∂
     {
-        Debug.Log("1");
         GameManager.Instance.SwithScene(GameScene.Level1);
         CharacterEntity characterEntity = DataManager.Instance.LoadPlayerJsonData();
+        Debug.Log(characterEntity.GetHealth());
         Debug.Log(characterEntity.IsDead());
         UIManager.Instance.Close<GameOverForm>();
     }
